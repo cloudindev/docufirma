@@ -18,7 +18,10 @@
     "search": "Search",
     "optional": "optional",
     "language": "Language",
-    "languages": { "es": "Español", "en": "English" },
+    "languages": {
+      "es": "Español",
+      "en": "English"
+    },
     "comingSoon": "Coming soon"
   },
   "errors": {
@@ -27,6 +30,121 @@
       "title": "We couldn't find this page",
       "description": "The link may be wrong or the page may have moved.",
       "cta": "Back to home"
+    }
+  },
+  "validation": {
+    "required": "This field is required.",
+    "email": "Enter a valid email address.",
+    "tooLong": "The text is too long.",
+    "passwordMin": "The password must be at least 8 characters long.",
+    "passwordWeak": "The password must contain letters and numbers.",
+    "passwordMismatch": "The passwords don't match.",
+    "acceptTerms": "You must accept the terms to continue.",
+    "invalid": "The value is not valid."
+  },
+  "auth": {
+    "panel": {
+      "title": "Legally binding signatures, without the hassle.",
+      "points": {
+        "one": "Advanced electronic signature with biometric data",
+        "two": "RFC 3161 qualified timestamp",
+        "three": "Evidence certificate and public verification"
+      },
+      "quote": "Your documents and your clients' documents are stored on servers in the European Union."
+    },
+    "orDivider": "or",
+    "google": "Continue with Google",
+    "email": "Email",
+    "password": "Password",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "login": {
+      "metaTitle": "Log in",
+      "title": "Welcome back",
+      "subtitle": "Log in to your DocuFirma account.",
+      "tabPassword": "Password",
+      "tabMagic": "Magic link",
+      "submit": "Log in",
+      "magicSubmit": "Email me a link",
+      "magicHint": "We'll send you a one-time login link.",
+      "magicSent": "If an account exists for that email, we've sent you a login link. Check your inbox.",
+      "forgot": "Forgot your password?",
+      "noAccount": "Don't have an account yet?",
+      "register": "Create a free account"
+    },
+    "register": {
+      "metaTitle": "Create account",
+      "title": "Create your free account",
+      "subtitle": "Includes {credits, plural, =0 {access to your dashboard} one {# trial signature} other {# trial signatures}}. No card required.",
+      "submit": "Create account",
+      "passwordHint": "At least 8 characters, with letters and numbers.",
+      "acceptTerms": "I accept the <terms>Terms of Service</terms> and the <privacy>Privacy Policy</privacy>.",
+      "haveAccount": "Already have an account?",
+      "login": "Log in",
+      "checkEmailTitle": "Check your email",
+      "checkEmailBody": "We've sent a confirmation link to {email}. Open it to activate your account.",
+      "checkEmailHint": "Can't find it? Check your spam or promotions folder."
+    },
+    "forgot": {
+      "metaTitle": "Reset password",
+      "title": "Reset your password",
+      "subtitle": "We'll email you a link to create a new one.",
+      "submit": "Send link",
+      "sent": "If an account exists for that email, you'll receive a password reset link in a few minutes.",
+      "back": "Back to log in"
+    },
+    "reset": {
+      "metaTitle": "New password",
+      "title": "Create a new password",
+      "subtitle": "Choose a strong password you don't use anywhere else.",
+      "password": "New password",
+      "confirm": "Repeat the password",
+      "submit": "Save password"
+    },
+    "errors": {
+      "invalidCredentials": "Incorrect email or password.",
+      "emailNotConfirmed": "Confirm your email before logging in. Check your inbox.",
+      "userExists": "An account with this email already exists. Log in or reset your password.",
+      "weakPassword": "The password is too weak.",
+      "rateLimited": "Too many attempts. Wait a few minutes and try again.",
+      "samePassword": "The new password must be different from the old one.",
+      "linkExpired": "The link is invalid or has expired. Request a new one.",
+      "signupDisabled": "Sign-ups are temporarily disabled.",
+      "validation": "Please check the highlighted fields.",
+      "generic": "We couldn't complete the operation. Please try again."
+    },
+    "signOut": "Log out"
+  },
+  "onboarding": {
+    "metaTitle": "Welcome",
+    "progressLabel": "Setup progress",
+    "optional": "optional",
+    "next": "Continue",
+    "back": "Back",
+    "error": "We couldn't save your details. Please try again.",
+    "profile": {
+      "title": "Welcome to DocuFirma",
+      "subtitle": "This is how signers will see you in emails and in the evidence certificate.",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "company": "Company",
+      "companyHint": "If you sign on behalf of a company, it will be shown next to your name."
+    },
+    "language": {
+      "title": "Which language do you prefer?",
+      "subtitle": "We'll use it in the app and, by default, in emails to your signers. You can change it on every envelope.",
+      "es": "Español",
+      "esHint": "Interfaz y emails en español",
+      "en": "English",
+      "enHint": "Interface and emails in English"
+    },
+    "start": {
+      "title": "All set. Send your first document",
+      "subtitle": "Upload a PDF, choose who needs to sign and DocuFirma takes care of the rest: biometric signature, timestamp and evidence certificate.",
+      "cta": "Send my first document",
+      "later": "Go to dashboard"
     }
   }
 }

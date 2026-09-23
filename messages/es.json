@@ -18,7 +18,10 @@
     "search": "Buscar",
     "optional": "opcional",
     "language": "Idioma",
-    "languages": { "es": "Español", "en": "English" },
+    "languages": {
+      "es": "Español",
+      "en": "English"
+    },
     "comingSoon": "Muy pronto"
   },
   "errors": {
@@ -27,6 +30,121 @@
       "title": "No encontramos esta página",
       "description": "Puede que el enlace sea incorrecto o que la página se haya movido.",
       "cta": "Volver al inicio"
+    }
+  },
+  "validation": {
+    "required": "Este campo es obligatorio.",
+    "email": "Introduce un email válido.",
+    "tooLong": "El texto es demasiado largo.",
+    "passwordMin": "La contraseña debe tener al menos 8 caracteres.",
+    "passwordWeak": "La contraseña debe incluir letras y números.",
+    "passwordMismatch": "Las contraseñas no coinciden.",
+    "acceptTerms": "Debes aceptar los términos para continuar.",
+    "invalid": "El valor no es válido."
+  },
+  "auth": {
+    "panel": {
+      "title": "Firma con validez legal, sin complicaciones.",
+      "points": {
+        "one": "Firma electrónica avanzada con datos biométricos",
+        "two": "Sello de tiempo cualificado RFC 3161",
+        "three": "Certificado de evidencias y verificación pública"
+      },
+      "quote": "Tus documentos y los de tus clientes se custodian en servidores de la Unión Europea."
+    },
+    "orDivider": "o",
+    "google": "Continuar con Google",
+    "email": "Email",
+    "password": "Contraseña",
+    "showPassword": "Mostrar contraseña",
+    "hidePassword": "Ocultar contraseña",
+    "firstName": "Nombre",
+    "lastName": "Apellidos",
+    "login": {
+      "metaTitle": "Iniciar sesión",
+      "title": "Bienvenido de nuevo",
+      "subtitle": "Accede a tu cuenta de DocuFirma.",
+      "tabPassword": "Contraseña",
+      "tabMagic": "Enlace mágico",
+      "submit": "Iniciar sesión",
+      "magicSubmit": "Enviarme un enlace",
+      "magicHint": "Te enviaremos un enlace de acceso de un solo uso.",
+      "magicSent": "Si existe una cuenta con ese email, te hemos enviado un enlace para entrar. Revisa tu bandeja de entrada.",
+      "forgot": "¿Has olvidado tu contraseña?",
+      "noAccount": "¿Aún no tienes cuenta?",
+      "register": "Crear cuenta gratis"
+    },
+    "register": {
+      "metaTitle": "Crear cuenta",
+      "title": "Crea tu cuenta gratis",
+      "subtitle": "Incluye {credits, plural, =0 {acceso a tu panel} one {# firma de prueba} other {# firmas de prueba}}. Sin tarjeta.",
+      "submit": "Crear cuenta",
+      "passwordHint": "Mínimo 8 caracteres, con letras y números.",
+      "acceptTerms": "Acepto los <terms>Términos del servicio</terms> y la <privacy>Política de privacidad</privacy>.",
+      "haveAccount": "¿Ya tienes cuenta?",
+      "login": "Inicia sesión",
+      "checkEmailTitle": "Revisa tu email",
+      "checkEmailBody": "Te hemos enviado un enlace de confirmación a {email}. Ábrelo para activar tu cuenta.",
+      "checkEmailHint": "¿No lo encuentras? Mira en la carpeta de spam o promociones."
+    },
+    "forgot": {
+      "metaTitle": "Recuperar contraseña",
+      "title": "Recupera tu contraseña",
+      "subtitle": "Te enviaremos un enlace para crear una nueva.",
+      "submit": "Enviar enlace",
+      "sent": "Si existe una cuenta con ese email, recibirás un enlace para restablecer la contraseña en unos minutos.",
+      "back": "Volver a iniciar sesión"
+    },
+    "reset": {
+      "metaTitle": "Nueva contraseña",
+      "title": "Crea una nueva contraseña",
+      "subtitle": "Elige una contraseña segura que no uses en otros sitios.",
+      "password": "Nueva contraseña",
+      "confirm": "Repite la contraseña",
+      "submit": "Guardar contraseña"
+    },
+    "errors": {
+      "invalidCredentials": "Email o contraseña incorrectos.",
+      "emailNotConfirmed": "Confirma tu email antes de iniciar sesión. Revisa tu bandeja de entrada.",
+      "userExists": "Ya existe una cuenta con este email. Inicia sesión o recupera tu contraseña.",
+      "weakPassword": "La contraseña es demasiado débil.",
+      "rateLimited": "Demasiados intentos. Espera unos minutos y vuelve a probar.",
+      "samePassword": "La nueva contraseña debe ser distinta de la anterior.",
+      "linkExpired": "El enlace no es válido o ha caducado. Solicita uno nuevo.",
+      "signupDisabled": "El registro está temporalmente desactivado.",
+      "validation": "Revisa los campos marcados.",
+      "generic": "No hemos podido completar la operación. Inténtalo de nuevo."
+    },
+    "signOut": "Cerrar sesión"
+  },
+  "onboarding": {
+    "metaTitle": "Bienvenida",
+    "progressLabel": "Progreso de configuración",
+    "optional": "opcional",
+    "next": "Continuar",
+    "back": "Atrás",
+    "error": "No hemos podido guardar tus datos. Inténtalo de nuevo.",
+    "profile": {
+      "title": "Te damos la bienvenida a DocuFirma",
+      "subtitle": "Así te verán los firmantes en los emails y en el certificado de evidencias.",
+      "firstName": "Nombre",
+      "lastName": "Apellidos",
+      "company": "Empresa",
+      "companyHint": "Si firmas en nombre de una empresa, aparecerá junto a tu nombre."
+    },
+    "language": {
+      "title": "¿En qué idioma prefieres trabajar?",
+      "subtitle": "Lo usaremos en la aplicación y, por defecto, en los emails a tus firmantes. Puedes cambiarlo en cada envío.",
+      "es": "Español",
+      "esHint": "Interfaz y emails en español",
+      "en": "English",
+      "enHint": "Interface and emails in English"
+    },
+    "start": {
+      "title": "Todo listo. Envía tu primer documento",
+      "subtitle": "Sube un PDF, indica quién debe firmar y DocuFirma se encarga del resto: firma biométrica, sello de tiempo y certificado de evidencias.",
+      "cta": "Enviar mi primer documento",
+      "later": "Ir al panel"
     }
   }
 }

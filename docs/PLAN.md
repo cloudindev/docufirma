@@ -19,15 +19,17 @@ Leyenda: `[x]` hecho · `[~]` hecho parcialmente / pendiente de credenciales ext
 
 ## Fase 1 — Base de datos y Auth
 
-- [ ] Migraciones: enums, tablas, triggers `updated_at`, `handle_new_user`, índices
-- [ ] Ledger de créditos en SQL (`get_available_credits`, reserve/consume/release con bloqueo)
-- [ ] RLS en todas las tablas + `envelope_events` append-only
-- [ ] Buckets privados de Storage + políticas
-- [ ] Tipos `types/database.ts`
-- [ ] Clientes Supabase (browser, server, admin) + sesión en `proxy.ts` + protección `/app/**`
-- [ ] Registro, login (contraseña, magic link, Google), recuperar/restablecer, callback
-- [ ] Perfil + onboarding (3 pasos)
-- [ ] Tests de migraciones contra Postgres local
+- [x] Migraciones: enums, tablas, triggers `updated_at`, `handle_new_user`, índices
+- [x] Ledger de créditos en SQL (`get_available_credits`, reserve/consume/release con bloqueo)
+- [x] RLS en todas las tablas + `envelope_events` append-only
+- [x] Buckets privados de Storage + políticas
+- [x] Tipos `types/database.ts`
+- [x] Clientes Supabase (browser, server, admin) + sesión en `proxy.ts` + protección `/app/**`
+- [x] Registro, login (contraseña, magic link, Google), recuperar/restablecer, callback
+- [x] Onboarding (3 pasos) — la edición completa del perfil y el logo están en Ajustes (Fase 3)
+- [x] Tests de migraciones contra Postgres local
+
+- [x] Supabase local sin Docker (`pnpm stack:up`) + e2e de autenticación contra GoTrue real
 
 ## Fase 2 — Landing y páginas públicas
 
