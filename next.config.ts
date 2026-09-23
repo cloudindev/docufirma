@@ -1,5 +1,7 @@
 import type { NextConfig } from "next";
+import { withSentryConfig } from "@sentry/nextjs/config";
 import createNextIntlPlugin from "next-intl/plugin";
+import { buildCsp } from "./lib/security/csp";
 
 const withNextIntl = createNextIntlPlugin("./lib/i18n/request.ts");
 
@@ -25,6 +27,11 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       { source: "/:path*", headers: securityHeaders },
+      {
+        // Baseline CSP for everything except /app and /sign (those get a nonce-based CSP in proxy.ts).
+        source: "/((?!(?:es|en)/(?:app|sign)(?:/|$)).*)",
+        headers: [{ key: "Content-Security-Policy", value: buildCsp() }],
+      },
       {
         // Signer view: never leak the token through the Referer header, never index.
         source: "/:locale/sign/:path*",
@@ -52,4 +59,15 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withNextIntl(nextConfig);
+const withIntl = withNextIntl(nextConfig);
+
+// Sentry build integration (source maps) only when configured; runtime init lives in instrumentation*.ts.
+export default process.env.SENTRY_AUTH_TOKEN && process.env.SENTRY_ORG && process.env.SENTRY_PROJECT
+  ? withSentryConfig(withIntl, {
+      org: process.env.SENTRY_ORG,
+      project: process.env.SENTRY_PROJECT,
+      authToken: process.env.SENTRY_AUTH_TOKEN,
+      silent: !process.env.CI,
+      tunnelRoute: "/monitoring",
+    })
+  : withIntl;

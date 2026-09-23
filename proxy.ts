@@ -1,6 +1,7 @@
 import createIntlMiddleware from "next-intl/middleware";
 import { type NextRequest, NextResponse } from "next/server";
 import { defaultLocale, isLocale, type Locale, routing } from "@/lib/i18n/routing";
+import { buildCsp, generateNonce } from "@/lib/security/csp";
 import { updateSession } from "@/lib/supabase/middleware";
 
 const intl = createIntlMiddleware(routing);
@@ -19,16 +20,25 @@ const AUTH_ONLY_GUEST = new Set<string>(
 );
 
 export async function proxy(request: NextRequest) {
-  const response = intl(request);
-
-  // Redirects issued by next-intl (e.g. "/" -> "/es") are returned as-is.
-  if (response.headers.get("location")) return response;
-
   const [, maybeLocale, ...rest] = request.nextUrl.pathname.split("/");
   const locale: Locale = isLocale(maybeLocale) ? maybeLocale : defaultLocale;
   const subPath = `/${rest.join("/")}`;
   const isApp = subPath === "/app" || subPath.startsWith("/app/");
   const isSign = subPath.startsWith("/sign/");
+
+  // Strict nonce-based CSP for the dynamic, sensitive areas. Next.js reads the nonce from the
+  // request's CSP header and applies it to its own scripts.
+  let csp: string | null = null;
+  if (isApp || isSign) {
+    csp = buildCsp({ nonce: generateNonce() });
+    request.headers.set("content-security-policy", csp);
+  }
+
+  const response = intl(request);
+  if (csp) response.headers.set("Content-Security-Policy", csp);
+
+  // Redirects issued by next-intl (e.g. "/" -> "/es") are returned as-is.
+  if (response.headers.get("location")) return response;
 
   // The signer view never depends on a sender session: skip auth work entirely.
   if (isSign) return response;
