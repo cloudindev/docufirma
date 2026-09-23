@@ -2,6 +2,7 @@ import "server-only";
 import { cache } from "react";
 import { redirect } from "@/lib/i18n/navigation";
 import type { Locale } from "@/lib/i18n/routing";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 import type { Tables } from "@/types/database";
 
@@ -38,12 +39,18 @@ export async function requireUser(locale: Locale): Promise<SessionUser> {
   return user;
 }
 
+/**
+ * Profile of the signed-in user. A missing profile (user created before the schema existed, or
+ * a failed sign-up trigger) is provisioned on the spot. Redirecting to the login page instead
+ * would loop, because the login page sends signed-in users back to the app.
+ */
 export async function requireProfile(locale: Locale): Promise<Tables<"profiles">> {
-  await requireUser(locale);
+  const user = await requireUser(locale);
   const profile = await getProfile();
-  if (!profile) {
-    redirect({ href: "/login", locale });
-    throw new Error("unreachable");
-  }
-  return profile;
+  if (profile) return profile;
+
+  // The RPC returns the row: re-reading with the same GET would hit Next's per-render fetch memo.
+  const { data, error } = await createAdminClient().rpc("provision_user", { p_user_id: user.id });
+  if (error || !data?.id) throw new Error(`Could not provision profile: ${error?.message ?? "empty"}`);
+  return data;
 }

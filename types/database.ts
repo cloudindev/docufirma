@@ -930,6 +930,7 @@ export type Database = {
       mark_signer_viewed: { Args: { p_token_hash: string; p_ip?: string; p_user_agent?: string }; Returns: Json };
       owns_draft_envelope: { Args: { p_envelope_id: string }; Returns: boolean };
       owns_envelope: { Args: { p_envelope_id: string }; Returns: boolean };
+      provision_user: { Args: { p_user_id: string }; Returns: { id: string; email: string; first_name: string; last_name: string; company_name: string; tax_id: string; locale: string; logo_path: string; stripe_customer_id: string; onboarding_completed: boolean; notify_on_view: boolean; notify_on_complete: boolean; notify_marketing: boolean; created_at: string; updated_at: string } };
       rate_limit_hit: { Args: { p_key: string; p_limit: number; p_window_seconds: number }; Returns: { allowed: boolean; remaining: number; reset_at: string }[] };
       record_reminder: { Args: { p_signer_id: string; p_resend_id?: string }; Returns: undefined };
       record_signer_event: { Args: { p_token_hash: string; p_type: Database["public"]["Enums"]["envelope_event_type"]; p_metadata?: Json; p_ip?: string; p_user_agent?: string }; Returns: undefined };
