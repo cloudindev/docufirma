@@ -1016,5 +1016,114 @@
       "not_draft": "Este envío ya se había enviado.",
       "no_documents": "Añade al menos un documento."
     }
+  },
+  "signing": {
+    "metaTitle": "Firmar documento",
+    "poweredBy": "Firma segura con DocuFirma",
+    "progress": "Paso {current} de 2",
+    "stepReview": "Revisar",
+    "stepSign": "Firmar",
+    "review": {
+      "heading": "{sender} te ha enviado {count, plural, one {un documento} other {# documentos}} para firmar",
+      "hello": "Hola {name}, revisa {count, plural, one {el documento} other {los documentos}} antes de firmar.",
+      "messageFrom": "Mensaje de {sender}",
+      "documentsTabs": "Documentos",
+      "readProgress": "{read} de {total} leídos",
+      "scrollHint": "Desplázate hasta el final de cada documento para continuar.",
+      "readAll": "Has revisado todos los documentos.",
+      "confirmRead": "He leído el documento completo",
+      "continue": "Continuar a la firma",
+      "decline": "Rechazar",
+      "expires": "Puedes firmar hasta el {date}."
+    },
+    "viewer": {
+      "label": "Visor del documento {name}",
+      "zoomIn": "Ampliar",
+      "zoomOut": "Reducir",
+      "fit": "Ajustar al ancho",
+      "page": "Página {page} de {total}",
+      "loading": "Cargando documento…",
+      "error": "No hemos podido mostrar el documento. Recarga la página.",
+      "end": "Fin del documento"
+    },
+    "sign": {
+      "heading": "Firma {count, plural, one {el documento} other {los documentos}}",
+      "subheading": "Dibuja tu firma con el dedo, un lápiz o el ratón.",
+      "consent": "Declaro que he leído el/los documento(s) y consiento firmarlo(s) electrónicamente. Acepto que DocuFirma capture los datos biométricos de mi firma (trazo, presión, velocidad y tiempos) y datos de contexto (dirección IP, dispositivo, fecha y hora) como evidencia de la firma, conforme a la <policy>Política de firma electrónica</policy> y la <privacy>Política de privacidad</privacy>.",
+      "padLabel": "Área de firma. Dibuja tu firma dentro del recuadro.",
+      "padHint": "Firma aquí",
+      "clear": "Borrar",
+      "fullscreen": "Pantalla completa",
+      "exitFullscreen": "Salir",
+      "rotateHint": "Gira el móvil para tener más espacio",
+      "submit": "Firmar documento",
+      "back": "Volver a los documentos",
+      "needConsent": "Acepta el consentimiento para poder firmar.",
+      "needSignature": "Dibuja tu firma en el recuadro.",
+      "tooShort": "La firma es demasiado corta. Dibújala de nuevo, con calma.",
+      "signingAs": "Firmando como {name} ({email})"
+    },
+    "processing": {
+      "title": "Firmando…",
+      "signing": "Registrando tu firma",
+      "generating": "Generando el documento firmado",
+      "sealing": "Aplicando el sello de tiempo cualificado",
+      "done": "Listo"
+    },
+    "success": {
+      "title": "¡Documento firmado!",
+      "body": "Tu firma se ha registrado correctamente. Te hemos enviado una copia por email.",
+      "waiting": "Has firmado correctamente. Cuando firmen el resto de personas, te enviaremos por email el documento firmado y sellado.",
+      "slow": "Estamos terminando de generar el documento. Te lo enviamos por email en unos minutos.",
+      "downloads": "Descargas",
+      "signedPdf": "PDF firmado · {name}",
+      "evidence": "Certificado de evidencias",
+      "sealing": "El sello de tiempo se está aplicando; la copia del email lo incluirá.",
+      "close": "Ya puedes cerrar esta ventana."
+    },
+    "decline": {
+      "title": "¿Rechazar la firma?",
+      "body": "{sender} recibirá un aviso y el envío se cerrará. Puedes indicar el motivo (opcional).",
+      "reason": "Motivo",
+      "confirm": "Rechazar firma",
+      "cancel": "Volver",
+      "done": "Has rechazado firmar. Hemos avisado a {sender}."
+    },
+    "states": {
+      "invalid": {
+        "title": "Enlace no válido",
+        "body": "Este enlace de firma no existe o no es correcto. Comprueba que has copiado la dirección completa del email."
+      },
+      "expired": {
+        "title": "El enlace ha caducado",
+        "body": "El plazo para firmar este documento ha terminado. Pide al remitente que te lo envíe de nuevo."
+      },
+      "canceled": {
+        "title": "Envío cancelado",
+        "body": "El remitente ha cancelado este envío. Ya no es necesario que lo firmes."
+      },
+      "declined": {
+        "title": "Firma rechazada",
+        "body": "Este envío se cerró porque se rechazó la firma."
+      },
+      "already_signed": {
+        "title": "Ya has firmado este documento",
+        "body": "Tu firma ya está registrada. Te enviaremos (o ya te hemos enviado) una copia por email."
+      },
+      "not_your_turn": {
+        "title": "Aún no es tu turno",
+        "body": "Este documento se firma en orden. Recibirás un email cuando los firmantes anteriores hayan firmado."
+      },
+      "rate_limited": {
+        "title": "Demasiadas solicitudes",
+        "body": "Espera un minuto y vuelve a abrir el enlace."
+      }
+    },
+    "errors": {
+      "generic": "No hemos podido registrar la firma. Inténtalo de nuevo.",
+      "rate_limited": "Demasiados intentos. Espera unos minutos.",
+      "signature_image": "No hemos podido procesar tu firma. Bórrala y dibújala de nuevo.",
+      "biometrics": "La firma no es válida. Dibújala de nuevo, sin prisa."
+    }
   }
 }

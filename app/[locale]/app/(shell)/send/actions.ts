@@ -211,17 +211,15 @@ export async function saveDraft(envelopeId: string, raw: unknown): Promise<Actio
   const unique = [...new Map(d.signers.map((s) => [s.email.toLowerCase(), s])).values()];
   await admin.from("signers").delete().eq("envelope_id", envelopeId);
   if (unique.length) {
-    const { error: sErr } = await admin
-      .from("signers")
-      .insert(
-        unique.map((s, i) => ({
-          envelope_id: envelopeId,
-          first_name: s.firstName,
-          last_name: s.lastName,
-          email: s.email,
-          order_index: i,
-        })),
-      );
+    const { error: sErr } = await admin.from("signers").insert(
+      unique.map((s, i) => ({
+        envelope_id: envelopeId,
+        first_name: s.firstName,
+        last_name: s.lastName,
+        email: s.email,
+        order_index: i,
+      })),
+    );
     if (sErr) return fail("generic");
   }
   return ok();

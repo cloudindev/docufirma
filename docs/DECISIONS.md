@@ -133,3 +133,34 @@ magic bytes, PDF sin JavaScript/XFA/cifrado), convierte imágenes/DOCX, calcula 
 
 `/app/send` no crea borradores vacíos: el borrador nace con la primera subida y la URL pasa a `/app/send/{id}` con
 `history.replaceState` (sin remontar el wizard). El paso 2 se autoguarda (debounce 0,9 s) solo con firmantes completos.
+
+## D-024 · Página de firmas siempre nueva
+
+El PDF firmado añade siempre una **página de firmas** al final (con el tamaño de la última página) en lugar de intentar
+dibujar sobre la última página: detectar espacio libre de forma fiable exige analizar el contenido y podría tapar texto.
+Después va una página de resumen de evidencias con QR, y todas las páginas llevan el pie con el código de verificación.
+
+## D-025 · `.tsr` fuera del PDF (de momento)
+
+Adjuntar el `.tsr` dentro del PDF cambiaría su hash (el sello es sobre esos bytes). El `.tsr` se descarga aparte (app y
+`/verificar`). La alternativa correcta, un _document timestamp_ PAdES (`/DocTimeStamp`), se evalúa en la Fase 8.
+
+## D-026 · Fuentes estándar PDF (WinAnsi)
+
+Los PDF usan Helvetica/Courier estándar (sin incrustar fuentes, PDFs ligeros y deterministas). Cubren español e inglés;
+caracteres fuera de WinAnsi se transliteran (Ł→L, ś→s) o se sustituyen por "?" sin romper la generación.
+
+## D-027 · pdf.js _legacy_ en el navegador
+
+La build moderna de pdf.js v6 usa APIs JS muy recientes (p. ej. `Map.prototype.getOrInsertComputed`) ausentes en muchos
+móviles. Se usa `pdfjs-dist/legacy`, con el worker empaquetado por Next (sin CDN).
+
+## D-028 · TSA de pruebas local
+
+Para desarrollo y e2e sin acceso a Mensatek, `TSA_PROVIDER=test` usa una TSA RFC 3161 implementada con pkijs y una clave
+desechable (`tests/fixtures/tsa`). Sus tokens se verifican con OpenSSL pero no tienen valor legal.
+
+## D-029 · Consentimiento y lectura
+
+El botón "Continuar a la firma" se habilita cuando se llega al final de cada documento (evento `scrolled_to_end`) **o**
+cuando el firmante marca "He leído el documento completo" (alternativa accesible si el scroll no se detecta).

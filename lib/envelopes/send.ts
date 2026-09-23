@@ -124,17 +124,15 @@ async function rememberContacts(
     .filter((id): id is string => Boolean(id));
   if (known.length) await admin.from("contacts").update({ last_used_at: now }).in("id", known);
   if (missing.length) {
-    const { error } = await admin
-      .from("contacts")
-      .insert(
-        missing.map((r) => ({
-          user_id: userId,
-          first_name: r.first_name,
-          last_name: r.last_name,
-          email: r.email,
-          last_used_at: now,
-        })),
-      );
+    const { error } = await admin.from("contacts").insert(
+      missing.map((r) => ({
+        user_id: userId,
+        first_name: r.first_name,
+        last_name: r.last_name,
+        email: r.email,
+        last_used_at: now,
+      })),
+    );
     if (error) console.warn("[contacts] insert", error.message);
   }
 }

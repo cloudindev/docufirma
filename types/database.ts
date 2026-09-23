@@ -906,6 +906,7 @@ export type Database = {
     Functions: {
       adjust_credits: { Args: { p_user_id: string; p_amount: number; p_note: string }; Returns: undefined };
       cancel_envelope: { Args: { p_envelope_id: string; p_user_id: string }; Returns: Json };
+      claim_job_by_key: { Args: { p_dedupe_key: string }; Returns: { id: string; type: string; payload: Json; status: Database["public"]["Enums"]["job_status"]; run_at: string; attempts: number; max_attempts: number; last_error: string; locked_at: string; dedupe_key: string; created_at: string; updated_at: string }[] };
       claim_jobs: { Args: { p_type: string; p_limit?: number }; Returns: { id: string; type: string; payload: Json; status: Database["public"]["Enums"]["job_status"]; run_at: string; attempts: number; max_attempts: number; last_error: string; locked_at: string; dedupe_key: string; created_at: string; updated_at: string }[] };
       complete_job: { Args: { p_job_id: string }; Returns: undefined };
       complete_signature: { Args: { p_token_hash: string; p_evidence: Json; p_consent_version: string; p_ip?: string; p_user_agent?: string }; Returns: Json };
@@ -928,6 +929,7 @@ export type Database = {
       rate_limit_hit: { Args: { p_key: string; p_limit: number; p_window_seconds: number }; Returns: { allowed: boolean; remaining: number; reset_at: string }[] };
       record_reminder: { Args: { p_signer_id: string; p_resend_id?: string }; Returns: undefined };
       record_signer_event: { Args: { p_token_hash: string; p_type: Database["public"]["Enums"]["envelope_event_type"]; p_metadata?: Json; p_ip?: string; p_user_agent?: string }; Returns: undefined };
+      record_tsa_result: { Args: { p_artifact_id: string; p_granted: boolean; p_fields: Json; p_error?: string; p_next_attempt_at?: string }; Returns: { id: string; envelope_id: string; kind: Database["public"]["Enums"]["signed_artifact_kind"]; document_id: string; signed_path: string; signed_sha256: string; size_bytes: number; evidence_pdf_path: string; evidence_sha256: string; tsa_provider: string; tsq_path: string; tsr_path: string; tsa_serial: string; tsa_gen_time: string; tsa_policy_oid: string; tsa_name: string; tsa_hash_alg: string; tsa_status: Database["public"]["Enums"]["tsa_status"]; tsa_error: string; tsa_attempts: number; tsa_next_attempt_at: string; created_at: string; updated_at: string } };
       release_credit: { Args: { p_signer_id: string; p_note?: string }; Returns: boolean };
       reserve_credits: { Args: { p_user_id: string; p_envelope_id: string; p_signer_ids: string[] }; Returns: undefined };
       send_envelope: { Args: { p_envelope_id: string; p_user_id: string; p_tokens: Json; p_verification_code: string; p_expires_at: string; p_sender?: Json }; Returns: Json };

@@ -1016,5 +1016,114 @@
       "not_draft": "This envelope had already been sent.",
       "no_documents": "Add at least one document."
     }
+  },
+  "signing": {
+    "metaTitle": "Sign document",
+    "poweredBy": "Secure signing with DocuFirma",
+    "progress": "Step {current} of 2",
+    "stepReview": "Review",
+    "stepSign": "Sign",
+    "review": {
+      "heading": "{sender} sent you {count, plural, one {a document} other {# documents}} to sign",
+      "hello": "Hi {name}, please review {count, plural, one {the document} other {the documents}} before signing.",
+      "messageFrom": "Message from {sender}",
+      "documentsTabs": "Documents",
+      "readProgress": "{read} of {total} read",
+      "scrollHint": "Scroll to the end of each document to continue.",
+      "readAll": "You have reviewed all documents.",
+      "confirmRead": "I have read the whole document",
+      "continue": "Continue to signature",
+      "decline": "Decline",
+      "expires": "You can sign until {date}."
+    },
+    "viewer": {
+      "label": "Viewer for document {name}",
+      "zoomIn": "Zoom in",
+      "zoomOut": "Zoom out",
+      "fit": "Fit to width",
+      "page": "Page {page} of {total}",
+      "loading": "Loading document…",
+      "error": "We couldn't display the document. Please reload the page.",
+      "end": "End of document"
+    },
+    "sign": {
+      "heading": "Sign {count, plural, one {the document} other {the documents}}",
+      "subheading": "Draw your signature with your finger, a stylus or the mouse.",
+      "consent": "I declare that I have read the document(s) and consent to sign it/them electronically. I accept that DocuFirma captures the biometric data of my signature (stroke, pressure, speed and timing) and contextual data (IP address, device, date and time) as evidence of the signature, in accordance with the <policy>Electronic signature policy</policy> and the <privacy>Privacy policy</privacy>.",
+      "padLabel": "Signature area. Draw your signature inside the box.",
+      "padHint": "Sign here",
+      "clear": "Clear",
+      "fullscreen": "Full screen",
+      "exitFullscreen": "Exit",
+      "rotateHint": "Rotate your phone for more space",
+      "submit": "Sign document",
+      "back": "Back to documents",
+      "needConsent": "Accept the consent to be able to sign.",
+      "needSignature": "Draw your signature in the box.",
+      "tooShort": "The signature is too short. Please draw it again, calmly.",
+      "signingAs": "Signing as {name} ({email})"
+    },
+    "processing": {
+      "title": "Signing…",
+      "signing": "Recording your signature",
+      "generating": "Generating the signed document",
+      "sealing": "Applying the qualified timestamp",
+      "done": "Done"
+    },
+    "success": {
+      "title": "Document signed!",
+      "body": "Your signature has been recorded. We've emailed you a copy.",
+      "waiting": "You have signed successfully. When everyone else has signed, we'll email you the signed and sealed document.",
+      "slow": "We're finishing the document. We'll email it to you in a few minutes.",
+      "downloads": "Downloads",
+      "signedPdf": "Signed PDF · {name}",
+      "evidence": "Evidence certificate",
+      "sealing": "The timestamp is being applied; the emailed copy will include it.",
+      "close": "You can now close this window."
+    },
+    "decline": {
+      "title": "Decline to sign?",
+      "body": "{sender} will be notified and the envelope will be closed. You can give a reason (optional).",
+      "reason": "Reason",
+      "confirm": "Decline signature",
+      "cancel": "Back",
+      "done": "You declined to sign. We've notified {sender}."
+    },
+    "states": {
+      "invalid": {
+        "title": "Invalid link",
+        "body": "This signing link doesn't exist or is incorrect. Check that you copied the full address from the email."
+      },
+      "expired": {
+        "title": "The link has expired",
+        "body": "The period to sign this document has ended. Ask the sender to send it again."
+      },
+      "canceled": {
+        "title": "Envelope canceled",
+        "body": "The sender canceled this envelope. You no longer need to sign it."
+      },
+      "declined": {
+        "title": "Signature declined",
+        "body": "This envelope was closed because the signature was declined."
+      },
+      "already_signed": {
+        "title": "You have already signed this document",
+        "body": "Your signature is recorded. We will send (or have already sent) you a copy by email."
+      },
+      "not_your_turn": {
+        "title": "It's not your turn yet",
+        "body": "This document is signed in order. You'll receive an email once the previous signers have signed."
+      },
+      "rate_limited": {
+        "title": "Too many requests",
+        "body": "Wait a minute and open the link again."
+      }
+    },
+    "errors": {
+      "generic": "We couldn't record the signature. Please try again.",
+      "rate_limited": "Too many attempts. Please wait a few minutes.",
+      "signature_image": "We couldn't process your signature. Clear it and draw it again.",
+      "biometrics": "The signature is not valid. Please draw it again, calmly."
+    }
   }
 }

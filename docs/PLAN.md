@@ -63,21 +63,22 @@ Leyenda: `[x]` hecho · `[~]` hecho parcialmente / pendiente de credenciales ext
 
 ## Fase 5 — Vista del firmante
 
-- [ ] Validación de token (hash, caducidad, turno secuencial), rate limit, `noindex`, `no-referrer`
-- [ ] Visor PDF (pdf.js) con scroll hasta el final / confirmación de lectura
-- [ ] `SignaturePad` biométrico (Pointer Events: x, y, t, presión, tilt, tipo de puntero)
-- [ ] Consentimiento versionado + `completeSignature` (FOR UPDATE, cifrado AES-256-GCM, evidencias)
-- [ ] Rechazo con motivo, liberación de créditos, notificaciones
+- [x] Validación de token (hash, caducidad, turno secuencial), rate limit, `noindex`, `no-referrer`
+- [x] Visor PDF (pdf.js) con scroll hasta el final / confirmación de lectura
+- [x] `SignaturePad` biométrico (Pointer Events: x, y, t, presión, tilt, tipo de puntero)
+- [x] Consentimiento versionado + `completeSignature` (FOR UPDATE, cifrado AES-256-GCM, evidencias)
+- [x] Rechazo con motivo, liberación de créditos, notificaciones
 
 ## Fase 6 — Cierre del sobre
 
-- [ ] PDF firmado (bloques de firma, pie de verificación, página de evidencias, metadatos)
-- [ ] `evidence.pdf` completo con QR
-- [ ] TSA RFC 3161 (Mensatek): TSQ, petición, parseo, verificación
-- [ ] Reintentos con backoff (`jobs`), eventos `tsa_granted`/`tsa_failed`
-- [ ] Emails de cierre
-- [ ] Verificación pública por código y por hash
-- [ ] Crons: recordatorios, expiración, reintentos TSA
+- [x] PDF firmado (bloques de firma, pie de verificación, página de evidencias, metadatos)
+- [x] `evidence.pdf` completo con QR
+- [~] TSA RFC 3161 (Mensatek): TSQ, petición, parseo, verificación — probado con TSA local y OpenSSL; falta un TSR real de Mensatek (red bloqueada en el entorno de desarrollo)
+- [x] Reintentos con backoff (`jobs`), eventos `tsa_granted`/`tsa_failed`
+- [x] Emails de cierre
+- [x] Verificación pública por código y por hash
+- [x] Crons: recordatorios, expiración, reintentos TSA
+- [x] E2E: firma en móvil → completado → descarga → verificación por código y por hash; rechazo; caducidad por cron; firma secuencial
 
 ## Fase 7 — Stripe
 
