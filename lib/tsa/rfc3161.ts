@@ -256,3 +256,29 @@ export function pemToCertificate(pem: string): pkijs.Certificate {
   const der = Buffer.from(b64, "base64");
   return pkijs.Certificate.fromBER(toArrayBuffer(der));
 }
+
+/** The DER TimeStampToken (CMS ContentInfo) inside a TimeStampResp. */
+export function extractTimeStampToken(tsr: Uint8Array): Buffer {
+  const asn1 = asn1js.fromBER(toArrayBuffer(tsr));
+  const resp = new pkijs.TimeStampResp({ schema: asn1.result });
+  if (!resp.timeStampToken) throw new Error("TimeStampResp without token");
+  return Buffer.from(resp.timeStampToken.toSchema().toBER(false));
+}
+
+/** Parses a bare TimeStampToken (as embedded in PAdES /Contents) and returns its TSTInfo imprint. */
+export function tokenImprint(token: Uint8Array): {
+  hashAlg: HashAlg | null;
+  messageImprint: string;
+  genTime: Date;
+} {
+  const ci = new pkijs.ContentInfo({ schema: asn1js.fromBER(toArrayBuffer(token)).result });
+  const signed = new pkijs.SignedData({ schema: ci.content });
+  const tst = new pkijs.TSTInfo({
+    schema: asn1js.fromBER(signed.encapContentInfo.eContent!.getValue()).result,
+  });
+  return {
+    hashAlg: OID_TO_HASH[tst.messageImprint.hashAlgorithm.algorithmId] ?? null,
+    messageImprint: hex(tst.messageImprint.hashedMessage.valueBlock.valueHexView),
+    genTime: tst.genTime,
+  };
+}

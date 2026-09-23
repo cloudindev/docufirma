@@ -5,16 +5,32 @@ import { logEvent } from "@/lib/events";
 import { getPathname } from "@/lib/i18n/navigation";
 import type { EvidenceData } from "@/lib/pdf/evidence-model";
 import { generateEvidencePdf } from "@/lib/pdf/evidence";
+import { addDocTimeStamp } from "@/lib/pdf/pades";
 import { generateSignedPdf } from "@/lib/pdf/signed-document";
 import { sha256Hex } from "@/lib/signing/tokens";
 import { BUCKETS, paths, safeFileName } from "@/lib/storage/paths";
 import { type AdminSupabase, createAdminClient } from "@/lib/supabase/admin";
-import { timestampBytes } from "@/lib/tsa";
+import { timestampBytes, timestampTokenForDigest } from "@/lib/tsa";
 import { LIMITS } from "@/lib/config";
 import type { Tables } from "@/types/database";
 
 /** Retry schedule for failed timestamps (spec §9.2.4): 1 min, 5 min, 30 min, 2 h, 24 h. */
 export const TSA_BACKOFF_MINUTES = [1, 5, 30, 120, 1440];
+
+/**
+ * Optional PAdES document timestamp (/DocTimeStamp, ETSI.RFC3161) so PDF readers show it
+ * (D-025). Off by default: it costs one extra TSA stamp per document. Failures never block
+ * closure: the detached RFC 3161 timestamp over the final hash remains the legal evidence.
+ */
+async function withDocTimeStamp(pdf: Uint8Array, envelopeId: string): Promise<Uint8Array> {
+  if (process.env.PADES_DOC_TIMESTAMP !== "true") return pdf;
+  try {
+    return await addDocTimeStamp(pdf, timestampTokenForDigest);
+  } catch (error) {
+    console.warn(`[closure] PAdES timestamp skipped for ${envelopeId}:`, error);
+    return pdf;
+  }
+}
 
 const closeKey = (envelopeId: string) => `close_envelope:${envelopeId}`;
 const tsaKey = (artifactId: string) => `retry_tsa:${artifactId}`;
@@ -389,10 +405,13 @@ export async function closeEnvelope(
       const original = await download(admin, BUCKETS.originals, doc.original_path);
       if (sha256Hex(original) !== doc.original_sha256)
         throw new Error(`original ${doc.id} does not match its hash`);
-      const signed = await generateSignedPdf(
-        original,
-        data,
-        data.documents.find((d) => d.id === doc.id)!,
+      const signed = await withDocTimeStamp(
+        await generateSignedPdf(
+          original,
+          data,
+          data.documents.find((d) => d.id === doc.id)!,
+        ),
+        envelopeId,
       );
       const signedPath = paths.signed(owner, envelopeId, doc.id);
       const signedSha = sha256Hex(signed);

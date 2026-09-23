@@ -3,6 +3,7 @@ import { createHash } from "node:crypto";
 import { mensatekConfigFromEnv, providerFromEndpoint, requestTimestamp } from "./mensatek";
 import {
   buildTimestampRequest,
+  extractTimeStampToken,
   type ParsedTimestampResponse,
   verifyTimestampResponse,
 } from "./rfc3161";
@@ -69,4 +70,21 @@ export async function timestampBytes(bytes: Uint8Array): Promise<TimestampResult
     throw new TimestampError(`Invalid TSA response: ${verification.errors.join("; ")}`, provider);
   }
   return { provider, hash, tsq, tsr, parsed: verification.parsed };
+}
+
+/** DER TimeStampToken (ContentInfo) for a precomputed SHA-256 digest (used for PAdES DocTimeStamp). */
+export async function timestampTokenForDigest(digest: Buffer): Promise<Buffer> {
+  const provider = configuredProvider();
+  if (!provider) throw new TimestampError("No TSA configured", null);
+  const { der: tsq } = buildTimestampRequest(digest, "sha256");
+  const tsr =
+    provider === "TEST"
+      ? await createTestTimestampResponse(tsq)
+      : await requestTimestamp(tsq, mensatekConfigFromEnv()!);
+  const verification = await verifyTimestampResponse(tsr, tsq, digest, {
+    trustedCertsPem: trustedRoots(provider),
+  });
+  if (!verification.valid)
+    throw new TimestampError(`Invalid TSA response: ${verification.errors.join("; ")}`, provider);
+  return extractTimeStampToken(tsr);
 }
