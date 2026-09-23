@@ -146,5 +146,413 @@
       "cta": "Enviar mi primer documento",
       "later": "Ir al panel"
     }
+  },
+  "marketing": {
+    "nav": {
+      "product": "Producto",
+      "howItWorks": "Cómo funciona",
+      "pricing": "Precios",
+      "verify": "Verificar documento",
+      "login": "Iniciar sesión",
+      "cta": "Empezar gratis",
+      "dashboard": "Ir al panel",
+      "openMenu": "Abrir menú",
+      "closeMenu": "Cerrar menú",
+      "skipToContent": "Saltar al contenido"
+    },
+    "hero": {
+      "eyebrow": "Firma electrónica avanzada · eIDAS",
+      "title": "Firma electrónica avanzada. Sencilla, legal y sellada en el tiempo.",
+      "subtitle": "Sube tus documentos, indica quién debe firmar y recibe el PDF firmado con firma biométrica y sello de tiempo cualificado. Sin instalar nada.",
+      "ctaPrimary": "Empezar gratis",
+      "ctaSecondary": "Ver cómo funciona",
+      "note": "{credits} firmas de prueba · Sin tarjeta"
+    },
+    "badges": {
+      "label": "Garantías",
+      "eidas": "eIDAS",
+      "tsa": "Sello de tiempo cualificado RFC 3161",
+      "gdpr": "RGPD",
+      "eu": "Servidores en la UE"
+    },
+    "steps": {
+      "eyebrow": "Cómo funciona",
+      "title": "Del PDF a la firma sellada en tres pasos",
+      "subtitle": "Sin cuentas para tus firmantes, sin aplicaciones, sin certificados que instalar.",
+      "one": {
+        "title": "1. Sube",
+        "body": "Arrastra uno o varios documentos PDF (o imágenes). Calculamos su huella SHA-256 al instante."
+      },
+      "two": {
+        "title": "2. Envía",
+        "body": "Indica nombre, apellidos y email de cada firmante. Reciben un enlace único y seguro."
+      },
+      "three": {
+        "title": "3. Firmado y sellado",
+        "body": "Firman con el dedo o el ratón. Cerramos el documento con hash y sello de tiempo cualificado."
+      }
+    },
+    "features": {
+      "eyebrow": "Producto",
+      "title": "Todo lo que necesitas para firmar con garantías",
+      "subtitle": "Una experiencia sencilla para ti y para quien firma, con la solidez probatoria que exige un contrato.",
+      "biometric": {
+        "title": "Firma biométrica",
+        "body": "Capturamos el trazo con presión, velocidad, aceleración y tiempos, junto a evidencias de contexto."
+      },
+      "timestamp": {
+        "title": "Sello de tiempo cualificado",
+        "body": "Cada documento se sella con un sello RFC 3161 emitido por un prestador cualificado europeo."
+      },
+      "evidence": {
+        "title": "Certificado de evidencias",
+        "body": "Un informe detallado con firmantes, dispositivos, huellas y cronología de todo el proceso."
+      },
+      "verification": {
+        "title": "Verificación pública",
+        "body": "Cualquiera puede comprobar la integridad de un documento con su código o subiendo el PDF."
+      },
+      "multidoc": {
+        "title": "Varios documentos y firmantes",
+        "body": "Hasta 10 documentos y 10 firmantes por envío, en paralelo o en el orden que elijas."
+      },
+      "reminders": {
+        "title": "Recordatorios automáticos",
+        "body": "Recordamos a tus firmantes que tienen documentos pendientes y te avisamos en cada paso."
+      }
+    },
+    "legal": {
+      "eyebrow": "Validez legal",
+      "title": "Firma electrónica avanzada según el Reglamento eIDAS",
+      "body": "El Reglamento (UE) 910/2014 (eIDAS) reconoce efectos jurídicos a la firma electrónica y define la firma electrónica avanzada en su artículo 26. DocuFirma la construye así:",
+      "points": {
+        "unique": {
+          "title": "Vinculada al firmante",
+          "body": "Cada firmante recibe un enlace único y personal en su email y firma con su propio trazo."
+        },
+        "identify": {
+          "title": "Permite identificarle",
+          "body": "Registramos nombre, email, dirección IP, dispositivo y los datos biométricos de la firma."
+        },
+        "control": {
+          "title": "Bajo su control exclusivo",
+          "body": "El firmante crea la firma con su mano, en su dispositivo, tras leer el documento."
+        },
+        "integrity": {
+          "title": "Detecta cualquier cambio",
+          "body": "La huella SHA-256 y el sello de tiempo cualificado (art. 42) revelan cualquier modificación posterior."
+        }
+      },
+      "disclaimer": "DocuFirma ofrece firma electrónica avanzada, no firma electrónica cualificada.",
+      "link": "Leer la política de firma"
+    },
+    "pricing": {
+      "eyebrow": "Precios",
+      "title": "Un único plan. Sin sorpresas.",
+      "subtitle": "Paga solo por lo que usas. Cancela cuando quieras.",
+      "planName": "Plan Pro",
+      "perMonth": "/mes",
+      "planSummary": "{credits} firmas incluidas · IVA incluido · Cancela cuando quieras",
+      "includes": "Incluye",
+      "features": {
+        "credits": "{credits} firmas al mes (se renuevan cada ciclo)",
+        "biometric": "Firma electrónica avanzada biométrica",
+        "timestamp": "Sello de tiempo cualificado en cada documento",
+        "evidence": "Certificado de evidencias en PDF",
+        "multi": "Hasta 10 documentos y 10 firmantes por envío",
+        "reminders": "Recordatorios y caducidad automáticos",
+        "verification": "Verificación pública de documentos",
+        "support": "Soporte por email en español e inglés"
+      },
+      "cta": "Empezar gratis",
+      "trialNote": "Empieza con {credits} firmas de prueba, sin tarjeta.",
+      "packsTitle": "¿Necesitas más firmas?",
+      "packsSubtitle": "Packs de pago único. No caducan y se usan después de las firmas del mes.",
+      "packCredits": "{credits} firmas",
+      "packUnit": "{price} por firma",
+      "whatIsSignature": "1 firma = 1 firmante que completa un envío (con todos sus documentos)."
+    },
+    "faq": {
+      "eyebrow": "Preguntas frecuentes",
+      "title": "Resolvemos tus dudas",
+      "items": {
+        "q1": {
+          "q": "¿Tiene validez legal la firma de DocuFirma?",
+          "a": "Sí. Es una firma electrónica avanzada conforme al artículo 26 del Reglamento eIDAS, admisible como prueba en juicio en toda la UE. En España, la Ley 6/2020 y la Ley de Enjuiciamiento Civil regulan su valor probatorio. Para los pocos actos que exigen firma cualificada o forma notarial, no sustituye a esos requisitos."
+        },
+        "q2": {
+          "q": "¿Qué es el sello de tiempo cualificado?",
+          "a": "Es una prueba, emitida por un prestador cualificado de servicios de confianza, de que un documento existía con un contenido concreto en una fecha y hora exactas. Según el artículo 41 de eIDAS, se presume la exactitud de esa fecha y la integridad de los datos."
+        },
+        "q3": {
+          "q": "¿El firmante necesita registrarse o instalar algo?",
+          "a": "No. Recibe un email con un enlace único, revisa el documento en su navegador y firma con el dedo, un lápiz o el ratón. Funciona en móvil, tableta y ordenador."
+        },
+        "q4": {
+          "q": "¿Qué datos biométricos se capturan y cómo se protegen?",
+          "a": "Capturamos el trazo de la firma (coordenadas, presión, inclinación y tiempos) con el consentimiento explícito del firmante. Se cifran con AES-256, solo se usan como prueba de la firma y se conservan durante el plazo indicado en la política de privacidad."
+        },
+        "q5": {
+          "q": "¿Qué pasa si no uso todas las firmas del mes?",
+          "a": "Las firmas incluidas en el plan se renuevan en cada ciclo de facturación y no se acumulan. Las firmas de los packs no caducan y se usan solo cuando se agotan las del mes."
+        },
+        "q6": {
+          "q": "¿Cómo se cuenta una firma?",
+          "a": "Una firma es un firmante que completa un envío, aunque firme varios documentos a la vez. Un envío con tres firmantes consume tres firmas. Si alguien rechaza o el envío caduca, las firmas pendientes se devuelven a tu saldo."
+        },
+        "q7": {
+          "q": "¿Puedo verificar un documento firmado?",
+          "a": "Sí. En la página de verificación puedes introducir el código DF-XXXX-XXXX que aparece en el documento o subir el PDF: calculamos su huella en tu navegador y comprobamos que coincide con el original sellado, sin que el archivo salga de tu equipo."
+        },
+        "q8": {
+          "q": "¿Puedo cancelar cuando quiera?",
+          "a": "Sí. Puedes cancelar la suscripción desde tu panel en cualquier momento. Seguirás teniendo acceso a tu historial y a tus documentos firmados."
+        }
+      }
+    },
+    "cta": {
+      "title": "Empieza a firmar hoy mismo",
+      "subtitle": "Crea tu cuenta en un minuto y envía tu primer documento con {credits} firmas de prueba.",
+      "button": "Empezar gratis"
+    },
+    "footer": {
+      "tagline": "Firma electrónica avanzada con sello de tiempo cualificado para autónomos y pymes.",
+      "product": "Producto",
+      "legal": "Legal",
+      "help": "Ayuda",
+      "language": "Idioma",
+      "contact": "Contacto",
+      "faq": "Preguntas frecuentes",
+      "rights": "© {year} DocuFirma. Todos los derechos reservados.",
+      "madeIn": "Hecho en la UE · Servidores en Frankfurt"
+    },
+    "howItWorksPage": {
+      "metaTitle": "Cómo funciona",
+      "metaDescription": "Así funciona DocuFirma: sube el documento, envíalo a los firmantes y recibe el PDF firmado con firma biométrica y sello de tiempo cualificado.",
+      "title": "Cómo funciona DocuFirma",
+      "subtitle": "Un proceso pensado para que firmar sea tan fácil como abrir un email, sin renunciar a las garantías legales.",
+      "sender": "Para quien envía",
+      "signer": "Para quien firma",
+      "senderSteps": {
+        "s1": "Crea tu cuenta y sube uno o varios PDF, imágenes o documentos Word.",
+        "s2": "Añade a los firmantes con nombre, apellidos y email. Elige si firman en paralelo o en orden.",
+        "s3": "Sigue el estado de cada envío en tiempo real y recibe el PDF firmado, el certificado de evidencias y el sello de tiempo."
+      },
+      "signerSteps": {
+        "s1": "Abre el enlace del email: no necesita cuenta ni instalar nada.",
+        "s2": "Revisa el documento completo en su navegador, en el móvil o en el ordenador.",
+        "s3": "Acepta el consentimiento y firma en pantalla. Recibe una copia firmada al instante."
+      },
+      "behindTitle": "Qué ocurre por detrás",
+      "behind": {
+        "hash": "Calculamos la huella SHA-256 de cada documento original.",
+        "biometric": "Capturamos el trazo biométrico y lo guardamos cifrado con AES-256-GCM.",
+        "pdf": "Generamos el PDF firmado con la firma, el código de verificación y un certificado de evidencias.",
+        "tsa": "Solicitamos un sello de tiempo cualificado RFC 3161 sobre el documento final."
+      }
+    },
+    "pricingPage": {
+      "metaTitle": "Precios",
+      "metaDescription": "Plan Pro de DocuFirma: 9 €/mes con 10 firmas incluidas, IVA incluido. Packs de firmas adicionales sin caducidad."
+    },
+    "home": {
+      "metaTitle": "Firma electrónica avanzada con sello de tiempo cualificado"
+    }
+  },
+  "legal": {
+    "draftNotice": "Borrador pendiente de revisión legal. Los datos entre corchetes deben completarse antes del lanzamiento.",
+    "updated": "Última actualización: {date}",
+    "nav": {
+      "legal-notice": "Aviso legal",
+      "privacy": "Política de privacidad",
+      "cookies": "Política de cookies",
+      "terms": "Términos del servicio",
+      "signature-policy": "Política de firma electrónica"
+    },
+    "pages": {
+      "legal-notice": {
+        "description": "Información legal sobre el titular de DocuFirma.",
+        "sections": {
+          "s1": {
+            "h": "Titular del sitio web",
+            "p": "En cumplimiento del artículo 10 de la Ley 34/2002, de Servicios de la Sociedad de la Información (LSSI-CE), se informa de que docufirma.es es titularidad de [RAZÓN SOCIAL], con NIF [NIF], domicilio en [DOMICILIO] e inscrita en [REGISTRO MERCANTIL]. Contacto: [EMAIL DE CONTACTO]."
+          },
+          "s2": {
+            "h": "Objeto",
+            "p": "DocuFirma es un servicio en línea que permite enviar documentos para su firma electrónica avanzada y sellarlos con un sello de tiempo cualificado emitido por un prestador de servicios de confianza."
+          },
+          "s3": {
+            "h": "Propiedad intelectual",
+            "p": "Los contenidos, marcas, logotipos y software del sitio pertenecen a [RAZÓN SOCIAL] o a sus licenciantes. Queda prohibida su reproducción sin autorización."
+          },
+          "s4": {
+            "h": "Responsabilidad",
+            "p": "El titular no se responsabiliza del uso que los usuarios hagan del servicio ni del contenido de los documentos que suben. Cada usuario es responsable de disponer de la base legal necesaria para tratar los datos de sus firmantes."
+          },
+          "s5": {
+            "h": "Legislación aplicable",
+            "p": "Este aviso se rige por la legislación española. Para cualquier controversia, las partes se someten a los juzgados y tribunales de [CIUDAD], salvo que la normativa de consumidores disponga otra cosa."
+          }
+        }
+      },
+      "privacy": {
+        "description": "Cómo tratamos los datos personales de usuarios y firmantes.",
+        "sections": {
+          "s1": {
+            "h": "Responsable del tratamiento",
+            "p": "[RAZÓN SOCIAL], NIF [NIF], [DOMICILIO]. Delegado de protección de datos: [EMAIL DPD]."
+          },
+          "s2": {
+            "h": "Datos de los usuarios (remitentes)",
+            "p": "Tratamos tus datos de cuenta (nombre, apellidos, email, empresa, NIF opcional), de facturación y de uso para prestar el servicio (art. 6.1.b RGPD), cumplir obligaciones legales (art. 6.1.c) y mejorar el servicio (interés legítimo, art. 6.1.f)."
+          },
+          "s3": {
+            "h": "Datos de los firmantes",
+            "p": "Respecto de los documentos que envían nuestros usuarios, DocuFirma actúa como encargado del tratamiento. Tratamos nombre, apellidos, email, dirección IP, datos del dispositivo, ubicación aproximada y los eventos del proceso de firma para generar la evidencia de firma."
+          },
+          "s4": {
+            "h": "Datos biométricos de la firma",
+            "p": "El trazo de la firma (coordenadas, presión, inclinación y tiempos) puede constituir un dato biométrico (art. 9 RGPD). Solo se captura con el consentimiento explícito del firmante, se cifra con AES-256-GCM, se usa exclusivamente como prueba de la firma y se conserva durante [5] años desde la firma, salvo que un procedimiento judicial exija conservarlo más tiempo."
+          },
+          "s5": {
+            "h": "Encargados y transferencias",
+            "p": "Usamos proveedores situados o con servidores en la UE: Supabase (base de datos y almacenamiento, Frankfurt), Vercel (alojamiento, Frankfurt), Stripe (pagos), Resend (email), Mensatek (sello de tiempo) y Sentry (monitorización de errores). Cuando exista transferencia internacional, se ampara en cláusulas contractuales tipo."
+          },
+          "s6": {
+            "h": "Conservación",
+            "p": "Los datos de cuenta se conservan mientras la cuenta esté activa. Los sobres completados y sus evidencias se conservan [5] años para la defensa de posibles reclamaciones. Las facturas, durante los plazos que exige la normativa fiscal."
+          },
+          "s7": {
+            "h": "Tus derechos",
+            "p": "Puedes ejercer los derechos de acceso, rectificación, supresión, oposición, limitación y portabilidad escribiendo a [EMAIL DE PRIVACIDAD] o eliminando tu cuenta desde Ajustes. También puedes reclamar ante la Agencia Española de Protección de Datos (aepd.es)."
+          }
+        }
+      },
+      "cookies": {
+        "description": "Qué cookies utiliza DocuFirma.",
+        "sections": {
+          "s1": {
+            "h": "Cookies técnicas",
+            "p": "Usamos únicamente cookies técnicas necesarias: la sesión de usuario (sb-*), la preferencia de idioma (NEXT_LOCALE) y cookies de seguridad de nuestro proveedor de pagos durante el proceso de compra. No requieren consentimiento (art. 22.2 LSSI-CE)."
+          },
+          "s2": {
+            "h": "Analítica y publicidad",
+            "p": "DocuFirma no utiliza cookies de analítica de terceros ni cookies publicitarias. Si en el futuro se incorporan, se pedirá tu consentimiento previo mediante un banner."
+          },
+          "s3": {
+            "h": "Cómo gestionarlas",
+            "p": "Puedes borrar o bloquear las cookies desde la configuración de tu navegador. Si bloqueas las cookies técnicas, no podrás iniciar sesión."
+          }
+        }
+      },
+      "terms": {
+        "description": "Condiciones de uso del servicio DocuFirma.",
+        "sections": {
+          "s1": {
+            "h": "El servicio",
+            "p": "DocuFirma permite a usuarios registrados enviar documentos para su firma electrónica avanzada y obtener el documento firmado, un certificado de evidencias y un sello de tiempo cualificado."
+          },
+          "s2": {
+            "h": "Planes y pagos",
+            "p": "El Plan Pro cuesta 9 €/mes (IVA incluido) e incluye 10 firmas por ciclo de facturación, que no se acumulan. Los packs de firmas son pagos únicos y no caducan. Una firma equivale a un firmante que completa un envío. Las firmas reservadas se devuelven si el envío se rechaza, se cancela o caduca."
+          },
+          "s3": {
+            "h": "Obligaciones del usuario",
+            "p": "Te comprometes a usar el servicio de forma lícita, a no subir contenido ilícito o malicioso, a informar a tus firmantes y a disponer de base legal para tratar sus datos. Eres responsable del contenido de los documentos."
+          },
+          "s4": {
+            "h": "Naturaleza de la firma",
+            "p": "DocuFirma ofrece firma electrónica avanzada (art. 26 eIDAS) y sello de tiempo cualificado (art. 42 eIDAS). No es una firma electrónica cualificada y no sustituye los requisitos de forma que la ley exija para determinados actos."
+          },
+          "s5": {
+            "h": "Cancelación",
+            "p": "Puedes cancelar la suscripción en cualquier momento; seguirá activa hasta el final del periodo pagado. Puedes eliminar tu cuenta desde Ajustes."
+          },
+          "s6": {
+            "h": "Responsabilidad",
+            "p": "El servicio se presta con la diligencia debida. [RAZÓN SOCIAL] no responde de daños indirectos ni del uso de los documentos firmados. La responsabilidad total queda limitada al importe pagado en los últimos 12 meses, salvo dolo o culpa grave."
+          },
+          "s7": {
+            "h": "Ley y jurisdicción",
+            "p": "Estos términos se rigen por la ley española. Los consumidores pueden acudir a los tribunales de su domicilio."
+          }
+        }
+      },
+      "signature-policy": {
+        "description": "Cómo se crea, se conserva y se verifica una firma en DocuFirma.",
+        "sections": {
+          "s1": {
+            "h": "Tipo de firma",
+            "p": "Firma electrónica avanzada biométrica conforme al artículo 26 del Reglamento (UE) 910/2014 (eIDAS), complementada con un sello de tiempo cualificado conforme a sus artículos 41 y 42."
+          },
+          "s2": {
+            "h": "Identificación del firmante",
+            "p": "El firmante recibe en su email un enlace único de 256 bits de entropía. Solo se almacena la huella SHA-256 del enlace. Se registran nombre, apellidos, email, IP, agente de usuario, dispositivo, ubicación aproximada y la cronología de eventos."
+          },
+          "s3": {
+            "h": "Creación de la firma",
+            "p": "Tras revisar el documento completo y aceptar el consentimiento (texto versionado y registrado), el firmante dibuja su firma. Se capturan, por cada punto, coordenadas, presión, inclinación, tipo de puntero y marca temporal de alta resolución."
+          },
+          "s4": {
+            "h": "Integridad y sellado",
+            "p": "Se calcula la huella SHA-256 de cada documento original, del fichero biométrico y del PDF firmado final. Sobre este último, y sobre el certificado de evidencias, se solicita un sello de tiempo RFC 3161 a Mensatek (política OID 1.3.6.1.4.1.5734.3.18.1)."
+          },
+          "s5": {
+            "h": "Verificación",
+            "p": "Cualquier persona puede verificar un documento en docufirma.es/verificar con su código o su huella. El sello puede comprobarse de forma independiente con OpenSSL (openssl ts -verify)."
+          },
+          "s6": {
+            "h": "Conservación de evidencias",
+            "p": "Las evidencias se conservan cifradas durante [5] años. El acceso está restringido a procesos del servidor y, bajo requerimiento, a autoridades judiciales."
+          }
+        }
+      }
+    }
+  },
+  "verify": {
+    "metaTitle": "Verificar documento",
+    "metaDescription": "Comprueba si un documento firmado con DocuFirma es auténtico y no ha sido modificado, con su código de verificación o subiendo el PDF.",
+    "title": "Verifica un documento firmado",
+    "subtitle": "Comprueba la autenticidad e integridad de un documento firmado con DocuFirma. Nunca mostramos el contenido del documento.",
+    "tabCode": "Código de verificación",
+    "tabFile": "Subir PDF",
+    "codeLabel": "Código de verificación",
+    "codeHint": "Aparece en el pie de cada página del documento firmado, por ejemplo DF-7K3Q-9X2M.",
+    "codePlaceholder": "DF-XXXX-XXXX",
+    "submit": "Verificar",
+    "fileLabel": "Arrastra aquí el PDF firmado o haz clic para elegirlo",
+    "fileHint": "Calculamos la huella SHA-256 en tu navegador. El archivo no sale de tu equipo.",
+    "hashing": "Calculando huella…",
+    "fileHash": "Huella SHA-256 del archivo",
+    "invalidCode": "Introduce un código con el formato DF-XXXX-XXXX.",
+    "rateLimited": "Demasiadas consultas. Espera un minuto y vuelve a intentarlo.",
+    "error": "No hemos podido completar la verificación. Inténtalo de nuevo.",
+    "result": {
+      "validTitle": "Documento verificado",
+      "validBody": "Este documento fue firmado electrónicamente con DocuFirma y consta en nuestros registros.",
+      "matchBody": "El archivo que has subido coincide exactamente con el documento firmado y sellado: no ha sido modificado.",
+      "notFoundTitle": "No encontramos este documento",
+      "notFoundBody": "El código o el archivo no corresponden a ningún documento firmado y completado en DocuFirma. Si has subido un PDF, puede que haya sido modificado o que no sea la versión final firmada.",
+      "document": "Documento",
+      "code": "Código",
+      "completedAt": "Completado",
+      "signers": "Firmantes",
+      "signedAt": "Firmado el {date}",
+      "artifacts": "Archivos sellados",
+      "evidence": "Certificado de evidencias",
+      "originalHash": "SHA-256 original",
+      "signedHash": "SHA-256 firmado",
+      "tsaTitle": "Sello de tiempo",
+      "tsaAuthority": "Autoridad",
+      "tsaDate": "Fecha del sello",
+      "tsaSerial": "Número de serie",
+      "tsaPolicy": "Política",
+      "tsaPending": "Sello de tiempo pendiente",
+      "tsaFailed": "Sello de tiempo no disponible todavía",
+      "downloadTsr": "Descargar .tsr",
+      "matched": "Coincide con tu archivo",
+      "howTo": "Cómo verificar el sello por tu cuenta",
+      "howToBody": "Descarga el .tsr y ejecuta: openssl ts -verify -in documento.tsr -data documento.pdf -CAfile cadena-tsa.pem"
+    }
   }
 }

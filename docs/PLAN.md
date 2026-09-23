@@ -33,10 +33,12 @@ Leyenda: `[x]` hecho · `[~]` hecho parcialmente / pendiente de credenciales ext
 
 ## Fase 2 — Landing y páginas públicas
 
-- [ ] Header, Hero, Cómo funciona, Características, Legalidad, Precios, FAQ, CTA, Footer
-- [ ] `/precios`, `/como-funciona`, `/legal/*`, `/verificar` (UI)
-- [ ] SEO: metadata, OG image, sitemap, robots, JSON-LD `SoftwareApplication`
-- [ ] Ilustraciones SVG propias
+- [x] Header, Hero, Cómo funciona, Características, Legalidad, Precios, FAQ, CTA, Footer
+- [x] `/precios`, `/como-funciona`, `/legal/*`, `/verificar` (UI + API pública por código y por hash, con rate limit)
+- [x] SEO: metadata, OG image, sitemap, robots, JSON-LD `SoftwareApplication`
+- [x] Ilustraciones SVG propias
+- [x] `docs/LEGAL.md` y borradores de textos legales ES/EN
+- [x] E2E de la parte pública
 
 ## Fase 3 — Área privada
 

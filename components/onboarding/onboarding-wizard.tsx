@@ -5,7 +5,7 @@ import { ArrowRight, Building2, Check, FileSignature, Languages } from "lucide-r
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { useState, useTransition } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { completeOnboarding } from "@/app/[locale]/app/onboarding/actions";
 import { Alert } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
@@ -36,7 +36,7 @@ export function OnboardingWizard({ defaults }: { defaults: OnboardingInput }) {
     defaultValues: defaults,
   });
   const errors = form.formState.errors;
-  const locale = form.watch("locale");
+  const locale = useWatch({ control: form.control, name: "locale" });
 
   const finish = (target: "/app" | "/app/send") =>
     form.handleSubmit((values) =>

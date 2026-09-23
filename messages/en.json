@@ -146,5 +146,413 @@
       "cta": "Send my first document",
       "later": "Go to dashboard"
     }
+  },
+  "marketing": {
+    "nav": {
+      "product": "Product",
+      "howItWorks": "How it works",
+      "pricing": "Pricing",
+      "verify": "Verify document",
+      "login": "Log in",
+      "cta": "Start for free",
+      "dashboard": "Go to dashboard",
+      "openMenu": "Open menu",
+      "closeMenu": "Close menu",
+      "skipToContent": "Skip to content"
+    },
+    "hero": {
+      "eyebrow": "Advanced electronic signature · eIDAS",
+      "title": "Advanced electronic signature. Simple, legal and time-stamped.",
+      "subtitle": "Upload your documents, choose who needs to sign and get the signed PDF with a biometric signature and a qualified timestamp. Nothing to install.",
+      "ctaPrimary": "Start for free",
+      "ctaSecondary": "See how it works",
+      "note": "{credits} trial signatures · No card required"
+    },
+    "badges": {
+      "label": "Guarantees",
+      "eidas": "eIDAS",
+      "tsa": "RFC 3161 qualified timestamp",
+      "gdpr": "GDPR",
+      "eu": "EU-hosted servers"
+    },
+    "steps": {
+      "eyebrow": "How it works",
+      "title": "From PDF to sealed signature in three steps",
+      "subtitle": "No accounts for your signers, no apps, no certificates to install.",
+      "one": {
+        "title": "1. Upload",
+        "body": "Drop one or more PDF documents (or images). We compute their SHA-256 fingerprint instantly."
+      },
+      "two": {
+        "title": "2. Send",
+        "body": "Enter each signer's first name, last name and email. They receive a unique, secure link."
+      },
+      "three": {
+        "title": "3. Signed and sealed",
+        "body": "They sign with a finger or mouse. We close the document with a hash and a qualified timestamp."
+      }
+    },
+    "features": {
+      "eyebrow": "Product",
+      "title": "Everything you need to sign with confidence",
+      "subtitle": "A simple experience for you and your signers, with the evidentiary strength a contract demands.",
+      "biometric": {
+        "title": "Biometric signature",
+        "body": "We capture the stroke with pressure, speed, acceleration and timing, plus contextual evidence."
+      },
+      "timestamp": {
+        "title": "Qualified timestamp",
+        "body": "Every document is sealed with an RFC 3161 timestamp issued by a European qualified provider."
+      },
+      "evidence": {
+        "title": "Evidence certificate",
+        "body": "A detailed report with signers, devices, fingerprints and the timeline of the whole process."
+      },
+      "verification": {
+        "title": "Public verification",
+        "body": "Anyone can check a document's integrity with its code or by uploading the PDF."
+      },
+      "multidoc": {
+        "title": "Multiple documents and signers",
+        "body": "Up to 10 documents and 10 signers per envelope, in parallel or in the order you choose."
+      },
+      "reminders": {
+        "title": "Automatic reminders",
+        "body": "We remind your signers about pending documents and keep you posted at every step."
+      }
+    },
+    "legal": {
+      "eyebrow": "Legal validity",
+      "title": "Advanced electronic signature under the eIDAS Regulation",
+      "body": "Regulation (EU) 910/2014 (eIDAS) gives legal effect to electronic signatures and defines the advanced electronic signature in its Article 26. This is how DocuFirma meets it:",
+      "points": {
+        "unique": {
+          "title": "Uniquely linked to the signer",
+          "body": "Each signer receives a unique, personal link by email and signs with their own stroke."
+        },
+        "identify": {
+          "title": "Capable of identifying them",
+          "body": "We record name, email, IP address, device and the biometric data of the signature."
+        },
+        "control": {
+          "title": "Under their sole control",
+          "body": "The signer creates the signature by hand, on their own device, after reading the document."
+        },
+        "integrity": {
+          "title": "Detects any change",
+          "body": "The SHA-256 fingerprint and the qualified timestamp (Art. 42) reveal any subsequent modification."
+        }
+      },
+      "disclaimer": "DocuFirma provides advanced electronic signatures, not qualified electronic signatures.",
+      "link": "Read the signature policy"
+    },
+    "pricing": {
+      "eyebrow": "Pricing",
+      "title": "One plan. No surprises.",
+      "subtitle": "Pay only for what you use. Cancel anytime.",
+      "planName": "Pro plan",
+      "perMonth": "/month",
+      "planSummary": "{credits} signatures included · VAT included · Cancel anytime",
+      "includes": "Includes",
+      "features": {
+        "credits": "{credits} signatures per month (renewed every cycle)",
+        "biometric": "Biometric advanced electronic signature",
+        "timestamp": "Qualified timestamp on every document",
+        "evidence": "PDF evidence certificate",
+        "multi": "Up to 10 documents and 10 signers per envelope",
+        "reminders": "Automatic reminders and expiry",
+        "verification": "Public document verification",
+        "support": "Email support in Spanish and English"
+      },
+      "cta": "Start for free",
+      "trialNote": "Start with {credits} trial signatures, no card required.",
+      "packsTitle": "Need more signatures?",
+      "packsSubtitle": "One-off packs. They never expire and are used after your monthly signatures.",
+      "packCredits": "{credits} signatures",
+      "packUnit": "{price} per signature",
+      "whatIsSignature": "1 signature = 1 signer completing an envelope (with all of its documents)."
+    },
+    "faq": {
+      "eyebrow": "FAQ",
+      "title": "Your questions, answered",
+      "items": {
+        "q1": {
+          "q": "Is a DocuFirma signature legally valid?",
+          "a": "Yes. It is an advanced electronic signature under Article 26 of the eIDAS Regulation, admissible as evidence in legal proceedings across the EU. For the few acts that legally require a qualified signature or a notarial deed, it does not replace those requirements."
+        },
+        "q2": {
+          "q": "What is a qualified timestamp?",
+          "a": "It is proof, issued by a qualified trust service provider, that a document existed with specific content at an exact date and time. Under Article 41 of eIDAS, the accuracy of that date and the integrity of the data are presumed."
+        },
+        "q3": {
+          "q": "Does the signer need an account or to install anything?",
+          "a": "No. They receive an email with a unique link, review the document in their browser and sign with a finger, a stylus or the mouse. It works on phones, tablets and computers."
+        },
+        "q4": {
+          "q": "Which biometric data is captured and how is it protected?",
+          "a": "We capture the signature stroke (coordinates, pressure, tilt and timing) with the signer's explicit consent. It is encrypted with AES-256, used only as evidence of the signature and kept for the period stated in the privacy policy."
+        },
+        "q5": {
+          "q": "What happens if I don't use all my monthly signatures?",
+          "a": "Signatures included in the plan renew every billing cycle and do not roll over. Pack signatures never expire and are only used once your monthly signatures run out."
+        },
+        "q6": {
+          "q": "How is a signature counted?",
+          "a": "One signature is one signer completing an envelope, even if they sign several documents at once. An envelope with three signers uses three signatures. If someone declines or the envelope expires, the pending signatures go back to your balance."
+        },
+        "q7": {
+          "q": "Can I verify a signed document?",
+          "a": "Yes. On the verification page you can enter the DF-XXXX-XXXX code printed on the document or upload the PDF: we compute its fingerprint in your browser and check it against the sealed original, without the file ever leaving your device."
+        },
+        "q8": {
+          "q": "Can I cancel anytime?",
+          "a": "Yes. You can cancel your subscription from your dashboard at any time. You keep access to your history and your signed documents."
+        }
+      }
+    },
+    "cta": {
+      "title": "Start signing today",
+      "subtitle": "Create your account in a minute and send your first document with {credits} trial signatures.",
+      "button": "Start for free"
+    },
+    "footer": {
+      "tagline": "Advanced electronic signature with qualified timestamp for freelancers and SMEs.",
+      "product": "Product",
+      "legal": "Legal",
+      "help": "Help",
+      "language": "Language",
+      "contact": "Contact",
+      "faq": "FAQ",
+      "rights": "© {year} DocuFirma. All rights reserved.",
+      "madeIn": "Made in the EU · Servers in Frankfurt"
+    },
+    "howItWorksPage": {
+      "metaTitle": "How it works",
+      "metaDescription": "This is how DocuFirma works: upload the document, send it to the signers and get the signed PDF with a biometric signature and a qualified timestamp.",
+      "title": "How DocuFirma works",
+      "subtitle": "A process designed to make signing as easy as opening an email, without giving up legal guarantees.",
+      "sender": "For the sender",
+      "signer": "For the signer",
+      "senderSteps": {
+        "s1": "Create your account and upload one or more PDFs, images or Word documents.",
+        "s2": "Add the signers with first name, last name and email. Choose whether they sign in parallel or in order.",
+        "s3": "Track every envelope in real time and receive the signed PDF, the evidence certificate and the timestamp."
+      },
+      "signerSteps": {
+        "s1": "Opens the link in the email: no account, nothing to install.",
+        "s2": "Reviews the full document in the browser, on a phone or a computer.",
+        "s3": "Accepts the consent and signs on screen. Gets a signed copy instantly."
+      },
+      "behindTitle": "What happens behind the scenes",
+      "behind": {
+        "hash": "We compute the SHA-256 fingerprint of every original document.",
+        "biometric": "We capture the biometric stroke and store it encrypted with AES-256-GCM.",
+        "pdf": "We generate the signed PDF with the signature, the verification code and an evidence certificate.",
+        "tsa": "We request an RFC 3161 qualified timestamp over the final document."
+      }
+    },
+    "pricingPage": {
+      "metaTitle": "Pricing",
+      "metaDescription": "DocuFirma Pro plan: €9/month with 10 signatures included, VAT included. Extra signature packs that never expire."
+    },
+    "home": {
+      "metaTitle": "Advanced electronic signature with qualified timestamp"
+    }
+  },
+  "legal": {
+    "draftNotice": "Draft pending legal review. Details in square brackets must be completed before launch.",
+    "updated": "Last updated: {date}",
+    "nav": {
+      "legal-notice": "Legal notice",
+      "privacy": "Privacy policy",
+      "cookies": "Cookie policy",
+      "terms": "Terms of service",
+      "signature-policy": "Electronic signature policy"
+    },
+    "pages": {
+      "legal-notice": {
+        "description": "Legal information about the owner of DocuFirma.",
+        "sections": {
+          "s1": {
+            "h": "Website owner",
+            "p": "Pursuant to Article 10 of Spanish Law 34/2002 on Information Society Services (LSSI-CE), docufirma.es is owned by [COMPANY NAME], tax ID [TAX ID], registered office at [ADDRESS], registered with [COMPANIES REGISTER]. Contact: [CONTACT EMAIL]."
+          },
+          "s2": {
+            "h": "Purpose",
+            "p": "DocuFirma is an online service to send documents for advanced electronic signature and seal them with a qualified timestamp issued by a trust service provider."
+          },
+          "s3": {
+            "h": "Intellectual property",
+            "p": "The content, trademarks, logos and software of the site belong to [COMPANY NAME] or its licensors. Reproduction without permission is prohibited."
+          },
+          "s4": {
+            "h": "Liability",
+            "p": "The owner is not responsible for how users use the service or for the content of the documents they upload. Each user is responsible for having a legal basis to process their signers' data."
+          },
+          "s5": {
+            "h": "Governing law",
+            "p": "This notice is governed by Spanish law. The parties submit to the courts of [CITY], unless consumer law provides otherwise."
+          }
+        }
+      },
+      "privacy": {
+        "description": "How we process the personal data of users and signers.",
+        "sections": {
+          "s1": {
+            "h": "Data controller",
+            "p": "[COMPANY NAME], tax ID [TAX ID], [ADDRESS]. Data protection officer: [DPO EMAIL]."
+          },
+          "s2": {
+            "h": "User (sender) data",
+            "p": "We process your account data (name, email, company, optional tax ID), billing and usage data to provide the service (Art. 6.1.b GDPR), comply with legal obligations (Art. 6.1.c) and improve the service (legitimate interest, Art. 6.1.f)."
+          },
+          "s3": {
+            "h": "Signer data",
+            "p": "For documents sent by our users, DocuFirma acts as a data processor. We process name, email, IP address, device data, approximate location and signing events to produce the signature evidence."
+          },
+          "s4": {
+            "h": "Biometric signature data",
+            "p": "The signature stroke (coordinates, pressure, tilt and timing) may be biometric data (Art. 9 GDPR). It is only captured with the signer's explicit consent, encrypted with AES-256-GCM, used exclusively as evidence of the signature and kept for [5] years after signing, unless legal proceedings require longer retention."
+          },
+          "s5": {
+            "h": "Processors and transfers",
+            "p": "We use providers located in, or with servers in, the EU: Supabase (database and storage, Frankfurt), Vercel (hosting, Frankfurt), Stripe (payments), Resend (email), Mensatek (timestamping) and Sentry (error monitoring). Any international transfer relies on standard contractual clauses."
+          },
+          "s6": {
+            "h": "Retention",
+            "p": "Account data is kept while the account is active. Completed envelopes and their evidence are kept for [5] years to defend potential claims. Invoices are kept for the periods required by tax law."
+          },
+          "s7": {
+            "h": "Your rights",
+            "p": "You can exercise your rights of access, rectification, erasure, objection, restriction and portability by writing to [PRIVACY EMAIL] or by deleting your account in Settings. You may also lodge a complaint with the Spanish Data Protection Agency (aepd.es)."
+          }
+        }
+      },
+      "cookies": {
+        "description": "Which cookies DocuFirma uses.",
+        "sections": {
+          "s1": {
+            "h": "Technical cookies",
+            "p": "We only use strictly necessary cookies: the user session (sb-*), the language preference (NEXT_LOCALE) and security cookies from our payment provider during checkout. They do not require consent (Art. 22.2 LSSI-CE)."
+          },
+          "s2": {
+            "h": "Analytics and advertising",
+            "p": "DocuFirma does not use third-party analytics or advertising cookies. If they are added in the future, we will ask for your prior consent through a banner."
+          },
+          "s3": {
+            "h": "Managing cookies",
+            "p": "You can delete or block cookies in your browser settings. If you block technical cookies you will not be able to log in."
+          }
+        }
+      },
+      "terms": {
+        "description": "Terms of use of the DocuFirma service.",
+        "sections": {
+          "s1": {
+            "h": "The service",
+            "p": "DocuFirma lets registered users send documents for advanced electronic signature and obtain the signed document, an evidence certificate and a qualified timestamp."
+          },
+          "s2": {
+            "h": "Plans and payments",
+            "p": "The Pro plan costs €9/month (VAT included) and includes 10 signatures per billing cycle, which do not roll over. Signature packs are one-off payments and never expire. One signature equals one signer completing an envelope. Reserved signatures are returned if the envelope is declined, canceled or expires."
+          },
+          "s3": {
+            "h": "User obligations",
+            "p": "You agree to use the service lawfully, not to upload unlawful or malicious content, to inform your signers and to have a legal basis to process their data. You are responsible for the content of your documents."
+          },
+          "s4": {
+            "h": "Nature of the signature",
+            "p": "DocuFirma provides advanced electronic signatures (Art. 26 eIDAS) and qualified timestamps (Art. 42 eIDAS). It is not a qualified electronic signature and does not replace formal requirements that the law imposes on certain acts."
+          },
+          "s5": {
+            "h": "Cancellation",
+            "p": "You can cancel your subscription at any time; it stays active until the end of the paid period. You can delete your account in Settings."
+          },
+          "s6": {
+            "h": "Liability",
+            "p": "The service is provided with due diligence. [COMPANY NAME] is not liable for indirect damages or for the use of signed documents. Total liability is limited to the amount paid in the last 12 months, except in cases of wilful misconduct or gross negligence."
+          },
+          "s7": {
+            "h": "Law and jurisdiction",
+            "p": "These terms are governed by Spanish law. Consumers may bring claims before the courts of their place of residence."
+          }
+        }
+      },
+      "signature-policy": {
+        "description": "How a signature is created, preserved and verified in DocuFirma.",
+        "sections": {
+          "s1": {
+            "h": "Signature type",
+            "p": "Biometric advanced electronic signature under Article 26 of Regulation (EU) 910/2014 (eIDAS), complemented by a qualified timestamp under its Articles 41 and 42."
+          },
+          "s2": {
+            "h": "Signer identification",
+            "p": "The signer receives by email a unique link with 256 bits of entropy. Only the SHA-256 hash of the link is stored. Name, email, IP address, user agent, device, approximate location and the event timeline are recorded."
+          },
+          "s3": {
+            "h": "Signature creation",
+            "p": "After reviewing the whole document and accepting the consent (a versioned, recorded text), the signer draws their signature. For every point we capture coordinates, pressure, tilt, pointer type and a high-resolution timestamp."
+          },
+          "s4": {
+            "h": "Integrity and sealing",
+            "p": "We compute the SHA-256 fingerprint of every original document, of the biometric file and of the final signed PDF. An RFC 3161 timestamp is requested from Mensatek (policy OID 1.3.6.1.4.1.5734.3.18.1) over the latter and over the evidence certificate."
+          },
+          "s5": {
+            "h": "Verification",
+            "p": "Anyone can verify a document at docufirma.es/verify with its code or fingerprint. The timestamp can be checked independently with OpenSSL (openssl ts -verify)."
+          },
+          "s6": {
+            "h": "Evidence retention",
+            "p": "Evidence is kept encrypted for [5] years. Access is restricted to server processes and, upon request, to judicial authorities."
+          }
+        }
+      }
+    }
+  },
+  "verify": {
+    "metaTitle": "Verify a document",
+    "metaDescription": "Check whether a document signed with DocuFirma is authentic and unaltered, using its verification code or by uploading the PDF.",
+    "title": "Verify a signed document",
+    "subtitle": "Check the authenticity and integrity of a document signed with DocuFirma. We never show the document's content.",
+    "tabCode": "Verification code",
+    "tabFile": "Upload PDF",
+    "codeLabel": "Verification code",
+    "codeHint": "It is printed in the footer of every page of the signed document, e.g. DF-7K3Q-9X2M.",
+    "codePlaceholder": "DF-XXXX-XXXX",
+    "submit": "Verify",
+    "fileLabel": "Drop the signed PDF here or click to choose it",
+    "fileHint": "We compute the SHA-256 fingerprint in your browser. The file never leaves your device.",
+    "hashing": "Computing fingerprint…",
+    "fileHash": "File SHA-256 fingerprint",
+    "invalidCode": "Enter a code in the DF-XXXX-XXXX format.",
+    "rateLimited": "Too many requests. Wait a minute and try again.",
+    "error": "We couldn't complete the verification. Please try again.",
+    "result": {
+      "validTitle": "Document verified",
+      "validBody": "This document was electronically signed with DocuFirma and is on record.",
+      "matchBody": "The file you uploaded exactly matches the signed and sealed document: it has not been modified.",
+      "notFoundTitle": "We couldn't find this document",
+      "notFoundBody": "The code or file doesn't match any completed document signed with DocuFirma. If you uploaded a PDF, it may have been modified or it may not be the final signed version.",
+      "document": "Document",
+      "code": "Code",
+      "completedAt": "Completed",
+      "signers": "Signers",
+      "signedAt": "Signed on {date}",
+      "artifacts": "Sealed files",
+      "evidence": "Evidence certificate",
+      "originalHash": "Original SHA-256",
+      "signedHash": "Signed SHA-256",
+      "tsaTitle": "Timestamp",
+      "tsaAuthority": "Authority",
+      "tsaDate": "Timestamp date",
+      "tsaSerial": "Serial number",
+      "tsaPolicy": "Policy",
+      "tsaPending": "Timestamp pending",
+      "tsaFailed": "Timestamp not available yet",
+      "downloadTsr": "Download .tsr",
+      "matched": "Matches your file",
+      "howTo": "How to verify the timestamp yourself",
+      "howToBody": "Download the .tsr and run: openssl ts -verify -in document.tsr -data document.pdf -CAfile tsa-chain.pem"
+    }
   }
 }
