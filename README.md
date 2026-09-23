@@ -47,6 +47,8 @@ los emite una TSA local de pruebas (sin valor legal).
    pnpm dlx supabase link --project-ref <ref>
    pnpm supabase:push                 # migraciones de supabase/migrations (tablas, RLS, funciones, buckets)
    ```
+   Sin CLI: pega `supabase/dashboard/all-migrations.sql` (todas las migraciones en una transacción, generado con
+   `pnpm db:bundle`) en el _SQL Editor_ y ejecútalo.
 3. **Authentication → URL Configuration**: _Site URL_ `https://docufirma.es`; _Redirect URLs_
    `https://docufirma.es/auth/callback` y `https://docufirma.es/auth/confirm` (añade las de preview de Vercel si las usas).
 4. **Authentication → Email Templates**: pega el contenido de `supabase/templates/*.html` (confirmación, magic link,
