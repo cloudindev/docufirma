@@ -30,7 +30,8 @@
       "title": "No encontramos esta página",
       "description": "Puede que el enlace sea incorrecto o que la página se haya movido.",
       "cta": "Volver al inicio"
-    }
+    },
+    "retry": "Reintentar"
   },
   "validation": {
     "required": "Este campo es obligatorio.",

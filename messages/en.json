@@ -30,7 +30,8 @@
       "title": "We couldn't find this page",
       "description": "The link may be wrong or the page may have moved.",
       "cta": "Back to home"
-    }
+    },
+    "retry": "Try again"
   },
   "validation": {
     "required": "This field is required.",
