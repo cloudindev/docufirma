@@ -1,0 +1,32 @@
+{
+  "metadata": {
+    "title": "DocuFirma · Advanced electronic signature with qualified timestamp",
+    "description": "Send documents for signature in minutes. Advanced biometric signature, RFC 3161 qualified timestamp and evidence certificate. EU-hosted."
+  },
+  "common": {
+    "appName": "DocuFirma",
+    "loading": "Loading…",
+    "save": "Save",
+    "saved": "Saved",
+    "cancel": "Cancel",
+    "close": "Close",
+    "continue": "Continue",
+    "back": "Back",
+    "next": "Next",
+    "delete": "Delete",
+    "edit": "Edit",
+    "search": "Search",
+    "optional": "optional",
+    "language": "Language",
+    "languages": { "es": "Español", "en": "English" },
+    "comingSoon": "Coming soon"
+  },
+  "errors": {
+    "generic": "Something went wrong. Please try again in a few seconds.",
+    "notFound": {
+      "title": "We couldn't find this page",
+      "description": "The link may be wrong or the page may have moved.",
+      "cta": "Back to home"
+    }
+  }
+}

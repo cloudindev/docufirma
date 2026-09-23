@@ -1,0 +1,34 @@
+import { cn } from "@/lib/utils";
+
+/** DocuFirma mark: a document with a folded corner, a signature stroke and a seal dot. */
+export function LogoMark({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 32 32" fill="none" aria-hidden className={cn("size-8", className)}>
+      <rect width="32" height="32" rx="9" fill="#1F4FE0" />
+      <path
+        d="M10 7.5h8.5L23 12v12.5a1 1 0 0 1-1 1H10a1 1 0 0 1-1-1v-16a1 1 0 0 1 1-1Z"
+        fill="#fff"
+      />
+      <path d="M18.5 7.5V11a1 1 0 0 0 1 1H23" fill="#DCE6FF" />
+      <path
+        d="M11.5 20.5c1.2-2.4 2.4-3.6 3.2-2.6.8 1-1 3.2.2 3.2 1 0 1.8-2 2.8-2 .7 0 .6 1.2 1.6 1.2"
+        stroke="#1F4FE0"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <circle cx="20.5" cy="15" r="1.6" fill="#12B76A" />
+    </svg>
+  );
+}
+
+export function Logo({ className, markClassName }: { className?: string; markClassName?: string }) {
+  return (
+    <span className={cn("inline-flex items-center gap-2.5", className)}>
+      <LogoMark className={markClassName} />
+      <span className="text-lg font-semibold tracking-tight text-ink">
+        Docu<span className="text-primary">Firma</span>
+      </span>
+    </span>
+  );
+}

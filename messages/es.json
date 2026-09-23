@@ -1,0 +1,32 @@
+{
+  "metadata": {
+    "title": "DocuFirma · Firma electrónica avanzada con sello de tiempo cualificado",
+    "description": "Envía documentos para firmar en minutos. Firma biométrica avanzada, sello de tiempo cualificado RFC 3161 y certificado de evidencias. Servidores en la UE."
+  },
+  "common": {
+    "appName": "DocuFirma",
+    "loading": "Cargando…",
+    "save": "Guardar",
+    "saved": "Guardado",
+    "cancel": "Cancelar",
+    "close": "Cerrar",
+    "continue": "Continuar",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "search": "Buscar",
+    "optional": "opcional",
+    "language": "Idioma",
+    "languages": { "es": "Español", "en": "English" },
+    "comingSoon": "Muy pronto"
+  },
+  "errors": {
+    "generic": "Algo ha ido mal. Inténtalo de nuevo en unos segundos.",
+    "notFound": {
+      "title": "No encontramos esta página",
+      "description": "Puede que el enlace sea incorrecto o que la página se haya movido.",
+      "cta": "Volver al inicio"
+    }
+  }
+}

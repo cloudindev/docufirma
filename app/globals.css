@@ -1,0 +1,121 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* ---------------------------------------------------------------------------
+ * DocuFirma design tokens (docs/DECISIONS.md D-002).
+ * Dark mode is out of scope for the MVP; tokens are centralised so a
+ * `[data-theme="dark"]` block can override them later.
+ * ------------------------------------------------------------------------- */
+:root {
+  --color-bg: #ffffff;
+  --color-bg-soft: #f5f8ff;
+  --color-bg-tint: #eaf0ff;
+  --color-primary: #1f4fe0;
+  --color-primary-hover: #173fb8;
+  --color-primary-soft: #dce6ff;
+  --color-ink: #0b1b3f;
+  --color-ink-muted: #5b6b8c;
+  --color-border: #e3e8f2;
+  --color-success: #12b76a;
+  --color-warning: #f79009;
+  --color-danger: #e5484d;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  --shadow-card: 0 1px 2px rgba(11, 27, 63, 0.04), 0 8px 24px rgba(11, 27, 63, 0.06);
+  --shadow-card-hover: 0 2px 4px rgba(11, 27, 63, 0.05), 0 16px 40px rgba(11, 27, 63, 0.1);
+}
+
+@theme inline {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --color-bg: var(--color-bg);
+  --color-bg-soft: var(--color-bg-soft);
+  --color-bg-tint: var(--color-bg-tint);
+  --color-primary: var(--color-primary);
+  --color-primary-hover: var(--color-primary-hover);
+  --color-primary-soft: var(--color-primary-soft);
+  --color-primary-foreground: #ffffff;
+  --color-ink: var(--color-ink);
+  --color-ink-muted: var(--color-ink-muted);
+  --color-border: var(--color-border);
+  --color-success: var(--color-success);
+  --color-warning: var(--color-warning);
+  --color-danger: var(--color-danger);
+
+  /* shadcn/ui-compatible aliases */
+  --color-background: var(--color-bg);
+  --color-foreground: var(--color-ink);
+  --color-muted: var(--color-bg-soft);
+  --color-muted-foreground: var(--color-ink-muted);
+  --color-accent: var(--color-bg-tint);
+  --color-accent-foreground: var(--color-ink);
+  --color-input: var(--color-border);
+  --color-ring: var(--color-primary);
+  --color-destructive: var(--color-danger);
+  --color-popover: var(--color-bg);
+  --color-popover-foreground: var(--color-ink);
+  --color-card: var(--color-bg);
+  --color-card-foreground: var(--color-ink);
+
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-xl: var(--radius-xl);
+
+  --shadow-card: var(--shadow-card);
+  --shadow-card-hover: var(--shadow-card-hover);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-bg font-sans text-ink antialiased;
+    font-feature-settings: "cv11", "ss01";
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-semibold tracking-tight text-ink;
+  }
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-primary;
+  }
+  ::selection {
+    @apply bg-primary-soft text-ink;
+  }
+}
+
+@layer utilities {
+  .container-page {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
+  }
+  .section-y {
+    @apply py-20 sm:py-28;
+  }
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
