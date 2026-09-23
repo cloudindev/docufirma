@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Pencil, Plus, Search, Trash2, Users } from "lucide-react";
-import { useFormatter, useTranslations } from "next-intl";
+import { useFormatter, useNow, useTranslations } from "next-intl";
 import { useMemo, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { deleteContact, saveContact } from "@/app/[locale]/app/(shell)/contacts/actions";
@@ -107,6 +107,7 @@ export function ContactsManager({ contacts }: { contacts: ContactRow[] }) {
   const t = useTranslations("app.contacts");
   const tc = useTranslations("app.common");
   const format = useFormatter();
+  const now = useNow({ updateInterval: 60_000 });
   const router = useRouter();
   const [query, setQuery] = useState("");
   const [editing, setEditing] = useState<ContactRow | "new" | null>(null);
@@ -186,7 +187,9 @@ export function ContactsManager({ contacts }: { contacts: ContactRow[] }) {
                   </TableCell>
                   <TableCell className="hidden text-ink-muted sm:table-cell">{c.email}</TableCell>
                   <TableCell className="hidden text-ink-muted md:table-cell">
-                    {c.last_used_at ? format.relativeTime(new Date(c.last_used_at)) : t("never")}
+                    {c.last_used_at
+                      ? format.relativeTime(new Date(c.last_used_at), now)
+                      : t("never")}
                   </TableCell>
                   <TableCell className="text-right">
                     <div className="flex justify-end gap-1">

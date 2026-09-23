@@ -122,3 +122,14 @@ Así los emails ya enviados no rompen la imagen al caducar una URL firmada.
 ## D-021 · Recordatorios manuales
 
 "Recordar a pendientes" emite un token nuevo por firmante (los anteriores siguen válidos, D-012) y está limitado a uno por hora y firmante.
+
+## D-022 · Subida directa a Storage con URL firmada
+
+Los archivos (hasta 25 MB) no pasan por las funciones serverless (límite de 4,5 MB en Vercel): el servidor crea una URL de subida
+firmada en `originals/{user}/{envelope}/uploads/…`, el navegador sube directamente y `finalizeUpload` valida (tipo real por
+magic bytes, PDF sin JavaScript/XFA/cifrado), convierte imágenes/DOCX, calcula SHA-256 y mueve el archivo a su ruta definitiva.
+
+## D-023 · Borrador creado con el primer archivo
+
+`/app/send` no crea borradores vacíos: el borrador nace con la primera subida y la URL pasa a `/app/send/{id}` con
+`history.replaceState` (sin remontar el wizard). El paso 2 se autoguarda (debounce 0,9 s) solo con firmantes completos.

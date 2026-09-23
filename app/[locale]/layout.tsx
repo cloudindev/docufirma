@@ -43,7 +43,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
   const locale = await resolveLocale(params);
 
   return (
-    <html lang={locale} className={inter.variable}>
+    <html lang={locale} className={inter.variable} data-scroll-behavior="smooth">
       <body className="min-h-dvh">
         <NextIntlClientProvider>
           <TooltipProvider delayDuration={200}>

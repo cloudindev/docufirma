@@ -52,13 +52,14 @@ Leyenda: `[x]` hecho · `[~]` hecho parcialmente / pendiente de credenciales ext
 
 ## Fase 4 — Wizard de envío
 
-- [ ] Subida a Storage (validación tipo/tamaño, escaneo PDF, SHA-256, nº páginas)
-- [ ] Conversión imagen→PDF (sharp + pdf-lib) y DOCX→PDF (Gotenberg opcional)
-- [ ] Autosave de borrador, reordenar/eliminar documentos
-- [ ] Destinatarios con autocompletado, orden secuencial, caducidad, recordatorios, locale
-- [ ] Resumen con coste en firmas + modal sin créditos
-- [ ] `sendEnvelope` (reserva, tokens, código de verificación, eventos, emails)
-- [ ] Emails de invitación (react-email, ES/EN)
+- [x] Subida a Storage (validación tipo/tamaño, escaneo PDF, SHA-256, nº páginas)
+- [x] Conversión imagen→PDF (sharp + pdf-lib) y DOCX→PDF (Gotenberg opcional, `DOCX_CONVERTER_URL`)
+- [x] Autosave de borrador, reordenar/eliminar documentos
+- [x] Destinatarios con autocompletado, orden secuencial, caducidad, recordatorios, locale
+- [x] Resumen con coste en firmas + modal sin créditos
+- [x] `sendEnvelope` (reserva, tokens, código de verificación, eventos, emails)
+- [x] Emails de invitación (react-email, ES/EN)
+- [x] E2E del wizard (2 PDF + firmante + envío + email en buzón) y validaciones
 
 ## Fase 5 — Vista del firmante
 

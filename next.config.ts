@@ -15,7 +15,7 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
   // Native / heavy server-only deps stay out of the bundle.
-  serverExternalPackages: ["sharp", "pkijs", "asn1js", "pdfjs-dist"],
+  serverExternalPackages: ["sharp", "pkijs", "asn1js"],
   experimental: {
     serverActions: {
       // Signature submission carries the biometric JSON + PNG; uploads go straight to Storage.

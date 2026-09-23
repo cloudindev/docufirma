@@ -15,6 +15,7 @@ export async function EnvelopeList({
 }) {
   const t = await getTranslations({ locale, namespace: "app.envelopes" });
   const format = await getFormatter({ locale });
+  const now = new Date();
 
   const hrefFor = (e: EnvelopeListItem) =>
     e.status === "draft"
@@ -63,11 +64,11 @@ export async function EnvelopeList({
                 <span className="flex items-center justify-between gap-3 md:block">
                   <EnvelopeStatusBadge status={e.status} finalizing={e.finalizing} />
                   <span className="text-xs text-ink-muted md:hidden">
-                    {format.relativeTime(new Date(e.updatedAt))}
+                    {format.relativeTime(new Date(e.updatedAt), now)}
                   </span>
                 </span>
                 <span className="hidden text-right text-sm text-ink-muted md:block">
-                  {format.relativeTime(new Date(e.updatedAt))}
+                  {format.relativeTime(new Date(e.updatedAt), now)}
                 </span>
                 <ChevronRight className="hidden size-4 text-ink-muted md:block" aria-hidden />
               </Link>

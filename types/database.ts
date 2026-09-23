@@ -325,6 +325,7 @@ export type Database = {
           declined_at: string | null;
           expired_at: string | null;
           expires_at: string | null;
+          expiry_days: number;
           id: string;
           locale: string;
           message: string | null;
@@ -348,6 +349,7 @@ export type Database = {
           declined_at?: string | null;
           expired_at?: string | null;
           expires_at?: string | null;
+          expiry_days?: number;
           id?: string;
           locale?: string;
           message?: string | null;
@@ -371,6 +373,7 @@ export type Database = {
           declined_at?: string | null;
           expired_at?: string | null;
           expires_at?: string | null;
+          expiry_days?: number;
           id?: string;
           locale?: string;
           message?: string | null;
