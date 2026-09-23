@@ -181,11 +181,13 @@ export function AppShell({
   user,
   credits,
   initialCollapsed,
+  banner,
   children,
 }: {
   user: ShellUser;
   credits: ShellCredits;
   initialCollapsed: boolean;
+  banner?: ReactNode;
   children: ReactNode;
 }) {
   const t = useTranslations("app.nav");
@@ -275,6 +277,7 @@ export function AppShell({
           id="main"
           className="mx-auto w-full max-w-6xl flex-1 px-4 py-6 sm:px-6 sm:py-8 lg:px-8"
         >
+          {banner}
           {children}
         </main>
       </div>

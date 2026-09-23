@@ -1125,5 +1125,68 @@
       "signature_image": "No hemos podido procesar tu firma. Bórrala y dibújala de nuevo.",
       "biometrics": "La firma no es válida. Dibújala de nuevo, sin prisa."
     }
+  },
+  "billing": {
+    "plan": {
+      "title": "Tu plan",
+      "none": "Sin suscripción",
+      "noneBody": "Suscríbete al Plan Pro para tener {credits} firmas cada mes. También puedes comprar packs sin suscripción.",
+      "pro": "Plan Pro",
+      "price": "{price}/mes · IVA incluido",
+      "status": {
+        "active": "Activa",
+        "trialing": "En prueba",
+        "past_due": "Pago pendiente",
+        "unpaid": "Impagada",
+        "canceled": "Cancelada",
+        "incomplete": "Incompleta",
+        "incomplete_expired": "Caducada",
+        "paused": "En pausa"
+      },
+      "renews": "Se renueva el {date}",
+      "cancels": "Se cancelará el {date}. Hasta entonces conservas tus firmas del mes.",
+      "subscribe": "Suscribirme al Plan Pro",
+      "manage": "Gestionar suscripción",
+      "manageHint": "Cambia de tarjeta, descarga facturas o cancela en el portal seguro de Stripe."
+    },
+    "usage": {
+      "title": "Tus firmas",
+      "monthly": "Firmas del plan este mes",
+      "monthlyValue": "{used} de {granted} usadas",
+      "monthlyExpires": "Se renuevan el {date} (no se acumulan)",
+      "pack": "Firmas de packs y de prueba",
+      "packHint": "No caducan. Se usan cuando se agotan las del mes.",
+      "reserved": "{count, plural, =0 {Ninguna firma reservada} one {# firma reservada en envíos pendientes} other {# firmas reservadas en envíos pendientes}}",
+      "total": "Disponibles ahora"
+    },
+    "packs": {
+      "title": "Comprar firmas adicionales",
+      "subtitle": "Pago único. No caducan y no necesitas suscripción.",
+      "buy": "Comprar",
+      "credits": "{credits} firmas",
+      "unit": "{price} por firma"
+    },
+    "invoices": {
+      "title": "Facturas",
+      "empty": "Aún no tienes facturas.",
+      "unavailable": "No hemos podido cargar tus facturas. Consúltalas en el portal de Stripe.",
+      "number": "Nº",
+      "date": "Fecha",
+      "amount": "Importe",
+      "view": "Ver",
+      "download": "PDF"
+    },
+    "checkout": {
+      "success": "¡Pago completado! Tus firmas aparecerán en unos segundos.",
+      "canceled": "Has cancelado el pago. No se ha realizado ningún cargo."
+    },
+    "pastDue": "No hemos podido cobrar tu suscripción. Actualiza tu método de pago para no perder las firmas del próximo ciclo.",
+    "pastDueCta": "Actualizar pago",
+    "errors": {
+      "not_configured": "Los pagos aún no están configurados. Inténtalo más tarde.",
+      "stripe_error": "No hemos podido conectar con el sistema de pagos. Inténtalo de nuevo.",
+      "pack_not_found": "Este pack ya no está disponible.",
+      "generic": "No hemos podido iniciar el pago."
+    }
   }
 }

@@ -1125,5 +1125,68 @@
       "signature_image": "We couldn't process your signature. Clear it and draw it again.",
       "biometrics": "The signature is not valid. Please draw it again, calmly."
     }
+  },
+  "billing": {
+    "plan": {
+      "title": "Your plan",
+      "none": "No subscription",
+      "noneBody": "Subscribe to the Pro plan to get {credits} signatures every month. You can also buy packs without a subscription.",
+      "pro": "Pro plan",
+      "price": "{price}/month · VAT included",
+      "status": {
+        "active": "Active",
+        "trialing": "Trial",
+        "past_due": "Payment due",
+        "unpaid": "Unpaid",
+        "canceled": "Canceled",
+        "incomplete": "Incomplete",
+        "incomplete_expired": "Expired",
+        "paused": "Paused"
+      },
+      "renews": "Renews on {date}",
+      "cancels": "Will be canceled on {date}. You keep this month's signatures until then.",
+      "subscribe": "Subscribe to the Pro plan",
+      "manage": "Manage subscription",
+      "manageHint": "Change your card, download invoices or cancel in Stripe's secure portal."
+    },
+    "usage": {
+      "title": "Your signatures",
+      "monthly": "Plan signatures this month",
+      "monthlyValue": "{used} of {granted} used",
+      "monthlyExpires": "Renewed on {date} (they don't roll over)",
+      "pack": "Pack and trial signatures",
+      "packHint": "They never expire. Used once the monthly ones run out.",
+      "reserved": "{count, plural, =0 {No reserved signatures} one {# signature reserved in pending envelopes} other {# signatures reserved in pending envelopes}}",
+      "total": "Available now"
+    },
+    "packs": {
+      "title": "Buy additional signatures",
+      "subtitle": "One-off payment. They never expire and no subscription is needed.",
+      "buy": "Buy",
+      "credits": "{credits} signatures",
+      "unit": "{price} per signature"
+    },
+    "invoices": {
+      "title": "Invoices",
+      "empty": "You don't have any invoices yet.",
+      "unavailable": "We couldn't load your invoices. Check them in the Stripe portal.",
+      "number": "No.",
+      "date": "Date",
+      "amount": "Amount",
+      "view": "View",
+      "download": "PDF"
+    },
+    "checkout": {
+      "success": "Payment completed! Your signatures will appear in a few seconds.",
+      "canceled": "You canceled the payment. No charge was made."
+    },
+    "pastDue": "We couldn't charge your subscription. Update your payment method so you don't lose next cycle's signatures.",
+    "pastDueCta": "Update payment",
+    "errors": {
+      "not_configured": "Payments are not configured yet. Please try later.",
+      "stripe_error": "We couldn't reach the payment system. Please try again.",
+      "pack_not_found": "This pack is no longer available.",
+      "generic": "We couldn't start the payment."
+    }
   }
 }

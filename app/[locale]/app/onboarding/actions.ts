@@ -5,6 +5,9 @@ import { type ActionResult, fail, ok, zodFieldErrors } from "@/lib/actions/resul
 import { onboardingSchema } from "@/lib/auth/schemas";
 import { getSessionUser } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
+import { sendAccountNotice } from "@/lib/email";
+import { appUrl } from "@/lib/env-public";
+import { getPathname } from "@/lib/i18n/navigation";
 
 export async function completeOnboarding(raw: unknown): Promise<ActionResult> {
   const user = await getSessionUser();
@@ -24,6 +27,15 @@ export async function completeOnboarding(raw: unknown): Promise<ActionResult> {
     })
     .eq("id", user.id);
   if (error) return fail("generic");
+
+  const trial = Number(process.env.TRIAL_CREDITS ?? 3);
+  await sendAccountNotice(user.email, {
+    locale: parsed.data.locale,
+    kind: "welcome",
+    name: parsed.data.firstName,
+    count: Number.isFinite(trial) ? trial : 3,
+    ctaUrl: appUrl(getPathname({ href: "/app/send", locale: parsed.data.locale })),
+  });
 
   (await cookies()).set("NEXT_LOCALE", parsed.data.locale, {
     path: "/",

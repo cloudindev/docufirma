@@ -164,3 +164,22 @@ desechable (`tests/fixtures/tsa`). Sus tokens se verifican con OpenSSL pero no t
 
 El botón "Continuar a la firma" se habilita cuando se llega al final de cada documento (evento `scrolled_to_end`) **o**
 cuando el firmante marca "He leído el documento completo" (alternativa accesible si el scroll no se detecta).
+
+## D-030 · Stripe dirigido por webhooks
+
+El estado de la suscripción se refleja solo desde eventos `customer.subscription.*` (no se consulta la API en el webhook),
+las firmas mensuales se conceden en `invoice.paid` (10 firmas hasta el fin del periodo de la línea de factura) y los packs en
+`checkout.session.completed` / `async_payment_succeeded` con el catálogo `credit_packs` como fuente de verdad del nº de firmas.
+Idempotencia doble: tabla `stripe_events` (por id de evento) y claves únicas del ledger (por factura / payment intent).
+Adaptado a la API `2026-08-26.dahlia` del SDK v22 (periodos en `items.data[].current_period_*`, suscripción en `invoice.parent`).
+
+## D-031 · Packs sin suscripción y precios con IVA incluido
+
+Los packs se pueden comprar sin suscripción. Todos los precios se crean con `tax_behavior: inclusive` y Stripe Tax
+(`automatic_tax`), así el precio mostrado (9 €, 15 €, 49 €, 199 €) es el final para el cliente.
+
+## D-032 · Stripe inaccesible en el entorno de desarrollo
+
+La red del sandbox bloquea `api.stripe.com`. Checkout y Customer Portal no se han podido ejecutar aquí; el webhook se prueba
+de extremo a extremo con eventos firmados localmente (`tests/e2e/stripe-webhook.spec.ts`). En un entorno con red, usar
+`stripe listen --forward-to localhost:3000/api/stripe/webhook` y tarjetas de test.
