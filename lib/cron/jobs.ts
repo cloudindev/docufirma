@@ -71,3 +71,22 @@ export async function runExpirations(limit = 100) {
   }
   return { expired: data?.length ?? 0 };
 }
+
+/** Deletes encrypted biometric files older than BIOMETRIC_RETENTION_YEARS (default 5). */
+export async function runRetention(limit = 200) {
+  const years = Math.max(1, Number(process.env.BIOMETRIC_RETENTION_YEARS ?? 5) || 5);
+  const admin = createAdminClient();
+  const { data, error } = await admin.rpc("claim_expired_biometrics", {
+    p_years: years,
+    p_limit: limit,
+  });
+  if (error) throw new Error(error.message);
+  const paths = (data ?? [])
+    .map((r) => r.biometric_data_path)
+    .filter((p): p is string => Boolean(p));
+  for (let i = 0; i < paths.length; i += 100) {
+    const { error: rmError } = await admin.storage.from("evidence").remove(paths.slice(i, i + 100));
+    if (rmError) console.error("[cron:retention] storage remove failed", rmError.message);
+  }
+  return { purged: paths.length, years };
+}

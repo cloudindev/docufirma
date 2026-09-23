@@ -523,6 +523,7 @@ export type Database = {
         Row: {
           biometric_data_path: string | null;
           biometric_key_id: string | null;
+          biometric_purged_at: string | null;
           biometric_sha256: string;
           client_time: string | null;
           consent_text_version: string | null;
@@ -551,6 +552,7 @@ export type Database = {
         Insert: {
           biometric_data_path?: string | null;
           biometric_key_id?: string | null;
+          biometric_purged_at?: string | null;
           biometric_sha256: string;
           client_time?: string | null;
           consent_text_version?: string | null;
@@ -579,6 +581,7 @@ export type Database = {
         Update: {
           biometric_data_path?: string | null;
           biometric_key_id?: string | null;
+          biometric_purged_at?: string | null;
           biometric_sha256?: string;
           client_time?: string | null;
           consent_text_version?: string | null;
@@ -906,6 +909,7 @@ export type Database = {
     Functions: {
       adjust_credits: { Args: { p_user_id: string; p_amount: number; p_note: string }; Returns: undefined };
       cancel_envelope: { Args: { p_envelope_id: string; p_user_id: string }; Returns: Json };
+      claim_expired_biometrics: { Args: { p_years: number; p_limit?: number }; Returns: { evidence_id: string; biometric_data_path: string }[] };
       claim_job_by_key: { Args: { p_dedupe_key: string }; Returns: { id: string; type: string; payload: Json; status: Database["public"]["Enums"]["job_status"]; run_at: string; attempts: number; max_attempts: number; last_error: string; locked_at: string; dedupe_key: string; created_at: string; updated_at: string }[] };
       claim_jobs: { Args: { p_type: string; p_limit?: number }; Returns: { id: string; type: string; payload: Json; status: Database["public"]["Enums"]["job_status"]; run_at: string; attempts: number; max_attempts: number; last_error: string; locked_at: string; dedupe_key: string; created_at: string; updated_at: string }[] };
       complete_job: { Args: { p_job_id: string }; Returns: undefined };
