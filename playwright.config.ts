@@ -1,4 +1,8 @@
+import { loadEnvConfig } from "@next/env";
 import { defineConfig, devices } from "@playwright/test";
+
+// Same .env* files as the app, so specs that talk to Supabase/crons directly get their config.
+loadEnvConfig(process.cwd());
 
 const baseURL = process.env.E2E_BASE_URL ?? "http://localhost:3000";
 const useLocalServer = !process.env.E2E_BASE_URL;
@@ -28,7 +32,7 @@ export default defineConfig({
   ],
   webServer: useLocalServer
     ? {
-        command: "pnpm build && pnpm start",
+        command: process.env.E2E_SKIP_BUILD ? "pnpm start" : "pnpm build && pnpm start",
         url: baseURL,
         timeout: 300_000,
         reuseExistingServer: true,

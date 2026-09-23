@@ -55,6 +55,9 @@ test.describe("signing flow", () => {
     const signedUrl = await downloadLink.getAttribute("href");
     const signedBytes = Buffer.from(await (await phone.request.get(signedUrl!)).body());
     expect(signedBytes.subarray(0, 5).toString()).toBe("%PDF-");
+    // With PADES_DOC_TIMESTAMP=true on the server, the PDF embeds a document timestamp.
+    if (process.env.E2E_EXPECT_PADES)
+      expect(signedBytes.includes(Buffer.from("/ETSI.RFC3161"))).toBe(true);
     const signedHash = createHash("sha256").update(signedBytes).digest("hex");
 
     // Reusing the link shows "already signed".

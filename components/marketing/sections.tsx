@@ -48,7 +48,8 @@ export async function Hero({ locale }: Props) {
         className="absolute inset-x-0 top-0 -z-10 h-[640px] bg-gradient-to-b from-bg-soft to-bg"
       />
       <div className="container-page grid items-center gap-12 pt-12 pb-16 sm:pt-20 lg:grid-cols-[1.1fr_1fr] lg:gap-16 lg:pt-24 lg:pb-24">
-        <Reveal className="space-y-7">
+        {/* Hero copy renders visible without JS: it is the LCP element (no fade-in gate). */}
+        <div className="space-y-7">
           <Badge className="py-1">
             <ShieldCheck strokeWidth={1.75} /> {t("hero.eyebrow")}
           </Badge>
@@ -69,7 +70,7 @@ export async function Hero({ locale }: Props) {
             </Button>
           </div>
           <p className="text-sm text-ink-muted">{t("hero.note", { credits: trialCredits() })}</p>
-        </Reveal>
+        </div>
         <Reveal delay={0.1}>
           <HeroIllustration className="mx-auto max-w-[520px]" />
         </Reveal>
@@ -111,14 +112,12 @@ export async function HowItWorksSection({ locale }: Props) {
         />
         <ol className="grid gap-6 md:grid-cols-3">
           {steps.map((s, i) => (
-            <Reveal key={s.key} delay={i * 0.08}>
-              <li className="h-full list-none">
-                <Card className="h-full space-y-5 p-6">
-                  <StepIllustration step={s.n} className="w-28" />
-                  <h3 className="text-xl">{t(`${s.key}.title`)}</h3>
-                  <p className="leading-relaxed text-ink-muted">{t(`${s.key}.body`)}</p>
-                </Card>
-              </li>
+            <Reveal key={s.key} delay={i * 0.08} as="li" className="h-full list-none">
+              <Card className="h-full space-y-5 p-6">
+                <StepIllustration step={s.n} className="w-28" />
+                <h3 className="text-xl">{t(`${s.key}.title`)}</h3>
+                <p className="leading-relaxed text-ink-muted">{t(`${s.key}.body`)}</p>
+              </Card>
             </Reveal>
           ))}
         </ol>
@@ -232,6 +231,8 @@ export async function PricingSection({
     "support",
   ] as const;
 
+  // Keep heading levels sequential whether the section title is an h1 (pricing page) or h2.
+  const PacksHeading = headingAs === "h1" ? "h2" : "h3";
   return (
     <section id="pricing" className="section-y" aria-labelledby="pricing-title">
       <div className="container-page space-y-14">
@@ -281,7 +282,7 @@ export async function PricingSection({
         </Reveal>
         <div className="mx-auto max-w-3xl space-y-6">
           <div className="space-y-2 text-center">
-            <h3 className="text-xl">{t("packsTitle")}</h3>
+            <PacksHeading className="text-xl">{t("packsTitle")}</PacksHeading>
             <p className="text-ink-muted">{t("packsSubtitle")}</p>
           </div>
           <ul className="grid gap-4 sm:grid-cols-3">

@@ -57,7 +57,7 @@ function Shell({
         {children}
       </main>
       <footer className="py-6 text-center text-xs text-ink-muted">
-        <Logo className="scale-75 opacity-70" />
+        <Logo className="scale-75" />
       </footer>
     </div>
   );
