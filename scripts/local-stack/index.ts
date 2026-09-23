@@ -198,6 +198,7 @@ async function main() {
     GOTRUE_JWT_SECRET: JWT_SECRET,
     GOTRUE_JWT_EXP: "3600",
     GOTRUE_JWT_AUD: "authenticated",
+    GOTRUE_JWT_DEFAULT_GROUP_NAME: "authenticated",
     GOTRUE_JWT_ADMIN_ROLES: "service_role",
     GOTRUE_DISABLE_SIGNUP: "false",
     GOTRUE_EXTERNAL_EMAIL_ENABLED: "true",
