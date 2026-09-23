@@ -140,10 +140,12 @@ El PDF firmado añade siempre una **página de firmas** al final (con el tamaño
 dibujar sobre la última página: detectar espacio libre de forma fiable exige analizar el contenido y podría tapar texto.
 Después va una página de resumen de evidencias con QR, y todas las páginas llevan el pie con el código de verificación.
 
-## D-025 · `.tsr` fuera del PDF (de momento)
+## D-025 · `.tsr` fuera del PDF + sello PAdES opcional
 
 Adjuntar el `.tsr` dentro del PDF cambiaría su hash (el sello es sobre esos bytes). El `.tsr` se descarga aparte (app y
-`/verificar`). La alternativa correcta, un _document timestamp_ PAdES (`/DocTimeStamp`), se evalúa en la Fase 8.
+`/verificar`) y es la evidencia legal principal. Opcionalmente (`PADES_DOC_TIMESTAMP=true`), antes de calcular el hash
+final se incrusta un _document timestamp_ PAdES (`/DocTimeStamp`, `ETSI.RFC3161`) para que Adobe Reader muestre el sello
+en el panel de firmas. Consume un sello adicional de la TSA por documento y, si falla, el cierre continúa sin él.
 
 ## D-026 · Fuentes estándar PDF (WinAnsi)
 
@@ -183,3 +185,22 @@ Los packs se pueden comprar sin suscripción. Todos los precios se crean con `ta
 La red del sandbox bloquea `api.stripe.com`. Checkout y Customer Portal no se han podido ejecutar aquí; el webhook se prueba
 de extremo a extremo con eventos firmados localmente (`tests/e2e/stripe-webhook.spec.ts`). En un entorno con red, usar
 `stripe listen --forward-to localhost:3000/api/stripe/webhook` y tarjetas de test.
+
+## D-033 · CSP con nonce en la app y el firmante
+
+`/app` y `/sign` (rutas con datos y la captura biométrica) usan una CSP estricta generada en `proxy.ts` por petición:
+`script-src 'nonce-…' 'strict-dynamic'`, `frame-ancestors 'none'`, `connect-src` limitado a Supabase y Sentry. Las
+páginas de marketing son estáticas (no pueden llevar nonce por petición) y usan una CSP base desde `next.config.ts` con
+`'unsafe-inline'` solo para scripts. Las cookies de sesión de Supabase se emiten `HttpOnly`, `SameSite=Lax` y `Secure` en
+producción (el cliente de navegador no las lee: toda la autenticación pasa por el servidor).
+
+## D-034 · Sentry sin datos personales
+
+Sentry solo se activa con `SENTRY_DSN`/`NEXT_PUBLIC_SENTRY_DSN`. Recogida de datos por defecto desactivada (sin IP, sin
+cookies, sin cuerpos), y `beforeSend` elimina tokens de firmante de las URLs, cabeceras y breadcrumbs. Sin Session Replay.
+
+## D-035 · Purga de biometría por cron
+
+`/api/cron/retention` (diario) borra el JSON biométrico cifrado de las firmas de sobres cerrados hace más de
+`BIOMETRIC_RETENTION_YEARS` (5 por defecto) y marca `biometric_purged_at`. El PDF firmado, el certificado de evidencias y
+el `.tsr` se conservan (su hash sigue siendo verificable); el certificado ya incluye las métricas agregadas.

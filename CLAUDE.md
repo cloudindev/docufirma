@@ -39,6 +39,12 @@ Plan y estado: `docs/PLAN.md` · Decisiones: `docs/DECISIONS.md` · Legal: `docs
 
 Cierre de cada fase: `pnpm typecheck && pnpm lint && pnpm test`.
 
+E2E con backend: `E2E_WITH_BACKEND=1 pnpm test:e2e` (con `pnpm stack:up` en marcha). Playwright carga `.env*` como Next.
+Opcionales: `E2E_SKIP_BUILD=1` (reutiliza el build existente), `E2E_EXPECT_PADES=1` (exige el sello PAdES si el servidor
+tiene `PADES_DOC_TIMESTAMP=true`), `E2E_SCREENSHOTS=1`. Con `pnpm start`, los emails solo van al outbox si se define
+`EMAIL_OUTBOX_DIR`. `tests/e2e/a11y.spec.ts` ejecuta axe (WCAG 2.1 AA) y falla ante errores de consola o de CSP.
+CI: `.github/workflows/ci.yml`.
+
 ## Estructura
 
 ```

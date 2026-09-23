@@ -90,10 +90,15 @@ Leyenda: `[x]` hecho · `[~]` hecho parcialmente / pendiente de credenciales ext
 
 ## Fase 8 — Endurecimiento
 
-- [ ] CSP, HSTS, cabeceras de seguridad, rate limit en endpoints públicos
-- [ ] Sentry cliente/servidor
-- [ ] Accesibilidad y rendimiento
-- [ ] PAdES DocTimeStamp (opcional) o `.tsr` embebido
-- [ ] E2E Playwright completos
-- [ ] GitHub Actions (lint + typecheck + unit; e2e en main)
-- [ ] README de despliegue desde cero
+- [x] CSP con nonce + `strict-dynamic` en `/app` y `/sign`, CSP base en páginas estáticas, HSTS y cabeceras de seguridad (D-033)
+- [x] Rate limit en endpoints públicos (login, registro, verificación, firmante, API)
+- [x] Cookies de sesión `HttpOnly` + `Secure` en producción
+- [x] Sentry cliente/servidor opcional, sin datos personales (D-034)
+- [x] Purga automática de biometría por cron (`/api/cron/retention`, D-035)
+- [x] Accesibilidad: axe WCAG 2.1 AA sin incidencias serias en páginas públicas, panel, wizard y vista del firmante
+- [x] Rendimiento: Lighthouse móvil en `/es` y `/es/precios`: rendimiento 93, accesibilidad 100 y 98, buenas prácticas 100, SEO 100
+- [x] PAdES DocTimeStamp opcional (`PADES_DOC_TIMESTAMP=true`, D-025) además del `.tsr` independiente
+- [x] E2E Playwright completos contra el build de producción (escritorio + móvil emulado)
+- [x] GitHub Actions: formato + lint + typecheck + unit y tests SQL en PR; e2e completos en `main`
+- [x] README de despliegue desde cero
+- [~] Pendiente fuera del sandbox: sello real de Mensatek, Checkout/Portal de Stripe en vivo y ejecución del workflow en GitHub
