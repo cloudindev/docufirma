@@ -22,6 +22,9 @@ export function authErrorKey(code: string | undefined, message?: string): string
       return "signupDisabled";
     default:
       if (message?.toLowerCase().includes("rate limit")) return "rateLimited";
+      // Unmapped errors are usually configuration problems (SMTP, redirect URLs, DB triggers):
+      // log the code so they show up in the server logs. No user data is logged.
+      console.error(`[auth] unmapped Supabase Auth error: ${code ?? "no_code"} — ${message ?? ""}`);
       return "generic";
   }
 }
