@@ -1,0 +1,123 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  NEXT_TELEMETRY_DISABLED: "1"
+
+jobs:
+  checks:
+    name: Lint · typecheck · unit tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm format:check
+      - run: pnpm lint
+      - run: pnpm typecheck
+      - run: pnpm test
+
+  database:
+    name: SQL tests (RLS, credits, envelopes)
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_HOST_AUTH_METHOD: trust
+        ports: ["54329:5432"]
+        options: >-
+          --health-cmd pg_isready --health-interval 5s --health-timeout 5s --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test:db
+        env:
+          TEST_DATABASE_URL: postgresql://postgres@localhost:54329/postgres
+
+  e2e:
+    name: End-to-end (production build + local Supabase)
+    # Full browser suite on main; PRs rely on the two jobs above.
+    if: github.event_name == 'push'
+    needs: [checks, database]
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_HOST_AUTH_METHOD: trust
+        ports: ["54329:5432"]
+        options: >-
+          --health-cmd pg_isready --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      E2E_WITH_BACKEND: "1"
+      E2E_EXPECT_PADES: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Test-only configuration (throwaway values, never production secrets)
+        run: |
+          cat > .env.local <<ENV
+          NEXT_PUBLIC_APP_URL=http://localhost:3000
+          RATE_LIMIT_DISABLED=true
+          TSA_PROVIDER=test
+          PADES_DOC_TIMESTAMP=true
+          EVIDENCE_ENCRYPTION_KEY=$(openssl rand -base64 32)
+          CRON_SECRET=$(openssl rand -hex 24)
+          STRIPE_SECRET_KEY=sk_test_ci_dummy
+          STRIPE_WEBHOOK_SECRET=whsec_$(openssl rand -hex 24)
+          STRIPE_PRICE_PRO_MONTHLY=price_ci_pro
+          EMAIL_OUTBOX_DIR=${{ github.workspace }}/.local-stack/mail
+          ENV
+      - name: Start local Supabase (GoTrue + PostgREST + Storage emulator)
+        run: |
+          pnpm stack:up --reset > stack.log 2>&1 &
+          for i in $(seq 1 90); do
+            curl -sf http://localhost:54321/auth/v1/health > /dev/null && exit 0
+            sleep 2
+          done
+          cat stack.log; exit 1
+        env:
+          LOCAL_PG_ADMIN_URL: postgresql://postgres@localhost:54329/postgres
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm build
+      - name: Run the suite against the production build
+        run: pnpm test:e2e
+        env:
+          E2E_SKIP_BUILD: "1"
+          EMAIL_OUTBOX_DIR: ${{ github.workspace }}/.local-stack/mail
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report
+          path: |
+            playwright-report
+            test-results
+            stack.log
+          retention-days: 7
