@@ -14,7 +14,9 @@
 | `GET /auth/callback`, `GET /auth/confirm`  | —                                    | Callbacks de Supabase Auth.                                                                                        |
 
 Las acciones de la app y de la vista del firmante son **Server Actions** (no API pública).
-`vercel.json` programa los crons (los intervalos de minutos requieren plan Pro de Vercel; en Hobby usa un cron externo o intervalos diarios).
+Los crons los programa Supabase con `pg_cron` y los lanza `pg_net` contra estos endpoints (migración
+`20260923101000_scheduled_jobs.sql`, D-036). La URL de la app y el `CRON_SECRET` se guardan en Supabase Vault
+(`app_url`, `cron_secret`). `GET /api/cron/retention` purga la biometría caducada (diario).
 
 ## Flujo de cierre de un sobre
 

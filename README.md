@@ -95,9 +95,15 @@ Recomendado: exporta la cadena de certificados de la TSA a `TSA_TRUSTED_CERTS_PE
    ```
    Nunca definas `TSA_PROVIDER` ni `RATE_LIMIT_DISABLED` en producción.
 3. **Dominios**: `docufirma.es` como principal y `www.docufirma.es` redirigido (la app también redirige `www` → apex).
-4. **Crons**: `vercel.json` define recordatorios (cada hora), caducidad (cada hora), reintento de sellos (cada 5 min) y
-   purga biométrica (diaria). La frecuencia < 1/día requiere plan **Pro** de Vercel. Vercel envía
-   `Authorization: Bearer $CRON_SECRET` automáticamente.
+4. **Crons**: los ejecuta Supabase (`pg_cron` + `pg_net`), no Vercel, así que funcionan también en el plan Hobby. La
+   migración `…101000_scheduled_jobs.sql` programa recordatorios (cada hora), caducidad (cada hora), reintento de sellos
+   (cada 5 min) y purga biométrica (diaria). Cuando el dominio ya responda, en Supabase → _SQL Editor_ ejecuta una vez:
+   ```sql
+   select vault.create_secret('https://docufirma.es', 'app_url');
+   select vault.create_secret('<el mismo valor que CRON_SECRET en Vercel>', 'cron_secret');
+   ```
+   Compruébalo en _Integrations → Cron_ (historial de ejecuciones) y en la tabla `net._http_response` (respuestas 200).
+   Si cambias `CRON_SECRET`, actualiza el secreto con `vault.update_secret`.
 5. (Opcional) **Sentry**: `SENTRY_DSN`, `NEXT_PUBLIC_SENTRY_DSN` y, para subir source maps, `SENTRY_AUTH_TOKEN`,
    `SENTRY_ORG`, `SENTRY_PROJECT`.
 6. Despliega y comprueba: registro → email de confirmación → envío de un sobre → firma desde el móvil → PDF firmado y

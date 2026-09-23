@@ -77,7 +77,7 @@ Leyenda: `[x]` hecho · `[~]` hecho parcialmente / pendiente de credenciales ext
 - [x] Reintentos con backoff (`jobs`), eventos `tsa_granted`/`tsa_failed`
 - [x] Emails de cierre
 - [x] Verificación pública por código y por hash
-- [x] Crons: recordatorios, expiración, reintentos TSA
+- [x] Crons: recordatorios, expiración, reintentos TSA (Supabase `pg_cron` + `pg_net`, D-036)
 - [x] E2E: firma en móvil → completado → descarga → verificación por código y por hash; rechazo; caducidad por cron; firma secuencial
 
 ## Fase 7 — Stripe

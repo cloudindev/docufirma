@@ -1,7 +1,7 @@
 import "server-only";
 import { timingSafeEqual } from "node:crypto";
 
-/** Vercel Cron sends `Authorization: Bearer <CRON_SECRET>`. */
+/** Scheduled callers (Supabase pg_cron via pg_net, D-036) send `Authorization: Bearer <CRON_SECRET>`. */
 export function isAuthorizedCron(request: Request) {
   const secret = process.env.CRON_SECRET;
   if (!secret) return false;

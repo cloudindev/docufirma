@@ -204,3 +204,11 @@ cookies, sin cuerpos), y `beforeSend` elimina tokens de firmante de las URLs, ca
 `/api/cron/retention` (diario) borra el JSON biométrico cifrado de las firmas de sobres cerrados hace más de
 `BIOMETRIC_RETENTION_YEARS` (5 por defecto) y marca `biometric_purged_at`. El PDF firmado, el certificado de evidencias y
 el `.tsr` se conservan (su hash sigue siendo verificable); el certificado ya incluye las métricas agregadas.
+
+## D-036 · Crons en Supabase (`pg_cron` + `pg_net`) en lugar de Vercel Cron
+
+Vercel Hobby solo permite crons diarios y los reintentos de sellado necesitan ejecutarse cada 5 minutos. Los cuatro
+crons se programan en Postgres con `pg_cron` y cada ejecución hace un `GET` asíncrono con `pg_net` al endpoint
+`/api/cron/*` de la app, con `Authorization: Bearer <CRON_SECRET>`. La lógica sigue en la app (emails, Mensatek,
+Storage). La URL y el secreto viven en Supabase Vault, nunca en las migraciones. En bases sin estas extensiones
+(tests SQL, stack local) la migración se omite. `vercel.json` ya no declara crons.
