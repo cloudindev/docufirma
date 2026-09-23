@@ -51,6 +51,7 @@ export async function requireProfile(locale: Locale): Promise<Tables<"profiles">
 
   // The RPC returns the row: re-reading with the same GET would hit Next's per-render fetch memo.
   const { data, error } = await createAdminClient().rpc("provision_user", { p_user_id: user.id });
-  if (error || !data?.id) throw new Error(`Could not provision profile: ${error?.message ?? "empty"}`);
+  if (error || !data?.id)
+    throw new Error(`Could not provision profile: ${error?.message ?? "empty"}`);
   return data;
 }
