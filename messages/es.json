@@ -554,5 +554,359 @@
       "howTo": "Cómo verificar el sello por tu cuenta",
       "howToBody": "Descarga el .tsr y ejecuta: openssl ts -verify -in documento.tsr -data documento.pdf -CAfile cadena-tsa.pem"
     }
+  },
+  "app": {
+    "nav": {
+      "dashboard": "Panel",
+      "send": "Enviar",
+      "envelopes": "Documentos",
+      "contacts": "Contactos",
+      "billing": "Facturación",
+      "settings": "Ajustes",
+      "collapse": "Contraer menú",
+      "expand": "Expandir menú",
+      "openMenu": "Abrir menú",
+      "main": "Navegación principal"
+    },
+    "topbar": {
+      "search": "Buscar envíos…",
+      "searchLabel": "Buscar envíos",
+      "credits": "{monthly}/{granted} este mes",
+      "creditsNoPlan": "{total} firmas disponibles",
+      "creditsPack": "+{pack} pack",
+      "creditsTooltip": "Firmas disponibles: {total}. Mensuales: {monthly}. Packs y prueba: {pack}.",
+      "account": "Cuenta",
+      "profile": "Ajustes de la cuenta",
+      "billing": "Facturación",
+      "signOut": "Cerrar sesión"
+    },
+    "status": {
+      "draft": "Borrador",
+      "sent": "Enviado",
+      "viewed": "Visto",
+      "completed": "Firmado",
+      "declined": "Rechazado",
+      "expired": "Caducado",
+      "canceled": "Cancelado",
+      "finalizing": "Finalizando"
+    },
+    "signerStatus": {
+      "pending": "En espera",
+      "sent": "Enviado",
+      "viewed": "Visto",
+      "signed": "Firmado",
+      "declined": "Rechazado"
+    },
+    "dashboard": {
+      "metaTitle": "Panel",
+      "greeting": "Hola, {name}",
+      "subtitle": "Este es el estado de tus firmas.",
+      "newEnvelope": "Nuevo envío",
+      "kpi": {
+        "pending": "Pendientes de firma",
+        "pendingHint": "Envíos esperando a los firmantes",
+        "signed": "Firmados este mes",
+        "signedHint": "Sobres completados desde el día 1",
+        "credits": "Firmas disponibles",
+        "creditsHint": "{monthly} del plan · {pack} de packs"
+      },
+      "recent": "Últimos envíos",
+      "viewAll": "Ver todos",
+      "emptyTitle": "Aún no has enviado ningún documento",
+      "emptyBody": "Sube un PDF, indica quién debe firmar y recibe el documento firmado y sellado.",
+      "emptyCta": "Enviar mi primer documento",
+      "lowCredits": "Te quedan {count, plural, =0 {0 firmas} one {# firma} other {# firmas}}. Suscríbete o compra un pack para seguir enviando.",
+      "lowCreditsCta": "Ver opciones"
+    },
+    "envelopes": {
+      "metaTitle": "Documentos",
+      "title": "Documentos",
+      "subtitle": "Todos tus envíos y su estado.",
+      "filters": {
+        "all": "Todos",
+        "draft": "Borradores",
+        "sent": "Enviados",
+        "viewed": "Vistos",
+        "completed": "Firmados",
+        "declined": "Rechazados",
+        "expired": "Caducados",
+        "canceled": "Cancelados"
+      },
+      "searchPlaceholder": "Buscar por título o código…",
+      "columns": {
+        "title": "Envío",
+        "signers": "Firmantes",
+        "status": "Estado",
+        "updated": "Actualizado"
+      },
+      "documentsCount": "{count, plural, one {# documento} other {# documentos}}",
+      "signersProgress": "{signed}/{total} firmados",
+      "emptyTitle": "No hay envíos",
+      "emptyFiltered": "No hay envíos que coincidan con los filtros.",
+      "untitled": "Sin título",
+      "pagination": {
+        "previous": "Anterior",
+        "next": "Siguiente",
+        "summary": "{from}–{to} de {total}"
+      }
+    },
+    "envelope": {
+      "back": "Volver a documentos",
+      "code": "Código de verificación",
+      "sentAt": "Enviado el {date}",
+      "createdAt": "Creado el {date}",
+      "expiresAt": "Caduca el {date}",
+      "completedAt": "Completado el {date}",
+      "sequential": "Firma en orden",
+      "parallel": "Firma en paralelo",
+      "message": "Mensaje para los firmantes",
+      "signers": "Firmantes",
+      "documents": "Documentos",
+      "timeline": "Actividad",
+      "downloads": "Descargas",
+      "download": {
+        "original": "Original",
+        "signed": "PDF firmado",
+        "evidence": "Certificado de evidencias",
+        "tsr": "Sello de tiempo (.tsr)"
+      },
+      "tsa": {
+        "granted": "Sellado el {date}",
+        "pending": "Sello de tiempo pendiente",
+        "failed": "Reintentando el sello de tiempo"
+      },
+      "signerMeta": {
+        "signedAt": "Firmó el {date}",
+        "viewedAt": "Lo vio el {date}",
+        "sentAt": "Enviado el {date}",
+        "declinedAt": "Rechazó el {date}",
+        "reason": "Motivo: {reason}",
+        "reminders": "{count, plural, =0 {Sin recordatorios} one {# recordatorio} other {# recordatorios}}",
+        "waiting": "Recibirá el enlace cuando firmen los anteriores"
+      },
+      "actions": {
+        "continue": "Continuar editando",
+        "remind": "Enviar recordatorio",
+        "remindAll": "Recordar a pendientes",
+        "cancel": "Cancelar envío",
+        "duplicate": "Duplicar",
+        "delete": "Eliminar borrador",
+        "more": "Más acciones"
+      },
+      "confirm": {
+        "cancelTitle": "¿Cancelar este envío?",
+        "cancelBody": "Los firmantes ya no podrán firmar y se devolverán las firmas reservadas a tu saldo. Esta acción no se puede deshacer.",
+        "cancelConfirm": "Sí, cancelar envío",
+        "deleteTitle": "¿Eliminar este borrador?",
+        "deleteBody": "Se eliminarán el borrador y sus documentos. Esta acción no se puede deshacer.",
+        "deleteConfirm": "Eliminar borrador",
+        "keep": "No, mantener"
+      },
+      "toast": {
+        "canceled": "Envío cancelado. Se han devuelto {count, plural, one {# firma} other {# firmas}}.",
+        "duplicated": "Hemos creado un borrador con los mismos documentos y firmantes.",
+        "deleted": "Borrador eliminado.",
+        "reminded": "Recordatorio enviado.",
+        "remindedMany": "{count, plural, =0 {No había firmantes pendientes} one {Recordatorio enviado a # firmante} other {Recordatorios enviados a # firmantes}}.",
+        "error": "No hemos podido completar la acción."
+      },
+      "events": {
+        "created": "Envío creado",
+        "sent": "Envío enviado a los firmantes",
+        "email_sent": "Email enviado a {signer}",
+        "email_delivered": "Email entregado a {signer}",
+        "email_failed": "No se pudo entregar el email a {signer}",
+        "opened": "{signer} abrió el enlace",
+        "document_viewed": "{signer} vio {document}",
+        "scrolled_to_end": "{signer} leyó {document} hasta el final",
+        "consent_accepted": "{signer} aceptó el consentimiento de firma",
+        "signed": "{signer} firmó",
+        "declined": "{signer} rechazó firmar",
+        "reminder_sent": "Recordatorio enviado a {signer}",
+        "completed": "Sobre completado",
+        "expired": "El envío caducó",
+        "canceled": "Envío cancelado",
+        "tsa_granted": "Sello de tiempo aplicado",
+        "tsa_failed": "Error al aplicar el sello de tiempo (se reintentará)",
+        "downloaded": "Descarga de {document}"
+      },
+      "someone": "El firmante",
+      "aDocument": "un documento",
+      "notFound": "No encontramos este envío."
+    },
+    "contacts": {
+      "metaTitle": "Contactos",
+      "title": "Contactos",
+      "subtitle": "Tus firmantes habituales. Los usarás para autocompletar nuevos envíos.",
+      "add": "Añadir contacto",
+      "edit": "Editar contacto",
+      "search": "Buscar contactos…",
+      "firstName": "Nombre",
+      "lastName": "Apellidos",
+      "email": "Email",
+      "lastUsed": "Último uso",
+      "never": "Nunca",
+      "emptyTitle": "Aún no tienes contactos",
+      "emptyBody": "Se guardarán automáticamente al enviar documentos, o puedes añadirlos ahora.",
+      "deleteTitle": "¿Eliminar a {name}?",
+      "deleteBody": "Se eliminará de tu libreta. Los envíos existentes no cambian.",
+      "saved": "Contacto guardado.",
+      "deleted": "Contacto eliminado.",
+      "duplicate": "Ya tienes un contacto con ese email.",
+      "error": "No hemos podido guardar el contacto."
+    },
+    "settings": {
+      "metaTitle": "Ajustes",
+      "title": "Ajustes",
+      "subtitle": "Gestiona tu perfil, preferencias y seguridad.",
+      "profile": {
+        "title": "Perfil",
+        "description": "Así te verán los firmantes en emails y certificados.",
+        "firstName": "Nombre",
+        "lastName": "Apellidos",
+        "company": "Empresa",
+        "taxId": "NIF/CIF",
+        "email": "Email",
+        "emailHint": "Para cambiar el email, escríbenos a soporte.",
+        "saved": "Perfil actualizado."
+      },
+      "logo": {
+        "title": "Logo",
+        "description": "Aparece en los emails a tus firmantes y en la página de firma. PNG, JPG o WebP de hasta 1 MB.",
+        "upload": "Subir logo",
+        "replace": "Cambiar logo",
+        "remove": "Quitar",
+        "uploaded": "Logo actualizado.",
+        "removed": "Logo eliminado.",
+        "invalid": "El archivo debe ser una imagen PNG, JPG o WebP de hasta 1 MB."
+      },
+      "preferences": {
+        "title": "Preferencias",
+        "language": "Idioma de la aplicación y de los emails",
+        "notifyView": "Avisarme cuando un firmante abra un documento",
+        "notifyComplete": "Avisarme cuando se complete un envío",
+        "saved": "Preferencias guardadas."
+      },
+      "password": {
+        "title": "Contraseña",
+        "description": "Usa al menos 8 caracteres, con letras y números.",
+        "new": "Nueva contraseña",
+        "confirm": "Repite la contraseña",
+        "submit": "Cambiar contraseña",
+        "saved": "Contraseña actualizada."
+      },
+      "danger": {
+        "title": "Eliminar cuenta",
+        "description": "Borraremos tu perfil, contactos, borradores y envíos no completados. Los documentos ya firmados se conservan de forma anonimizada durante el plazo legal para poder acreditar las firmas. Tu suscripción se cancelará.",
+        "button": "Eliminar mi cuenta",
+        "confirmTitle": "¿Eliminar tu cuenta definitivamente?",
+        "confirmBody": "Esta acción no se puede deshacer. Escribe tu email ({email}) para confirmar.",
+        "confirmLabel": "Tu email",
+        "confirm": "Eliminar cuenta",
+        "mismatch": "El email no coincide."
+      },
+      "error": "No hemos podido guardar los cambios."
+    },
+    "billing": {
+      "metaTitle": "Facturación",
+      "title": "Facturación",
+      "subtitle": "Tu plan, tus firmas y tus facturas."
+    },
+    "common": {
+      "save": "Guardar cambios",
+      "saving": "Guardando…",
+      "cancel": "Cancelar",
+      "delete": "Eliminar",
+      "edit": "Editar",
+      "actions": "Acciones",
+      "close": "Cerrar",
+      "confirm": "Confirmar"
+    }
+  },
+  "emails": {
+    "common": {
+      "via": "{sender} vía DocuFirma",
+      "footer": "DocuFirma · Firma electrónica avanzada con sello de tiempo cualificado · docufirma.es",
+      "automatic": "Este es un mensaje automático. Si tienes dudas sobre el documento, responde a este email para escribir a {sender}.",
+      "security": "Por seguridad, no reenvíes este email: el enlace es personal y permite firmar en tu nombre.",
+      "openApp": "Abrir en DocuFirma",
+      "verificationCode": "Código de verificación: {code}",
+      "documents": "Documentos",
+      "messageFrom": "Mensaje de {sender}:"
+    },
+    "invitation": {
+      "subject": "{sender} te ha enviado «{title}» para firmar",
+      "preview": "Revisa y firma {count, plural, one {el documento} other {los # documentos}} en unos minutos.",
+      "heading": "Tienes {count, plural, one {un documento} other {# documentos}} para firmar",
+      "body": "Hola {name}, {sender} te ha enviado {count, plural, one {un documento} other {# documentos}} para que {count, plural, one {lo firmes} other {los firmes}} electrónicamente con DocuFirma.",
+      "cta": "Revisar y firmar",
+      "expires": "El enlace caduca el {date}.",
+      "noAccount": "No necesitas crear una cuenta ni instalar nada."
+    },
+    "reminder": {
+      "subject": "Recordatorio: «{title}» está pendiente de tu firma",
+      "preview": "{sender} está esperando tu firma.",
+      "heading": "Tu firma sigue pendiente",
+      "body": "Hola {name}, te recordamos que {sender} está esperando que firmes «{title}».",
+      "cta": "Revisar y firmar",
+      "expires": "El enlace caduca el {date}."
+    },
+    "viewed": {
+      "subject": "{signer} ha abierto «{title}»",
+      "preview": "Tu documento ha sido visto.",
+      "heading": "Tu documento ha sido visto",
+      "body": "{signer} ({email}) ha abierto el enlace para firmar «{title}».",
+      "cta": "Ver el envío"
+    },
+    "completed": {
+      "subject": "«{title}» está firmado y sellado",
+      "preview": "Todos los firmantes han firmado. Descarga tu copia.",
+      "heading": "Documento firmado y sellado",
+      "bodySender": "Todos los firmantes han firmado «{title}». El documento está cerrado con su huella SHA-256 y un sello de tiempo cualificado.",
+      "bodySigner": "Hola {name}, «{title}» ya está firmado por todas las partes. Aquí tienes tu copia firmada y el certificado de evidencias.",
+      "downloads": "Descargas (enlaces válidos durante 7 días):",
+      "signedPdf": "PDF firmado · {name}",
+      "evidence": "Certificado de evidencias",
+      "tsaSummary": "Sello de tiempo: {authority} · {date} · Serie {serial}",
+      "tsaPending": "El sello de tiempo cualificado se está aplicando; lo verás en la página de verificación en unos minutos.",
+      "verify": "Verificar documento",
+      "cta": "Abrir en DocuFirma"
+    },
+    "declined": {
+      "subject": "{signer} ha rechazado firmar «{title}»",
+      "preview": "El envío se ha cerrado sin completarse.",
+      "heading": "Firma rechazada",
+      "body": "{signer} ({email}) ha rechazado firmar «{title}». El envío se ha cerrado y las firmas reservadas se han devuelto a tu saldo.",
+      "reason": "Motivo indicado: {reason}",
+      "cta": "Ver el envío"
+    },
+    "expired": {
+      "subject": "«{title}» ha caducado sin completarse",
+      "preview": "El plazo de firma ha terminado.",
+      "heading": "El envío ha caducado",
+      "body": "El plazo para firmar «{title}» ha terminado sin que todos los firmantes firmaran. Las firmas reservadas se han devuelto a tu saldo. Puedes duplicar el envío para volver a enviarlo.",
+      "cta": "Ver el envío"
+    },
+    "paymentFailed": {
+      "subject": "No hemos podido cobrar tu suscripción de DocuFirma",
+      "preview": "Actualiza tu método de pago para seguir enviando documentos.",
+      "heading": "Hay un problema con tu pago",
+      "body": "No hemos podido cobrar la renovación de tu Plan Pro. Actualiza tu tarjeta para no perder las firmas del próximo ciclo.",
+      "cta": "Actualizar método de pago"
+    },
+    "welcome": {
+      "subject": "Te damos la bienvenida a DocuFirma",
+      "preview": "Envía tu primer documento en menos de un minuto.",
+      "heading": "Te damos la bienvenida, {name}",
+      "body": "Ya puedes enviar documentos para firmar con firma biométrica avanzada y sello de tiempo cualificado. Tienes {credits, plural, =0 {tu cuenta lista} one {# firma de prueba} other {# firmas de prueba}} para empezar.",
+      "cta": "Enviar mi primer documento"
+    },
+    "creditsLow": {
+      "subject": "Te {count, plural, one {queda # firma} other {quedan # firmas}} en DocuFirma",
+      "preview": "Recarga tu saldo para seguir enviando.",
+      "heading": "Tu saldo de firmas se está agotando",
+      "body": "Te {count, plural, =0 {quedan 0 firmas} one {queda # firma} other {quedan # firmas}}. Suscríbete al Plan Pro o compra un pack para seguir enviando documentos.",
+      "cta": "Ver opciones"
+    }
   }
 }

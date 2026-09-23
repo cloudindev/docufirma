@@ -42,11 +42,13 @@ Leyenda: `[x]` hecho · `[~]` hecho parcialmente / pendiente de credenciales ext
 
 ## Fase 3 — Área privada
 
-- [ ] Layout con sidebar colapsable + topbar (buscador, contador de firmas, avatar)
-- [ ] Dashboard (KPIs, últimos envíos)
-- [ ] Contactos (CRUD)
-- [ ] Ajustes (perfil, logo, idioma, notificaciones, contraseña, eliminar cuenta)
-- [ ] Lista de envíos (filtros, búsqueda, paginación) y detalle (timeline, firmantes, descargas, acciones)
+- [x] Layout con sidebar colapsable + topbar (buscador, contador de firmas, avatar)
+- [x] Dashboard (KPIs, últimos envíos)
+- [x] Contactos (CRUD)
+- [x] Ajustes (perfil, logo, idioma, notificaciones, contraseña, eliminar cuenta)
+- [x] Lista de envíos (filtros, búsqueda, paginación) y detalle (timeline, firmantes, descargas, acciones)
+- [x] Emails transaccionales (react-email + Resend / buzón local) y recordatorios manuales
+- [x] E2E del área privada (panel, contactos, ajustes)
 
 ## Fase 4 — Wizard de envío
 

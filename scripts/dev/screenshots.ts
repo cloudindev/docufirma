@@ -20,6 +20,13 @@ async function main() {
   ] as const) {
     const context = await browser.newContext({ ...options, locale: "es-ES" });
     const page = await context.newPage();
+    if (process.env.SCREENSHOT_EMAIL) {
+      await page.goto(`${base}/es/iniciar-sesion`);
+      await page.locator("#login-email").fill(process.env.SCREENSHOT_EMAIL);
+      await page.locator("#login-password").fill(process.env.SCREENSHOT_PASSWORD ?? "");
+      await page.locator("#login-password").press("Enter");
+      await page.waitForURL(/\/app/);
+    }
     for (const path of paths) {
       await page.goto(`${base}${path}`, { waitUntil: "networkidle" });
       await page.evaluate(async () => {

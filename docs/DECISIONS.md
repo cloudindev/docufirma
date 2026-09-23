@@ -106,3 +106,19 @@ la app y los e2e en entornos sin Docker. `pnpm db:types` genera `types/database.
 
 Supabase no localiza plantillas por usuario; las plantillas de `supabase/templates` eligen idioma con `user_metadata.locale`
 (Go templates). Enlazan a `/auth/confirm?token_hash=…` (flujo SSR recomendado).
+
+## D-019 · Plantillas de email agrupadas
+
+Las 9 plantillas pedidas se implementan en 4 componentes react-email con variantes (mismo diseño, menos duplicación):
+`signer-invitation` (invitación y recordatorio), `envelope-notice` (visto, rechazado, caducado),
+`envelope-completed` (remitente y firmante) y `account-notice` (bienvenida, pago fallido, pocas firmas).
+Sin `RESEND_API_KEY` los emails se escriben en un buzón local (`EMAIL_OUTBOX_DIR`, por defecto `.local-stack/mail`), que usan los e2e.
+
+## D-020 · Logo del remitente público por URL estable
+
+El logo se guarda normalizado a PNG en el bucket privado `branding` y se sirve en `/api/branding/{userId}` (no es secreto).
+Así los emails ya enviados no rompen la imagen al caducar una URL firmada.
+
+## D-021 · Recordatorios manuales
+
+"Recordar a pendientes" emite un token nuevo por firmante (los anteriores siguen válidos, D-012) y está limitado a uno por hora y firmante.

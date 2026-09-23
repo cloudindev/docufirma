@@ -554,5 +554,359 @@
       "howTo": "How to verify the timestamp yourself",
       "howToBody": "Download the .tsr and run: openssl ts -verify -in document.tsr -data document.pdf -CAfile tsa-chain.pem"
     }
+  },
+  "app": {
+    "nav": {
+      "dashboard": "Dashboard",
+      "send": "Send",
+      "envelopes": "Documents",
+      "contacts": "Contacts",
+      "billing": "Billing",
+      "settings": "Settings",
+      "collapse": "Collapse menu",
+      "expand": "Expand menu",
+      "openMenu": "Open menu",
+      "main": "Main navigation"
+    },
+    "topbar": {
+      "search": "Search envelopes…",
+      "searchLabel": "Search envelopes",
+      "credits": "{monthly}/{granted} this month",
+      "creditsNoPlan": "{total} signatures available",
+      "creditsPack": "+{pack} pack",
+      "creditsTooltip": "Available signatures: {total}. Monthly: {monthly}. Packs and trial: {pack}.",
+      "account": "Account",
+      "profile": "Account settings",
+      "billing": "Billing",
+      "signOut": "Log out"
+    },
+    "status": {
+      "draft": "Draft",
+      "sent": "Sent",
+      "viewed": "Viewed",
+      "completed": "Signed",
+      "declined": "Declined",
+      "expired": "Expired",
+      "canceled": "Canceled",
+      "finalizing": "Finalizing"
+    },
+    "signerStatus": {
+      "pending": "Waiting",
+      "sent": "Sent",
+      "viewed": "Viewed",
+      "signed": "Signed",
+      "declined": "Declined"
+    },
+    "dashboard": {
+      "metaTitle": "Dashboard",
+      "greeting": "Hi, {name}",
+      "subtitle": "Here's where your signatures stand.",
+      "newEnvelope": "New envelope",
+      "kpi": {
+        "pending": "Awaiting signature",
+        "pendingHint": "Envelopes waiting for signers",
+        "signed": "Signed this month",
+        "signedHint": "Envelopes completed since the 1st",
+        "credits": "Available signatures",
+        "creditsHint": "{monthly} from plan · {pack} from packs"
+      },
+      "recent": "Recent envelopes",
+      "viewAll": "View all",
+      "emptyTitle": "You haven't sent any documents yet",
+      "emptyBody": "Upload a PDF, choose who needs to sign and get the signed and sealed document back.",
+      "emptyCta": "Send my first document",
+      "lowCredits": "You have {count, plural, =0 {0 signatures} one {# signature} other {# signatures}} left. Subscribe or buy a pack to keep sending.",
+      "lowCreditsCta": "See options"
+    },
+    "envelopes": {
+      "metaTitle": "Documents",
+      "title": "Documents",
+      "subtitle": "All your envelopes and their status.",
+      "filters": {
+        "all": "All",
+        "draft": "Drafts",
+        "sent": "Sent",
+        "viewed": "Viewed",
+        "completed": "Signed",
+        "declined": "Declined",
+        "expired": "Expired",
+        "canceled": "Canceled"
+      },
+      "searchPlaceholder": "Search by title or code…",
+      "columns": {
+        "title": "Envelope",
+        "signers": "Signers",
+        "status": "Status",
+        "updated": "Updated"
+      },
+      "documentsCount": "{count, plural, one {# document} other {# documents}}",
+      "signersProgress": "{signed}/{total} signed",
+      "emptyTitle": "No envelopes",
+      "emptyFiltered": "No envelopes match the filters.",
+      "untitled": "Untitled",
+      "pagination": {
+        "previous": "Previous",
+        "next": "Next",
+        "summary": "{from}–{to} of {total}"
+      }
+    },
+    "envelope": {
+      "back": "Back to documents",
+      "code": "Verification code",
+      "sentAt": "Sent on {date}",
+      "createdAt": "Created on {date}",
+      "expiresAt": "Expires on {date}",
+      "completedAt": "Completed on {date}",
+      "sequential": "Signing in order",
+      "parallel": "Signing in parallel",
+      "message": "Message to signers",
+      "signers": "Signers",
+      "documents": "Documents",
+      "timeline": "Activity",
+      "downloads": "Downloads",
+      "download": {
+        "original": "Original",
+        "signed": "Signed PDF",
+        "evidence": "Evidence certificate",
+        "tsr": "Timestamp (.tsr)"
+      },
+      "tsa": {
+        "granted": "Sealed on {date}",
+        "pending": "Timestamp pending",
+        "failed": "Retrying the timestamp"
+      },
+      "signerMeta": {
+        "signedAt": "Signed on {date}",
+        "viewedAt": "Viewed on {date}",
+        "sentAt": "Sent on {date}",
+        "declinedAt": "Declined on {date}",
+        "reason": "Reason: {reason}",
+        "reminders": "{count, plural, =0 {No reminders} one {# reminder} other {# reminders}}",
+        "waiting": "Will receive the link once previous signers have signed"
+      },
+      "actions": {
+        "continue": "Continue editing",
+        "remind": "Send reminder",
+        "remindAll": "Remind pending signers",
+        "cancel": "Cancel envelope",
+        "duplicate": "Duplicate",
+        "delete": "Delete draft",
+        "more": "More actions"
+      },
+      "confirm": {
+        "cancelTitle": "Cancel this envelope?",
+        "cancelBody": "Signers will no longer be able to sign and reserved signatures will return to your balance. This can't be undone.",
+        "cancelConfirm": "Yes, cancel envelope",
+        "deleteTitle": "Delete this draft?",
+        "deleteBody": "The draft and its documents will be deleted. This can't be undone.",
+        "deleteConfirm": "Delete draft",
+        "keep": "No, keep it"
+      },
+      "toast": {
+        "canceled": "Envelope canceled. {count, plural, one {# signature was} other {# signatures were}} returned.",
+        "duplicated": "We created a draft with the same documents and signers.",
+        "deleted": "Draft deleted.",
+        "reminded": "Reminder sent.",
+        "remindedMany": "{count, plural, =0 {There were no pending signers} one {Reminder sent to # signer} other {Reminders sent to # signers}}.",
+        "error": "We couldn't complete the action."
+      },
+      "events": {
+        "created": "Envelope created",
+        "sent": "Envelope sent to signers",
+        "email_sent": "Email sent to {signer}",
+        "email_delivered": "Email delivered to {signer}",
+        "email_failed": "Email to {signer} could not be delivered",
+        "opened": "{signer} opened the link",
+        "document_viewed": "{signer} viewed {document}",
+        "scrolled_to_end": "{signer} read {document} to the end",
+        "consent_accepted": "{signer} accepted the signing consent",
+        "signed": "{signer} signed",
+        "declined": "{signer} declined to sign",
+        "reminder_sent": "Reminder sent to {signer}",
+        "completed": "Envelope completed",
+        "expired": "The envelope expired",
+        "canceled": "Envelope canceled",
+        "tsa_granted": "Timestamp applied",
+        "tsa_failed": "Timestamping failed (will retry)",
+        "downloaded": "Download of {document}"
+      },
+      "someone": "The signer",
+      "aDocument": "a document",
+      "notFound": "We couldn't find this envelope."
+    },
+    "contacts": {
+      "metaTitle": "Contacts",
+      "title": "Contacts",
+      "subtitle": "Your frequent signers. Use them to autocomplete new envelopes.",
+      "add": "Add contact",
+      "edit": "Edit contact",
+      "search": "Search contacts…",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "email": "Email",
+      "lastUsed": "Last used",
+      "never": "Never",
+      "emptyTitle": "No contacts yet",
+      "emptyBody": "They are saved automatically when you send documents, or you can add them now.",
+      "deleteTitle": "Delete {name}?",
+      "deleteBody": "They will be removed from your address book. Existing envelopes are not affected.",
+      "saved": "Contact saved.",
+      "deleted": "Contact deleted.",
+      "duplicate": "You already have a contact with that email.",
+      "error": "We couldn't save the contact."
+    },
+    "settings": {
+      "metaTitle": "Settings",
+      "title": "Settings",
+      "subtitle": "Manage your profile, preferences and security.",
+      "profile": {
+        "title": "Profile",
+        "description": "This is how signers see you in emails and certificates.",
+        "firstName": "First name",
+        "lastName": "Last name",
+        "company": "Company",
+        "taxId": "Tax ID",
+        "email": "Email",
+        "emailHint": "To change your email, contact support.",
+        "saved": "Profile updated."
+      },
+      "logo": {
+        "title": "Logo",
+        "description": "Shown in emails to your signers and on the signing page. PNG, JPG or WebP up to 1 MB.",
+        "upload": "Upload logo",
+        "replace": "Change logo",
+        "remove": "Remove",
+        "uploaded": "Logo updated.",
+        "removed": "Logo removed.",
+        "invalid": "The file must be a PNG, JPG or WebP image up to 1 MB."
+      },
+      "preferences": {
+        "title": "Preferences",
+        "language": "Language of the app and emails",
+        "notifyView": "Notify me when a signer opens a document",
+        "notifyComplete": "Notify me when an envelope is completed",
+        "saved": "Preferences saved."
+      },
+      "password": {
+        "title": "Password",
+        "description": "Use at least 8 characters, with letters and numbers.",
+        "new": "New password",
+        "confirm": "Repeat the password",
+        "submit": "Change password",
+        "saved": "Password updated."
+      },
+      "danger": {
+        "title": "Delete account",
+        "description": "We'll delete your profile, contacts, drafts and envelopes that are not completed. Already signed documents are kept anonymised for the legal period so the signatures can still be proven. Your subscription will be canceled.",
+        "button": "Delete my account",
+        "confirmTitle": "Permanently delete your account?",
+        "confirmBody": "This can't be undone. Type your email ({email}) to confirm.",
+        "confirmLabel": "Your email",
+        "confirm": "Delete account",
+        "mismatch": "The email doesn't match."
+      },
+      "error": "We couldn't save your changes."
+    },
+    "billing": {
+      "metaTitle": "Billing",
+      "title": "Billing",
+      "subtitle": "Your plan, your signatures and your invoices."
+    },
+    "common": {
+      "save": "Save changes",
+      "saving": "Saving…",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "edit": "Edit",
+      "actions": "Actions",
+      "close": "Close",
+      "confirm": "Confirm"
+    }
+  },
+  "emails": {
+    "common": {
+      "via": "{sender} via DocuFirma",
+      "footer": "DocuFirma · Advanced electronic signature with qualified timestamp · docufirma.es",
+      "automatic": "This is an automated message. If you have questions about the document, reply to this email to write to {sender}.",
+      "security": "For your security, don't forward this email: the link is personal and allows signing on your behalf.",
+      "openApp": "Open in DocuFirma",
+      "verificationCode": "Verification code: {code}",
+      "documents": "Documents",
+      "messageFrom": "Message from {sender}:"
+    },
+    "invitation": {
+      "subject": "{sender} sent you \"{title}\" to sign",
+      "preview": "Review and sign {count, plural, one {the document} other {the # documents}} in a few minutes.",
+      "heading": "You have {count, plural, one {a document} other {# documents}} to sign",
+      "body": "Hi {name}, {sender} sent you {count, plural, one {a document} other {# documents}} to sign electronically with DocuFirma.",
+      "cta": "Review and sign",
+      "expires": "The link expires on {date}.",
+      "noAccount": "No account or installation needed."
+    },
+    "reminder": {
+      "subject": "Reminder: \"{title}\" is waiting for your signature",
+      "preview": "{sender} is waiting for your signature.",
+      "heading": "Your signature is still pending",
+      "body": "Hi {name}, just a reminder that {sender} is waiting for you to sign \"{title}\".",
+      "cta": "Review and sign",
+      "expires": "The link expires on {date}."
+    },
+    "viewed": {
+      "subject": "{signer} opened \"{title}\"",
+      "preview": "Your document has been viewed.",
+      "heading": "Your document has been viewed",
+      "body": "{signer} ({email}) opened the link to sign \"{title}\".",
+      "cta": "View envelope"
+    },
+    "completed": {
+      "subject": "\"{title}\" is signed and sealed",
+      "preview": "Everyone has signed. Download your copy.",
+      "heading": "Document signed and sealed",
+      "bodySender": "All signers have signed \"{title}\". The document is sealed with its SHA-256 fingerprint and a qualified timestamp.",
+      "bodySigner": "Hi {name}, \"{title}\" has been signed by all parties. Here is your signed copy and the evidence certificate.",
+      "downloads": "Downloads (links valid for 7 days):",
+      "signedPdf": "Signed PDF · {name}",
+      "evidence": "Evidence certificate",
+      "tsaSummary": "Timestamp: {authority} · {date} · Serial {serial}",
+      "tsaPending": "The qualified timestamp is being applied; it will show on the verification page in a few minutes.",
+      "verify": "Verify document",
+      "cta": "Open in DocuFirma"
+    },
+    "declined": {
+      "subject": "{signer} declined to sign \"{title}\"",
+      "preview": "The envelope was closed without being completed.",
+      "heading": "Signature declined",
+      "body": "{signer} ({email}) declined to sign \"{title}\". The envelope has been closed and the reserved signatures returned to your balance.",
+      "reason": "Reason given: {reason}",
+      "cta": "View envelope"
+    },
+    "expired": {
+      "subject": "\"{title}\" expired before being completed",
+      "preview": "The signing period has ended.",
+      "heading": "The envelope has expired",
+      "body": "The period to sign \"{title}\" ended before all signers signed. The reserved signatures have been returned to your balance. You can duplicate the envelope to send it again.",
+      "cta": "View envelope"
+    },
+    "paymentFailed": {
+      "subject": "We couldn't charge your DocuFirma subscription",
+      "preview": "Update your payment method to keep sending documents.",
+      "heading": "There's a problem with your payment",
+      "body": "We couldn't charge the renewal of your Pro plan. Update your card so you don't lose next cycle's signatures.",
+      "cta": "Update payment method"
+    },
+    "welcome": {
+      "subject": "Welcome to DocuFirma",
+      "preview": "Send your first document in less than a minute.",
+      "heading": "Welcome, {name}",
+      "body": "You can now send documents for advanced biometric signature with a qualified timestamp. You have {credits, plural, =0 {your account ready} one {# trial signature} other {# trial signatures}} to get started.",
+      "cta": "Send my first document"
+    },
+    "creditsLow": {
+      "subject": "You have {count, plural, one {# signature} other {# signatures}} left on DocuFirma",
+      "preview": "Top up to keep sending.",
+      "heading": "You're running low on signatures",
+      "body": "You have {count, plural, =0 {0 signatures} one {# signature} other {# signatures}} left. Subscribe to the Pro plan or buy a pack to keep sending documents.",
+      "cta": "See options"
+    }
   }
 }
