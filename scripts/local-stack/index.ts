@@ -196,7 +196,10 @@ async function main() {
     GOTRUE_SITE_URL: SITE_URL,
     GOTRUE_URI_ALLOW_LIST: `${SITE_URL}/**`,
     GOTRUE_JWT_SECRET: JWT_SECRET,
-    GOTRUE_JWT_EXP: "3600",
+    GOTRUE_JWT_EXP: process.env.LOCAL_JWT_EXP ?? "3600",
+    // Same refresh-token rotation behaviour as hosted Supabase (10 s reuse window).
+    GOTRUE_SECURITY_REFRESH_TOKEN_ROTATION_ENABLED: "true",
+    GOTRUE_SECURITY_REFRESH_TOKEN_REUSE_INTERVAL: "10",
     GOTRUE_JWT_AUD: "authenticated",
     GOTRUE_JWT_DEFAULT_GROUP_NAME: "authenticated",
     GOTRUE_JWT_ADMIN_ROLES: "service_role",

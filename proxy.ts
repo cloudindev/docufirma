@@ -34,37 +34,33 @@ export async function proxy(request: NextRequest) {
     request.headers.set("content-security-policy", csp);
   }
 
+  // The signer view never depends on a sender session: skip auth work entirely.
+  // Everything else refreshes the session first, before next-intl snapshots the request headers.
+  const session = isSign ? null : await updateSession(request);
+
   const response = intl(request);
   if (csp) response.headers.set("Content-Security-Policy", csp);
+  if (!session) return response;
 
   // Redirects issued by next-intl (e.g. "/" -> "/es") are returned as-is.
-  if (response.headers.get("location")) return response;
+  if (response.headers.get("location")) return session.apply(response);
 
-  // The signer view never depends on a sender session: skip auth work entirely.
-  if (isSign) return response;
-
-  const { userId } = await updateSession(request, response);
-
-  if (isApp && !userId) {
+  if (isApp && !session.userId) {
     const url = request.nextUrl.clone();
     url.pathname = localizedPath(locale, "/login");
     url.search = "";
     url.searchParams.set("next", request.nextUrl.pathname + request.nextUrl.search);
-    const redirect = NextResponse.redirect(url);
-    response.cookies.getAll().forEach((c) => redirect.cookies.set(c));
-    return redirect;
+    return session.apply(NextResponse.redirect(url));
   }
 
-  if (userId && AUTH_ONLY_GUEST.has(subPath)) {
+  if (session.userId && AUTH_ONLY_GUEST.has(subPath)) {
     const url = request.nextUrl.clone();
     url.pathname = localizedPath(locale, "/app");
     url.search = "";
-    const redirect = NextResponse.redirect(url);
-    response.cookies.getAll().forEach((c) => redirect.cookies.set(c));
-    return redirect;
+    return session.apply(NextResponse.redirect(url));
   }
 
-  return response;
+  return session.apply(response);
 }
 
 export const config = {
