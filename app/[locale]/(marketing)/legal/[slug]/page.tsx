@@ -1,7 +1,7 @@
-import { AlertTriangle } from "lucide-react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getFormatter, getTranslations } from "next-intl/server";
+import { LegalText } from "@/components/marketing/legal-text";
 import { Link } from "@/lib/i18n/navigation";
 import { routing } from "@/lib/i18n/routing";
 import { resolveLocale } from "@/lib/i18n/server";
@@ -66,24 +66,21 @@ export default async function LegalPage({ params }: PageProps<"/[locale]/legal/[
           <p className="text-sm text-ink-muted">
             {t("updated", { date: format.dateTime(new Date(LEGAL_UPDATED_AT), "short") })}
           </p>
-          <p
-            role="note"
-            className="flex items-start gap-2 rounded-xl border border-warning/30 bg-warning/8 px-4 py-3 text-sm"
-          >
-            <AlertTriangle className="mt-0.5 size-4 shrink-0 text-warning" aria-hidden />
-            {t("draftNotice")}
-          </p>
         </header>
-        {sections.map((key, i) => (
-          <section key={key} className="space-y-3">
-            <h2 className="text-xl">
-              {i + 1}. {t(`pages.${slug}.sections.${key}.h` as "pages.privacy.sections.s1.h")}
-            </h2>
-            <p className="leading-relaxed text-ink-muted">
-              {t(`pages.${slug}.sections.${key}.p` as "pages.privacy.sections.s1.p")}
-            </p>
-          </section>
-        ))}
+        {sections.map((key) => {
+          // Raw strings: legal copy is plain text with a tiny Markdown subset (see LegalText).
+          // Intro sections have no heading ("h" omitted in messages).
+          const hKey = `pages.${slug}.sections.${key}.h` as "pages.privacy.sections.s2.h";
+          const pKey = `pages.${slug}.sections.${key}.p` as "pages.privacy.sections.s1.p";
+          const heading = t.has(hKey) ? (t.raw(hKey) as string) : null;
+          const body = t.raw(pKey) as string;
+          return (
+            <section key={key} className="space-y-3">
+              {heading && <h2 className="text-xl">{heading}</h2>}
+              <LegalText text={body} locale={locale} />
+            </section>
+          );
+        })}
       </article>
     </div>
   );

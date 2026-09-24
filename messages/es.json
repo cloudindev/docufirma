@@ -361,7 +361,6 @@
     }
   },
   "legal": {
-    "draftNotice": "Borrador pendiente de revisión legal. Los datos entre corchetes deben completarse antes del lanzamiento.",
     "updated": "Última actualización: {date}",
     "nav": {
       "legal-notice": "Aviso legal",
@@ -372,77 +371,122 @@
     },
     "pages": {
       "legal-notice": {
-        "description": "Información legal sobre el titular de DocuFirma.",
+        "description": "Titular del sitio web y condiciones de uso de docufirma.es.",
         "sections": {
           "s1": {
-            "h": "Titular del sitio web",
-            "p": "En cumplimiento del artículo 10 de la Ley 34/2002, de Servicios de la Sociedad de la Información (LSSI-CE), se informa de que docufirma.es es titularidad de [RAZÓN SOCIAL], con NIF [NIF], domicilio en [DOMICILIO] e inscrita en [REGISTRO MERCANTIL]. Contacto: [EMAIL DE CONTACTO]."
+            "p": "El titular de la presente página web es:\n\n- DENOMINACIÓN SOCIAL: Cloudin Hosting S.L.\n- NIF: B-56282924\n- DOMICILIO SOCIAL: C/ La Lila, 5 – 1º – 33002 – Oviedo – Principado de Asturias – España\n- INSCRIPCIÓN: Registro Mercantil de Asturias, Tomo 4769, Libro 0, Folio 225, Hoja AS34722\n\nDATOS DE CONTACTO\nTeléfono: 900 525 901\n[Formulario de contacto](https://cloudin.pro/contacto)\n\nLos avisos legales establecen las condiciones de uso de un sitio Web.\n\nEste aviso legal establece las condiciones de uso de los sitios web de Cloudin Hosting S.L., en adelante CLOUDIN.\n\nSi accedes, navegas o ves contenido eres usuario y aceptas las siguientes condiciones de uso.\n\nEn España es necesario que el titular de cualquier Web pueda ser identificado por sus usuarios. La Ley de Servicios de la Sociedad de la Información y de Comercio Electrónico (LSSI) 34/2002 de 11 de julio es la norma que lo regula.\n\nEl objeto de esta Web es informar al público sobre nuestra actividad, productos y servicios."
           },
           "s2": {
             "h": "Objeto",
-            "p": "DocuFirma es un servicio en línea que permite enviar documentos para su firma electrónica avanzada y sellarlos con un sello de tiempo cualificado emitido por un prestador de servicios de confianza."
+            "p": "El prestador, responsable del sitio web, pone a disposición de los usuarios el presente documento con el que pretende dar cumplimiento a las obligaciones dispuestas en la Ley 34/2002, de Servicios de la Sociedad de la Información y del Comercio Electrónico (LSSI-CE), así como informar a todos los usuarios del sitio web respecto a cuáles son las condiciones de uso del sitio web.\n\nToda persona que acceda a este sitio web asume el papel de usuario, comprometiéndose a la observancia y cumplimiento riguroso de las disposiciones aquí dispuestas, así como a cualesquiera otra disposición legal que fuera de aplicación.\n\nEl prestador se reserva el derecho a modificar cualquier tipo de información que pudiera aparecer en el sitio web, sin que exista obligación de preavisar o poner en conocimiento de los usuarios dichas obligaciones, entendiéndose como suficiente con la publicación en el sitio web del prestador.\n\nPara ejercitar sus derechos de acceso, rectificación, cancelación y oposición, deberá remitir escrito identificando la referencia “Protección de Datos” a [hola@cloudin.pro](mailto:hola@cloudin.pro)"
           },
           "s3": {
-            "h": "Propiedad intelectual",
-            "p": "Los contenidos, marcas, logotipos y software del sitio pertenecen a [RAZÓN SOCIAL] o a sus licenciantes. Queda prohibida su reproducción sin autorización."
+            "h": "Responsabilidad",
+            "p": "El prestador se exime de cualquier tipo de responsabilidad derivada de la información publicada en su sitio web, siempre que esta información haya sido manipulada o introducida por un tercero ajeno al mismo.\n\nDesde el sitio web del cliente es posible que se redirija a contenidos de terceros sitios web. Dado que el prestador no puede controlar siempre los contenidos introducidos por los terceros en sus sitios web, éste no asume ningún tipo de responsabilidad respecto a dichos contenidos. En todo caso, el prestador manifiesta que procederá a la retirada inmediata de cualquier contenido que pudiera contravenir la legislación nacional o internacional, la moral o el orden público, procediendo a la retirada inmediata de la redirección a dicho sitio web, poniendo en conocimiento de las autoridades competentes el contenido en cuestión.\n\nEl prestador no se hace responsable de la información y contenidos almacenados, a título enunciativo pero no limitativo, en foros, chats, generadores de blogs, comentarios, redes sociales o cualesquiera otro medio que permita a terceros publicar contenidos de forma independiente en la página web del prestador. No obstante y en cumplimiento de lo dispuesto en el art. 11 y 16 de la LSSI-CE, el prestador se pone a disposición de todos los usuarios, autoridades y fuerzas de seguridad, y colaborando de forma activa en la retirada o en su caso bloqueo de todos aquellos contenidos que pudieran afectar o contravenir la legislación nacional, o internacional, derechos de terceros o la moral y el orden público. En caso de que el usuario considere que existe en el sitio web algún contenido que pudiera ser susceptible de esta clasificación, se ruega lo notifique de forma inmediata al administrador del sitio web.\n\nEste sitio web ha sido revisado y probado para que funcione correctamente. En principio, puede garantizarse el correcto funcionamiento los 365 días del año, 24 horas al día. No obstante, el prestador no descarta la posibilidad de que existan ciertos errores de programación, o que acontezcan causas de fuerza mayor, catástrofes naturales, huelgas, o circunstancias semejantes que hagan imposible el acceso a la página web."
           },
           "s4": {
-            "h": "Responsabilidad",
-            "p": "El titular no se responsabiliza del uso que los usuarios hagan del servicio ni del contenido de los documentos que suben. Cada usuario es responsable de disponer de la base legal necesaria para tratar los datos de sus firmantes."
+            "h": "Protección de datos personales",
+            "p": "El prestador se encuentra profundamente comprometido con el cumplimiento de la normativa española de protección de datos de carácter personal, y garantiza el cumplimiento íntegro de las obligaciones dispuestas, así como la implementación de las medidas de seguridad dispuestas en el art. 9 de la Ley 15/1999, de Protección de Datos de Carácter Personal (LOPD) y en el Reglamento de Desarrollo de la LOPD.\n\nEl prestador pone a disposición de los usuarios la [Política de Privacidad](/legal/privacy) de la entidad informando a los usuarios respecto a los siguientes aspectos:\n\n- Datos del Responsable del tratamiento.\n- Datos tratados.\n- Fichero en el que se almacenan.\n- Finalidad del tratamiento.\n- Obligatoriedad o no de facilitarlos, así como las consecuencias en caso de no facilitarlos.\n- Sobre los derechos que asisten a todo usuario y el procedimiento para ejercitarlos."
           },
           "s5": {
-            "h": "Legislación aplicable",
-            "p": "Este aviso se rige por la legislación española. Para cualquier controversia, las partes se someten a los juzgados y tribunales de [CIUDAD], salvo que la normativa de consumidores disponga otra cosa."
+            "h": "Propiedad Intelectual e Industrial",
+            "p": "El sitio web, incluyendo a título enunciativo pero no limitativo su programación, edición, compilación y demás elementos necesarios para su funcionamiento, los diseños, logotipos, texto y/o gráficos son propiedad del prestador o en su caso dispone de licencia o autorización expresa por parte de los autores. Todos los contenidos del sitio web se encuentran debidamente protegidos por la normativa de propiedad intelectual e industrial, así como inscritos en los registros públicos correspondientes.\n\nIndependientemente de la finalidad para la que fueran destinados, la reproducción total o parcial, uso, explotación, distribución y comercialización, requiere en todo caso de la autorización escrita previa por parte del prestador. Cualquier uso no autorizado previamente por parte del prestador será considerado un incumplimiento grave de los derechos de propiedad intelectual o industrial del autor.\n\nLos diseños, logotipos, texto y/o gráficos ajenos al prestador y que pudieran aparecer en el sitio web, pertenecen a sus respectivos propietarios, siendo ellos mismos responsables de cualquier posible controversia que pudiera suscitarse respecto a los mismos. En todo caso, el prestador cuenta con la autorización expresa y previa por parte de los mismos.\n\nEl prestador reconoce a favor de sus titulares los correspondientes derechos de propiedad industrial e intelectual, no implicando su sola mención o aparición en el sitio web la existencia de derechos o responsabilidad alguna del prestador sobre los mismos, como tampoco respaldo, patrocinio o recomendación por parte del mismo.\n\nPara realizar cualquier tipo de observación respecto a posibles incumplimientos de los derechos de propiedad intelectual o industrial, así como sobre cualquiera de los contenidos del sitio web, puede hacerlo a través del correo electrónico facilitado anteriormente.\n\nPara realizar cualquier tipo de observación respecto a posibles incumplimientos de los derechos de propiedad intelectual o industrial, así como sobre cualquiera de los contenidos del sitio web, puede hacerlo a través del siguiente correo electrónico."
+          },
+          "s6": {
+            "h": "Ley Aplicable y Jurisdicción",
+            "p": "Para la resolución de todas las controversias o cuestiones relacionadas con el presente sitio web o de las actividades en él desarrolladas, será de aplicación la legislación española, a la que se someten expresamente las partes, siendo competentes para la resolución de todos los conflictos derivados o relacionados con su uso los Juzgados y Tribunales de Oviedo."
           }
         }
       },
       "privacy": {
-        "description": "Cómo tratamos los datos personales de usuarios y firmantes.",
+        "description": "Cómo trata Cloudin Hosting S.L. los datos personales de usuarios y firmantes de DocuFirma.",
         "sections": {
           "s1": {
-            "h": "Responsable del tratamiento",
-            "p": "[RAZÓN SOCIAL], NIF [NIF], [DOMICILIO]. Delegado de protección de datos: [EMAIL DPD]."
+            "p": "Cuando el titular de los datos facilita datos a través de los sitios web de CLOUDIN, el Responsable del Tratamiento de los datos facilitados es Cloudin Hosting S.L. Además, y dependiendo de los motivos por los que se contacte con CLOUDIN, los datos facilitados serán comunicados a la empresa . Así, por ejemplo, si el titular del dato facilita su CV para ser incorporado a la bolsa de empleo , sus datos serán comunicados a la empresa.\n\nCLOUDIN, asume el compromiso de proteger los datos de carácter personal de todas las personas de las que trata datos, respetando las exigencias legales en materia de protección de datos aplicables y con las máximas garantías de confidencialidad y seguridad de los datos."
           },
           "s2": {
-            "h": "Datos de los usuarios (remitentes)",
-            "p": "Tratamos tus datos de cuenta (nombre, apellidos, email, empresa, NIF opcional), de facturación y de uso para prestar el servicio (art. 6.1.b RGPD), cumplir obligaciones legales (art. 6.1.c) y mejorar el servicio (interés legítimo, art. 6.1.f)."
+            "h": "Con qué finalidad trata el grupo CLOUDIN datos de carácter personal",
+            "p": "A través de los sitios web CLOUDIN pueden recabarse datos de aquellas personas que quieran formular consultas sobre nuestros servicios, pedirnos presupuestos sobre los mismos o realizar la contratación productos. La finalidad del tratamiento de dichos datos, es dar respuesta a la consulta formulada por el titular de los datos.\n\nSi el titular del dato se suscribe a nuestras newsletters, recibirá nuestras comunicaciones al correo electrónico con el que solicite el registro y hasta que decida oponerse en el futuro a la recepción de dichas comunicaciones.\n\nAsimismo, los sitios web de CLOUDIN pueden incluir una sección de Empleo para aquellos titulares de datos que quieran incorporar su currículum en la bolsa de trabajo de CLOUDIN y participar en nuestros procesos de selección abiertos. Para saber más sobre este tratamiento de las candidaturas, se debe consultar el aviso de privacidad para procedimientos de selección."
           },
           "s3": {
-            "h": "Datos de los firmantes",
-            "p": "Respecto de los documentos que envían nuestros usuarios, DocuFirma actúa como encargado del tratamiento. Tratamos nombre, apellidos, email, dirección IP, datos del dispositivo, ubicación aproximada y los eventos del proceso de firma para generar la evidencia de firma."
+            "h": "Datos de los usuarios de DocuFirma (remitentes)",
+            "p": "Tratamos tus datos de cuenta (nombre, apellidos, email, empresa, NIF opcional), de facturación y de uso para prestar el servicio (art. 6.1.b RGPD), cumplir obligaciones legales (art. 6.1.c) y mejorar el servicio (interés legítimo, art. 6.1.f)."
           },
           "s4": {
-            "h": "Datos biométricos de la firma",
-            "p": "El trazo de la firma (coordenadas, presión, inclinación y tiempos) puede constituir un dato biométrico (art. 9 RGPD). Solo se captura con el consentimiento explícito del firmante, se cifra con AES-256-GCM, se usa exclusivamente como prueba de la firma y se conserva durante [5] años desde la firma, salvo que un procedimiento judicial exija conservarlo más tiempo."
+            "h": "Datos de los firmantes",
+            "p": "Respecto de los documentos que envían nuestros usuarios, CLOUDIN actúa como encargado del tratamiento a través de DocuFirma. Tratamos nombre, apellidos, email, dirección IP, datos del dispositivo, ubicación aproximada y los eventos del proceso de firma para generar la evidencia de firma."
           },
           "s5": {
-            "h": "Encargados y transferencias",
-            "p": "Usamos proveedores situados o con servidores en la UE: Supabase (base de datos y almacenamiento, Frankfurt), Vercel (alojamiento, Frankfurt), Stripe (pagos), Resend (email), Mensatek (sello de tiempo) y Sentry (monitorización de errores). Cuando exista transferencia internacional, se ampara en cláusulas contractuales tipo."
+            "h": "Datos biométricos de la firma",
+            "p": "El trazo de la firma (coordenadas, presión, inclinación y tiempos) puede constituir un dato biométrico (art. 9 RGPD). Solo se captura con el consentimiento explícito del firmante, se cifra con AES-256-GCM, se usa exclusivamente como prueba de la firma y se conserva durante 5 años desde la firma, salvo que un procedimiento judicial exija conservarlo más tiempo. Transcurrido ese plazo se elimina de forma automática."
           },
           "s6": {
-            "h": "Conservación",
-            "p": "Los datos de cuenta se conservan mientras la cuenta esté activa. Los sobres completados y sus evidencias se conservan [5] años para la defensa de posibles reclamaciones. Las facturas, durante los plazos que exige la normativa fiscal."
+            "h": "Justificación legal para el tratamiento de los datos",
+            "p": "El tratamiento de datos que facilita el titular para resolver las cuestiones que plantea a través de los distintos formularios y medios de contacto existentes en los sitios web de CLOUDIN, está basado en el interés legítimo de CLOUDIN para dar respuesta a las preguntas planteadas.\n\nEl tratamiento del correo electrónico del titular de los datos para la suscripción al newsletter está basado en el consentimiento del titular del correo electrónico."
           },
           "s7": {
-            "h": "Tus derechos",
-            "p": "Puedes ejercer los derechos de acceso, rectificación, supresión, oposición, limitación y portabilidad escribiendo a [EMAIL DE PRIVACIDAD] o eliminando tu cuenta desde Ajustes. También puedes reclamar ante la Agencia Española de Protección de Datos (aepd.es)."
+            "h": "Destinatarios de los datos",
+            "p": "Los datos no van a ser comunicados a terceros en ningún caso."
+          },
+          "s8": {
+            "h": "Encargados del tratamiento del servicio DocuFirma",
+            "p": "Para prestar el servicio DocuFirma usamos proveedores situados o con servidores en la UE, que actúan como encargados del tratamiento: Supabase (base de datos y almacenamiento, Frankfurt), Vercel (alojamiento, Frankfurt), Stripe (pagos), Resend (email), Mensatek (sello de tiempo cualificado) y Sentry (monitorización de errores). Cuando exista transferencia internacional, se ampara en cláusulas contractuales tipo."
+          },
+          "s9": {
+            "h": "Tiempo de conservación de los datos",
+            "p": "El plazo de conservación de los datos dependerá de la finalidad para la que han sido recabados. Así, en el caso de que el tratamiento se realice para resolver una consulta, se conservarán los datos hasta que la misma sea contestada. Mientras que si es una suscripción al newsletter, los datos serán conservados hasta que el titular del dato quiera solicitar la baja, en su caso.\n\nEn DocuFirma, los datos de cuenta se conservan mientras la cuenta esté activa. Los sobres completados y sus evidencias se conservan 5 años para la defensa de posibles reclamaciones. Las facturas, durante los plazos que exige la normativa fiscal.\n\nEn cualquier caso, con independencia de los plazos de conservación que apliquen en cada caso, una vez terminada la finalidad de tratamiento, CLOUDIN, aplicará sus políticas de bloqueo y supresión de datos."
+          },
+          "s10": {
+            "h": "Derechos del titular de los datos",
+            "p": "El titular de los datos de carácter personal puede llevar a cabo el ejercicio de sus derechos en las direcciones que figuran al inicio de esta política o en el siguiente correo electrónico [hola@cloudin.pro](mailto:hola@cloudin.pro) del área de asesoría jurídica de CLOUDIN.\n\nTambién se puede contactar con nuestro Delegado de Protección de Datos en la siguiente dirección de email: [hola@cloudin.pro](mailto:hola@cloudin.pro)\n\nSi el titular de los datos considera que sus derechos no han sido resueltos de manera adecuada, puede formular una reclamación ante la Agencia Española de Protección de Datos, en el caso de España.\n\nEn concreto, en el caso de España, el titular de los datos puede ejercitar los derechos de acceso, rectificación o supresión, portabilidad, limitación y oposición al tratamiento de sus datos.\n\nPara todos los países, el titular de los datos puede retirar su consentimiento en cualquier momento, sin carácter retroactivo y también puede oponerse a la recepción de las comunicaciones electrónicas de CLOUDIN mediante el enlace disponible en cada comunicación."
+          },
+          "s11": {
+            "h": "Tratamiento de datos de menores de edad",
+            "p": "No está permitido facilitar datos de menores de edad a través de los sitios web de CLOUDIN."
+          },
+          "s12": {
+            "h": "Seguridad",
+            "p": "CLOUDIN ha adoptado las medidas técnicas y organizativas, de conformidad con la normativa sobre protección de datos, para evitar la pérdida de datos de carácter personal o el mal uso de los mismos."
+          },
+          "s13": {
+            "h": "Terceros prestadores de servicios",
+            "p": "Los sitios web de CLOUDIN pueden estar alojados en infraestructuras de terceros. En CLOUDIN nos aseguramos siempre de que dichos proveedores cumplan estándares de seguridad y que estén ubicados dentro del territorio europeo."
+          },
+          "s14": {
+            "h": "Enlaces",
+            "p": "Desde los sitios web de CLOUDIN puede haber enlaces a sitios webs de terceros. En esos casos, CLOUDIN no se responsabiliza de los tratamientos de datos llevados a cabo por dichos terceros y recomendamos revisar sus correspondientes avisos de privacidad."
+          },
+          "s15": {
+            "h": "Redes Sociales",
+            "p": "CLOUDIN tiene perfiles en distintas redes sociales. El tratamiento de datos que se lleve a cabo por CLOUDIN, como titular de los perfiles en las redes sociales, es el que permiten las mismas. En cualquier caso, CLOUDIN no extrae datos de las distintas redes sociales salvo que solicite, previamente y de manera expresa, el consentimiento del titular del dato para ello con alguna finalidad específica."
+          },
+          "s16": {
+            "h": "Cookies",
+            "p": "Los sitios web de CLOUDIN utilizan cookies. El usuario puede consultar nuestra política de cookies en el siguiente [enlace](/legal/cookies)."
+          },
+          "s17": {
+            "h": "Modificación de la presente política de protección de datos",
+            "p": "CLOUDIN se reserva el derecho de modificar su política de privacidad en el supuesto de que exista un cambio de la legislación vigente, doctrina jurisprudencial o por criterios propios empresariales. Si se introduce algún cambio en esta política, el nuevo texto se publicará en esta misma dirección.\n\nLa primera versión de la presente política data de 17 de julio de 2023 habiéndose actualizado el 01 de enero de 2024."
           }
         }
       },
       "cookies": {
-        "description": "Qué cookies utiliza DocuFirma.",
+        "description": "Qué son las cookies y cuáles utiliza este sitio web.",
         "sections": {
           "s1": {
-            "h": "Cookies técnicas",
-            "p": "Usamos únicamente cookies técnicas necesarias: la sesión de usuario (sb-*), la preferencia de idioma (NEXT_LOCALE) y cookies de seguridad de nuestro proveedor de pagos durante el proceso de compra. No requieren consentimiento (art. 22.2 LSSI-CE)."
+            "p": "Las cookies son pequeños archivos que las páginas web almacenan en el navegador del usuario que las visita y resultan necesarios para aportar a la navegación web innumerables ventajas en la prestación de servicios interactivos. Estos archivos permiten el almacenamiento en el terminal del usuario de cantidades de datos que van de unos pocos kilobytes a varios Megabytes.\n\nLa siguiente información de los tipos posibles de cookies le ayudará a comprender mejor y valorar nuestra política de cookies:\n\n- Cookies de sesión: son cookies temporales que permanecen en su equipo hasta que abandona la página web que las usa, por lo que ninguna queda registrada en el disco del usuario. La información obtenida por medio de estas cookies sirve para hacer posible la gestión operativa con cada uno de los usuarios que está accediendo de forma simultánea a la web.\n- Cookies persistentes: son cookies que permanecen almacenadas en el espacio de cookies de su equipo una vez abandonada la página web, y que volverán a ser consultadas por dicha página web la próxima vez que usted acceda a ella, con la finalidad de recordar información que facilite la navegación (ejemplo: acceder directamente al servicio sin necesidad de hacer el proceso de login) o la prestación de un servicio comercial (ejemplo: ofrecer aquellos productos o servicios relacionados con anteriores visitas).\n\nLas cookies intercambiadas al navegar por una página web pueden ser:\n\n- Cookies de origen o propias: son cookies generadas por la propia página web que se está visitando.\n- Cookies de terceros: son cookies que se reciben al navegar por esa página web, pero que han sido generadas por un tercer servicio que se encuentra hospedado en ella. Un ejemplo puede ser la cookie empleada por un anuncio o banner de publicidad que se encuentra en la página web que visitamos. Otro puede ser la cookie empleada por un contador de visitantes contratado por la página web que visitamos.\n\nLas cookies pueden ser usadas con diferentes finalidades:\n\n- Fines técnicos: Permiten al usuario la navegación a través de una página web, plataforma o aplicación y la utilización de las diferentes opciones o servicios que en ella existan como, por ejemplo, controlar el tráfico y la comunicación de datos, identificar la sesión, acceder a partes de acceso restringido, recordar los elementos que integran un pedido, realizar el proceso de compra de un pedido, realizar la solicitud de inscripción o participación en un evento, utilizar elementos de seguridad durante la navegación, almacenar contenidos para la difusión de videos o sonido o compartir contenidos a través de redes sociales.\n- De personalización: Permiten al usuario acceder al servicio con algunas características de carácter general predefinidas en función de una serie de criterios en el terminal del usuario como por ejemplo el idioma, el tipo de navegador por el que se accede al servicio, la configuración regional desde donde se accede, etc.\n- Análisis o rendimiento: Permiten al responsable de las mismas, el seguimiento y análisis del comportamiento de los usuarios de los sitios web a los que están vinculadas. La información recogida mediante este tipo de cookies se utiliza en la medición de la actividad de los sitios web, aplicación o plataforma y para la elaboración de perfiles de navegación de los usuarios de dichos sitios, aplicaciones y plataformas, con el fin de introducir mejoras en función del análisis de los datos de uso que hacen los usuarios del servicio.\n- Publicidad comportamental: Permiten la gestión, de la forma más eficaz posible, de los espacios publicitarios que, en su caso, el editor haya incluido en una página web, aplicación o plataforma desde la que presta el servicio solicitado. Estas cookies almacenan información del comportamiento de los usuarios obtenida a través de la observación continuada de sus hábitos de navegación, lo que permite desarrollar un perfil específico para mostrar publicidad en función del mismo."
           },
           "s2": {
-            "h": "Analítica y publicidad",
-            "p": "DocuFirma no utiliza cookies de analítica de terceros ni cookies publicitarias. Si en el futuro se incorporan, se pedirá tu consentimiento previo mediante un banner."
+            "h": "No utilizamos cookies no exentas",
+            "p": "No encontrarás un banner de cookies. Este sitio web se basa únicamente en cookies funcionales."
           },
           "s3": {
-            "h": "Cómo gestionarlas",
-            "p": "Puedes borrar o bloquear las cookies desde la configuración de tu navegador. Si bloqueas las cookies técnicas, no podrás iniciar sesión."
+            "h": "Eliminación de Cookies",
+            "p": "Si usted quiere eliminar de su navegador las cookies registradas por CloudIn, aquí tiene instrucciones para hacerlo según los distintos navegadores existentes:\n\n- [Internet Explorer](https://support.microsoft.com/es-es/help/278835/how-to-delete-cookie-files-in-internet-explorer)\n- [Microsoft Edge](https://support.microsoft.com/es-es/topic/eliminar-y-administrar-cookies-168dab11-0753-043d-7c16-ede5947fc64d)\n- [Google Chrome](https://support.google.com/chrome/answer/95647?co=GENIE.Platform%3DAndroid&hl=es-419)\n- [Firefox](https://support.mozilla.org/es/kb/Borrar%20cookies)\n- [Safari](https://support.apple.com/es-es/HT201265)\n- Otros: Por lo general, para eliminar las cookies de su navegador deberá ir al menú Preferencias o Configuración del navegador y buscar la sección Privacidad. Allí encontrará opciones para gestionar sus cookies y otros datos almacenados por los sitios web que visita, así como configurar el comportamiento de su navegador al tratar las cookies."
+          },
+          "s4": {
+            "h": "Configuración de cookies",
+            "p": "Asimismo, le informamos de que el usuario en cualquier momento podrá rechazar o configurar el uso de Cookies, a través de los siguientes tipos de configuración dependiendo de la forma de navegación que el usuario realiza."
           }
         }
       },
@@ -471,7 +515,7 @@
           },
           "s6": {
             "h": "Responsabilidad",
-            "p": "El servicio se presta con la diligencia debida. [RAZÓN SOCIAL] no responde de daños indirectos ni del uso de los documentos firmados. La responsabilidad total queda limitada al importe pagado en los últimos 12 meses, salvo dolo o culpa grave."
+            "p": "El servicio se presta con la diligencia debida. Cloudin Hosting S.L. no responde de daños indirectos ni del uso de los documentos firmados. La responsabilidad total queda limitada al importe pagado en los últimos 12 meses, salvo dolo o culpa grave."
           },
           "s7": {
             "h": "Ley y jurisdicción",
@@ -504,7 +548,7 @@
           },
           "s6": {
             "h": "Conservación de evidencias",
-            "p": "Las evidencias se conservan cifradas durante [5] años. El acceso está restringido a procesos del servidor y, bajo requerimiento, a autoridades judiciales."
+            "p": "Las evidencias se conservan cifradas durante 5 años. El acceso está restringido a procesos del servidor y, bajo requerimiento, a autoridades judiciales."
           }
         }
       }

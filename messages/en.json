@@ -361,7 +361,6 @@
     }
   },
   "legal": {
-    "draftNotice": "Draft pending legal review. Details in square brackets must be completed before launch.",
     "updated": "Last updated: {date}",
     "nav": {
       "legal-notice": "Legal notice",
@@ -372,77 +371,122 @@
     },
     "pages": {
       "legal-notice": {
-        "description": "Legal information about the owner of DocuFirma.",
+        "description": "Owner of the website and terms of use of docufirma.es.",
         "sections": {
           "s1": {
-            "h": "Website owner",
-            "p": "Pursuant to Article 10 of Spanish Law 34/2002 on Information Society Services (LSSI-CE), docufirma.es is owned by [COMPANY NAME], tax ID [TAX ID], registered office at [ADDRESS], registered with [COMPANIES REGISTER]. Contact: [CONTACT EMAIL]."
+            "p": "The owner of this website is:\n\n- COMPANY NAME: Cloudin Hosting S.L.\n- TAX ID (NIF): B-56282924\n- REGISTERED OFFICE: C/ La Lila, 5 – 1º – 33002 – Oviedo – Principality of Asturias – Spain\n- REGISTRATION: Asturias Commercial Registry, Volume 4769, Book 0, Folio 225, Sheet AS34722\n\nCONTACT DETAILS\nPhone: 900 525 901\n[Contact form](https://cloudin.pro/contacto)\n\nA legal notice sets out the terms of use of a website.\n\nThis legal notice sets out the terms of use of the websites of Cloudin Hosting S.L., hereinafter CLOUDIN.\n\nIf you access, browse or view content, you are a user and accept the following terms of use.\n\nIn Spain, the owner of any website must be identifiable by its users. This is governed by Law 34/2002 of 11 July on Information Society Services and Electronic Commerce (LSSI).\n\nThe purpose of this website is to inform the public about our activity, products and services."
           },
           "s2": {
             "h": "Purpose",
-            "p": "DocuFirma is an online service to send documents for advanced electronic signature and seal them with a qualified timestamp issued by a trust service provider."
+            "p": "The provider, responsible for the website, makes this document available to users in order to comply with the obligations set out in Law 34/2002 on Information Society Services and Electronic Commerce (LSSI-CE), and to inform all users of the website of its terms of use.\n\nAnyone who accesses this website becomes a user and undertakes to strictly observe and comply with the provisions set out herein, as well as any other applicable legal provision.\n\nThe provider reserves the right to modify any information that may appear on the website, with no obligation to give prior notice or to inform users of such changes, publication on the provider's website being deemed sufficient.\n\nTo exercise your rights of access, rectification, cancellation and objection, you must send a written request with the reference “Data Protection” to [hola@cloudin.pro](mailto:hola@cloudin.pro)"
           },
           "s3": {
-            "h": "Intellectual property",
-            "p": "The content, trademarks, logos and software of the site belong to [COMPANY NAME] or its licensors. Reproduction without permission is prohibited."
+            "h": "Liability",
+            "p": "The provider accepts no liability of any kind arising from the information published on its website where such information has been manipulated or introduced by a third party.\n\nThe client's website may redirect to content on third-party websites. Since the provider cannot always control the content introduced by third parties on their websites, it accepts no liability for such content. In any case, the provider states that it will immediately remove any content that may breach national or international law, morality or public order, immediately removing the redirection to that website and informing the competent authorities of the content in question.\n\nThe provider is not responsible for information and content stored, by way of example but not limited to, in forums, chats, blog generators, comments, social networks or any other means that allows third parties to publish content independently on the provider's website. Nevertheless, and in compliance with articles 11 and 16 of the LSSI-CE, the provider makes itself available to all users, authorities and security forces, actively collaborating in the removal or, where appropriate, blocking of any content that may affect or breach national or international law, the rights of third parties, morality or public order. If users consider that the website contains any content that may fall into this category, they are asked to notify the website administrator immediately.\n\nThis website has been reviewed and tested to work correctly. In principle, correct operation can be guaranteed 365 days a year, 24 hours a day. However, the provider does not rule out the possibility of certain programming errors, or of force majeure, natural disasters, strikes or similar circumstances making access to the website impossible."
           },
           "s4": {
-            "h": "Liability",
-            "p": "The owner is not responsible for how users use the service or for the content of the documents they upload. Each user is responsible for having a legal basis to process their signers' data."
+            "h": "Personal data protection",
+            "p": "The provider is deeply committed to complying with Spanish personal data protection regulations, and guarantees full compliance with the obligations set out therein, as well as the implementation of the security measures set out in article 9 of Law 15/1999 on the Protection of Personal Data (LOPD) and in the Regulation implementing the LOPD.\n\nThe provider makes the entity's [Privacy Policy](/legal/privacy) available to users, informing them about the following:\n\n- Details of the data controller.\n- Data processed.\n- File in which they are stored.\n- Purpose of the processing.\n- Whether providing them is mandatory, and the consequences of not providing them.\n- The rights of every user and the procedure for exercising them."
           },
           "s5": {
-            "h": "Governing law",
-            "p": "This notice is governed by Spanish law. The parties submit to the courts of [CITY], unless consumer law provides otherwise."
+            "h": "Intellectual and industrial property",
+            "p": "The website, including by way of example but not limited to its programming, editing, compilation and other elements necessary for its operation, designs, logos, text and/or graphics, is the property of the provider or, where applicable, the provider holds a licence or express authorisation from the authors. All content on the website is duly protected by intellectual and industrial property regulations and registered in the corresponding public registers.\n\nRegardless of its intended purpose, total or partial reproduction, use, exploitation, distribution and commercialisation always require the prior written authorisation of the provider. Any use not previously authorised by the provider will be considered a serious infringement of the author's intellectual or industrial property rights.\n\nDesigns, logos, text and/or graphics not belonging to the provider that may appear on the website belong to their respective owners, who are responsible for any dispute that may arise in relation to them. In any case, the provider has their express prior authorisation.\n\nThe provider recognises the corresponding industrial and intellectual property rights in favour of their owners; their mere mention or appearance on the website does not imply any rights or liability of the provider over them, nor any endorsement, sponsorship or recommendation by the provider.\n\nTo make any comment regarding possible infringements of intellectual or industrial property rights, or regarding any of the content of the website, you may do so through the email address provided above.\n\nTo make any comment regarding possible infringements of intellectual or industrial property rights, or regarding any of the content of the website, you may do so through the following email address."
+          },
+          "s6": {
+            "h": "Applicable law and jurisdiction",
+            "p": "Spanish law shall apply to the resolution of all disputes or matters relating to this website or the activities carried out on it, to which the parties expressly submit, the Courts and Tribunals of Oviedo having jurisdiction to resolve all conflicts arising from or related to its use."
           }
         }
       },
       "privacy": {
-        "description": "How we process the personal data of users and signers.",
+        "description": "How Cloudin Hosting S.L. processes the personal data of DocuFirma users and signers.",
         "sections": {
           "s1": {
-            "h": "Data controller",
-            "p": "[COMPANY NAME], tax ID [TAX ID], [ADDRESS]. Data protection officer: [DPO EMAIL]."
+            "p": "When data subjects provide data through the CLOUDIN websites, the Data Controller for the data provided is Cloudin Hosting S.L. In addition, depending on the reasons for contacting CLOUDIN, the data provided will be communicated to the company. For example, if the data subject provides their CV to be added to the job pool, their data will be communicated to the company.\n\nCLOUDIN is committed to protecting the personal data of everyone whose data it processes, respecting the applicable legal requirements on data protection and with the highest guarantees of confidentiality and data security."
           },
           "s2": {
-            "h": "User (sender) data",
-            "p": "We process your account data (name, email, company, optional tax ID), billing and usage data to provide the service (Art. 6.1.b GDPR), comply with legal obligations (Art. 6.1.c) and improve the service (legitimate interest, Art. 6.1.f)."
+            "h": "For what purpose does the CLOUDIN group process personal data",
+            "p": "Through the CLOUDIN websites, data may be collected from people who wish to ask questions about our services, request quotes for them or purchase products. The purpose of processing such data is to answer the enquiry made by the data subject.\n\nIf the data subject subscribes to our newsletters, they will receive our communications at the email address used to register until they decide to object to receiving them in the future.\n\nThe CLOUDIN websites may also include a Jobs section for data subjects who wish to add their CV to the CLOUDIN job pool and take part in our open selection processes. To learn more about how applications are processed, please consult the privacy notice for selection procedures."
           },
           "s3": {
-            "h": "Signer data",
-            "p": "For documents sent by our users, DocuFirma acts as a data processor. We process name, email, IP address, device data, approximate location and signing events to produce the signature evidence."
+            "h": "Data of DocuFirma users (senders)",
+            "p": "We process your account data (first name, last name, email, company, optional tax ID), billing data and usage data to provide the service (art. 6.1.b GDPR), to comply with legal obligations (art. 6.1.c) and to improve the service (legitimate interest, art. 6.1.f)."
           },
           "s4": {
-            "h": "Biometric signature data",
-            "p": "The signature stroke (coordinates, pressure, tilt and timing) may be biometric data (Art. 9 GDPR). It is only captured with the signer's explicit consent, encrypted with AES-256-GCM, used exclusively as evidence of the signature and kept for [5] years after signing, unless legal proceedings require longer retention."
+            "h": "Signers' data",
+            "p": "For documents sent by our users, CLOUDIN acts as data processor through DocuFirma. We process first name, last name, email, IP address, device data, approximate location and the events of the signing process to generate the signature evidence."
           },
           "s5": {
-            "h": "Processors and transfers",
-            "p": "We use providers located in, or with servers in, the EU: Supabase (database and storage, Frankfurt), Vercel (hosting, Frankfurt), Stripe (payments), Resend (email), Mensatek (timestamping) and Sentry (error monitoring). Any international transfer relies on standard contractual clauses."
+            "h": "Biometric signature data",
+            "p": "The signature stroke (coordinates, pressure, tilt and timing) may constitute biometric data (art. 9 GDPR). It is only captured with the signer's explicit consent, encrypted with AES-256-GCM, used solely as proof of the signature and kept for 5 years from signing, unless legal proceedings require it to be kept longer. After that period it is deleted automatically."
           },
           "s6": {
-            "h": "Retention",
-            "p": "Account data is kept while the account is active. Completed envelopes and their evidence are kept for [5] years to defend potential claims. Invoices are kept for the periods required by tax law."
+            "h": "Legal basis for processing the data",
+            "p": "The processing of data provided by data subjects to resolve the questions they raise through the various forms and contact channels on the CLOUDIN websites is based on CLOUDIN's legitimate interest in answering those questions.\n\nThe processing of the data subject's email address for the newsletter subscription is based on the consent of the owner of the email address."
           },
           "s7": {
-            "h": "Your rights",
-            "p": "You can exercise your rights of access, rectification, erasure, objection, restriction and portability by writing to [PRIVACY EMAIL] or by deleting your account in Settings. You may also lodge a complaint with the Spanish Data Protection Agency (aepd.es)."
+            "h": "Recipients of the data",
+            "p": "The data will not be communicated to third parties under any circumstances."
+          },
+          "s8": {
+            "h": "Data processors for the DocuFirma service",
+            "p": "To provide the DocuFirma service we use providers located in, or with servers in, the EU, acting as data processors: Supabase (database and storage, Frankfurt), Vercel (hosting, Frankfurt), Stripe (payments), Resend (email), Mensatek (qualified timestamping) and Sentry (error monitoring). Any international transfer is covered by standard contractual clauses."
+          },
+          "s9": {
+            "h": "Data retention period",
+            "p": "The retention period depends on the purpose for which the data were collected. If the data are processed to answer an enquiry, they will be kept until it has been answered. For a newsletter subscription, the data will be kept until the data subject asks to unsubscribe.\n\nIn DocuFirma, account data are kept while the account is active. Completed envelopes and their evidence are kept for 5 years to defend against possible claims. Invoices are kept for the periods required by tax law.\n\nIn any case, regardless of the retention periods applicable in each case, once the purpose of the processing has ended CLOUDIN will apply its data blocking and deletion policies."
+          },
+          "s10": {
+            "h": "Rights of the data subject",
+            "p": "Data subjects may exercise their rights at the addresses shown at the beginning of this policy or at the following email address of CLOUDIN's legal department: [hola@cloudin.pro](mailto:hola@cloudin.pro)\n\nYou can also contact our Data Protection Officer at the following email address: [hola@cloudin.pro](mailto:hola@cloudin.pro)\n\nIf data subjects consider that their rights have not been properly addressed, they may file a complaint with the Spanish Data Protection Agency, in the case of Spain.\n\nSpecifically, in the case of Spain, data subjects may exercise their rights of access, rectification or erasure, portability, restriction and objection to the processing of their data.\n\nIn all countries, data subjects may withdraw their consent at any time, without retroactive effect, and may also object to receiving electronic communications from CLOUDIN through the link included in each communication."
+          },
+          "s11": {
+            "h": "Processing of minors' data",
+            "p": "Providing data of minors through the CLOUDIN websites is not permitted."
+          },
+          "s12": {
+            "h": "Security",
+            "p": "CLOUDIN has adopted technical and organisational measures, in accordance with data protection regulations, to prevent the loss or misuse of personal data."
+          },
+          "s13": {
+            "h": "Third-party service providers",
+            "p": "The CLOUDIN websites may be hosted on third-party infrastructure. At CLOUDIN we always make sure that these providers meet security standards and are located within European territory."
+          },
+          "s14": {
+            "h": "Links",
+            "p": "The CLOUDIN websites may contain links to third-party websites. In those cases, CLOUDIN is not responsible for the data processing carried out by those third parties and we recommend reviewing their privacy notices."
+          },
+          "s15": {
+            "h": "Social networks",
+            "p": "CLOUDIN has profiles on various social networks. The data processing carried out by CLOUDIN as owner of the social network profiles is that permitted by those networks. In any case, CLOUDIN does not extract data from social networks unless it first expressly requests the data subject's consent for a specific purpose."
+          },
+          "s16": {
+            "h": "Cookies",
+            "p": "The CLOUDIN websites use cookies. Users can consult our cookie policy at the following [link](/legal/cookies)."
+          },
+          "s17": {
+            "h": "Changes to this data protection policy",
+            "p": "CLOUDIN reserves the right to modify its privacy policy in the event of changes to current legislation, case law or its own business criteria. If any change is made to this policy, the new text will be published at this same address.\n\nThe first version of this policy dates from 17 July 2023 and it was updated on 1 January 2024."
           }
         }
       },
       "cookies": {
-        "description": "Which cookies DocuFirma uses.",
+        "description": "What cookies are and which ones this website uses.",
         "sections": {
           "s1": {
-            "h": "Technical cookies",
-            "p": "We only use strictly necessary cookies: the user session (sb-*), the language preference (NEXT_LOCALE) and security cookies from our payment provider during checkout. They do not require consent (Art. 22.2 LSSI-CE)."
+            "p": "Cookies are small files that websites store in the browser of the user visiting them. They are necessary to bring countless advantages to web browsing in the provision of interactive services. These files allow amounts of data ranging from a few kilobytes to several megabytes to be stored on the user's device.\n\nThe following information about the possible types of cookies will help you better understand and assess our cookie policy:\n\n- Session cookies: temporary cookies that remain on your device until you leave the website that uses them, so none is recorded on the user's disk. The information obtained through these cookies makes it possible to manage operations with each of the users accessing the website at the same time.\n- Persistent cookies: cookies that remain stored in your device's cookie storage after you leave the website, and that the website will read again the next time you visit it, in order to remember information that makes browsing easier (for example, accessing the service directly without logging in) or to provide a commercial service (for example, offering products or services related to previous visits).\n\nCookies exchanged when browsing a website may be:\n\n- First-party cookies: cookies generated by the website being visited.\n- Third-party cookies: cookies received when browsing that website but generated by a third-party service hosted on it. One example is the cookie used by an advertisement or banner on the website we visit. Another is the cookie used by a visitor counter contracted by the website we visit.\n\nCookies may be used for different purposes:\n\n- Technical purposes: they allow the user to browse a website, platform or application and use its various options or services, such as controlling traffic and data communication, identifying the session, accessing restricted areas, remembering the items in an order, completing the purchase of an order, applying to register for or take part in an event, using security features while browsing, storing content for broadcasting video or sound, or sharing content through social networks.\n- Personalisation: they allow the user to access the service with certain predefined general features based on a series of criteria on the user's device, such as the language, the type of browser used to access the service, the regional settings from which it is accessed, etc.\n- Analysis or performance: they allow whoever is responsible for them to track and analyse the behaviour of users of the websites to which they are linked. The information collected through this type of cookie is used to measure the activity of websites, applications or platforms and to build browsing profiles of their users, in order to make improvements based on the analysis of how users use the service.\n- Behavioural advertising: they allow the most efficient possible management of the advertising spaces that the publisher may have included on a website, application or platform from which the requested service is provided. These cookies store information about user behaviour obtained through continuous observation of their browsing habits, which makes it possible to build a specific profile to show advertising based on it."
           },
           "s2": {
-            "h": "Analytics and advertising",
-            "p": "DocuFirma does not use third-party analytics or advertising cookies. If they are added in the future, we will ask for your prior consent through a banner."
+            "h": "We do not use non-exempt cookies",
+            "p": "You will not find a cookie banner. This website relies solely on functional cookies."
           },
           "s3": {
-            "h": "Managing cookies",
-            "p": "You can delete or block cookies in your browser settings. If you block technical cookies you will not be able to log in."
+            "h": "Deleting cookies",
+            "p": "If you want to delete the cookies set by CloudIn from your browser, here are instructions for the different browsers:\n\n- [Internet Explorer](https://support.microsoft.com/es-es/help/278835/how-to-delete-cookie-files-in-internet-explorer)\n- [Microsoft Edge](https://support.microsoft.com/es-es/topic/eliminar-y-administrar-cookies-168dab11-0753-043d-7c16-ede5947fc64d)\n- [Google Chrome](https://support.google.com/chrome/answer/95647?co=GENIE.Platform%3DAndroid&hl=es-419)\n- [Firefox](https://support.mozilla.org/es/kb/Borrar%20cookies)\n- [Safari](https://support.apple.com/es-es/HT201265)\n- Others: in general, to delete cookies from your browser, go to the browser's Preferences or Settings menu and look for the Privacy section. There you will find options to manage your cookies and other data stored by the websites you visit, and to configure how your browser handles cookies."
+          },
+          "s4": {
+            "h": "Cookie settings",
+            "p": "We also inform you that users may at any time reject or configure the use of cookies through the following types of settings, depending on how they browse."
           }
         }
       },
@@ -471,7 +515,7 @@
           },
           "s6": {
             "h": "Liability",
-            "p": "The service is provided with due diligence. [COMPANY NAME] is not liable for indirect damages or for the use of signed documents. Total liability is limited to the amount paid in the last 12 months, except in cases of wilful misconduct or gross negligence."
+            "p": "The service is provided with due diligence. Cloudin Hosting S.L. is not liable for indirect damages or for the use of signed documents. Total liability is limited to the amount paid in the last 12 months, except in cases of wilful misconduct or gross negligence."
           },
           "s7": {
             "h": "Law and jurisdiction",
@@ -504,7 +548,7 @@
           },
           "s6": {
             "h": "Evidence retention",
-            "p": "Evidence is kept encrypted for [5] years. Access is restricted to server processes and, upon request, to judicial authorities."
+            "p": "Evidence is kept encrypted for 5 years. Access is restricted to server processes and, upon request, to judicial authorities."
           }
         }
       }

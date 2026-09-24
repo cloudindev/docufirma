@@ -2,7 +2,10 @@
 
 > Documento técnico-legal para el equipo y para la revisión por un abogado. No es asesoramiento jurídico.
 > Los textos públicos (aviso legal, privacidad, cookies, términos, política de firma) viven en `messages/*.json` → `legal.pages`
-> y se muestran en `/[locale]/legal/[slug]` con un aviso de borrador hasta que se revisen.
+> y se muestran en `/[locale]/legal/[slug]`. El aviso legal, la política de privacidad y la de cookies reproducen los textos de
+> cloudin.pro (titular: Cloudin Hosting S.L.), con las secciones propias de DocuFirma (firmantes, biometría, encargados,
+> conservación) añadidas a la política de privacidad. Formato: párrafos separados por línea en blanco, listas con `- ` y
+> enlaces `[texto](url)` (ver `components/marketing/legal-text.tsx`).
 
 ## 1. Qué ofrece DocuFirma (y qué no)
 
@@ -70,7 +73,7 @@ Implementado en `delete_user_account` (ver `docs/DECISIONS.md` D-015):
 ## 7. Otros
 
 - **Cookies**: solo técnicas (sesión, idioma, pago). Sin banner mientras no haya analítica.
-- **LSSI-CE**: aviso legal con datos del titular (placeholders `[RAZÓN SOCIAL]`, `[NIF]`…).
+- **LSSI-CE**: aviso legal con los datos del titular, Cloudin Hosting S.L. (NIF B-56282924, Oviedo).
 - **Backups**: activar PITR en Supabase (plan Pro o superior). Los backups contienen biometría cifrada; la clave no está en la BD.
 - **Registro de actividad**: `envelope_events` y `credit_ledger` son append-only a nivel de base de datos (triggers).
 
