@@ -324,8 +324,7 @@
       "language": "Language",
       "contact": "Contact",
       "faq": "FAQ",
-      "rights": "© {year} DocuFirma. All rights reserved.",
-      "madeIn": "Made in the EU · Servers in Frankfurt"
+      "rights": "© {year} DocuFirma. All rights reserved."
     },
     "howItWorksPage": {
       "metaTitle": "How it works",
@@ -386,11 +385,11 @@
           },
           "s4": {
             "h": "Personal data protection",
-            "p": "The provider is deeply committed to complying with Spanish personal data protection regulations, and guarantees full compliance with the obligations set out therein, as well as the implementation of the security measures set out in article 9 of Law 15/1999 on the Protection of Personal Data (LOPD) and in the Regulation implementing the LOPD.\n\nThe provider makes the entity's [Privacy Policy](/legal/privacy) available to users, informing them about the following:\n\n- Details of the data controller.\n- Data processed.\n- File in which they are stored.\n- Purpose of the processing.\n- Whether providing them is mandatory, and the consequences of not providing them.\n- The rights of every user and the procedure for exercising them."
+            "p": "The provider is deeply committed to complying with Spanish personal data protection regulations, and guarantees full compliance with the obligations set out therein, as well as the implementation of the security measures set out in Regulation (EU) 2016/679, the General Data Protection Regulation (GDPR), and in Spanish Organic Law 3/2018 of 5 December on the Protection of Personal Data and Guarantee of Digital Rights (LOPDGDD).\n\nThe provider makes the entity's [Privacy Policy](/legal/privacy) available to users, informing them about the following:\n\n- Details of the data controller.\n- Data processed.\n- File in which they are stored.\n- Purpose of the processing.\n- Whether providing them is mandatory, and the consequences of not providing them.\n- The rights of every user and the procedure for exercising them."
           },
           "s5": {
             "h": "Intellectual and industrial property",
-            "p": "The website, including by way of example but not limited to its programming, editing, compilation and other elements necessary for its operation, designs, logos, text and/or graphics, is the property of the provider or, where applicable, the provider holds a licence or express authorisation from the authors. All content on the website is duly protected by intellectual and industrial property regulations and registered in the corresponding public registers.\n\nRegardless of its intended purpose, total or partial reproduction, use, exploitation, distribution and commercialisation always require the prior written authorisation of the provider. Any use not previously authorised by the provider will be considered a serious infringement of the author's intellectual or industrial property rights.\n\nDesigns, logos, text and/or graphics not belonging to the provider that may appear on the website belong to their respective owners, who are responsible for any dispute that may arise in relation to them. In any case, the provider has their express prior authorisation.\n\nThe provider recognises the corresponding industrial and intellectual property rights in favour of their owners; their mere mention or appearance on the website does not imply any rights or liability of the provider over them, nor any endorsement, sponsorship or recommendation by the provider.\n\nTo make any comment regarding possible infringements of intellectual or industrial property rights, or regarding any of the content of the website, you may do so through the email address provided above.\n\nTo make any comment regarding possible infringements of intellectual or industrial property rights, or regarding any of the content of the website, you may do so through the following email address."
+            "p": "The website, including by way of example but not limited to its programming, editing, compilation and other elements necessary for its operation, designs, logos, text and/or graphics, is the property of the provider or, where applicable, the provider holds a licence or express authorisation from the authors. All content on the website is duly protected by intellectual and industrial property regulations and registered in the corresponding public registers.\n\nRegardless of its intended purpose, total or partial reproduction, use, exploitation, distribution and commercialisation always require the prior written authorisation of the provider. Any use not previously authorised by the provider will be considered a serious infringement of the author's intellectual or industrial property rights.\n\nDesigns, logos, text and/or graphics not belonging to the provider that may appear on the website belong to their respective owners, who are responsible for any dispute that may arise in relation to them. In any case, the provider has their express prior authorisation.\n\nThe provider recognises the corresponding industrial and intellectual property rights in favour of their owners; their mere mention or appearance on the website does not imply any rights or liability of the provider over them, nor any endorsement, sponsorship or recommendation by the provider.\n\nTo make any comment regarding possible infringements of intellectual or industrial property rights, or regarding any of the content of the website, you may do so through the email address provided above."
           },
           "s6": {
             "h": "Applicable law and jurisdiction",
@@ -426,7 +425,7 @@
           },
           "s7": {
             "h": "Recipients of the data",
-            "p": "The data will not be communicated to third parties under any circumstances."
+            "p": "The data will not be disclosed to third parties unless required by law. Providers that serve CLOUDIN as data processors, listed in the section “Data processors for the DocuFirma service”, only access the data to provide the service and on our instructions."
           },
           "s8": {
             "h": "Data processors for the DocuFirma service",

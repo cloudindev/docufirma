@@ -17,7 +17,6 @@ export async function SiteFooter({ locale }: { locale: Locale }) {
         <div className="space-y-4">
           <Logo />
           <p className="max-w-xs text-sm leading-relaxed text-ink-muted">{t("footer.tagline")}</p>
-          <p className="text-xs text-ink-muted">{t("footer.madeIn")}</p>
         </div>
         <nav aria-label={t("footer.product")} className="space-y-3">
           <h2 className="text-sm font-semibold">{t("footer.product")}</h2>
