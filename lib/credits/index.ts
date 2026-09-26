@@ -38,3 +38,13 @@ export async function getCredits(
     reserved: row.reserved,
   };
 }
+
+/** SMS left for signing codes (purchased packs minus codes sent). */
+export async function getSmsBalance(
+  supabase: SupabaseClient<Database>,
+  userId: string,
+): Promise<number> {
+  const { data, error } = await supabase.rpc("get_sms_balance", { p_user_id: userId });
+  if (error) throw error;
+  return data ?? 0;
+}

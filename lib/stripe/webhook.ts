@@ -93,18 +93,22 @@ async function grantPack(admin: AdminSupabase, session: Stripe.Checkout.Session)
   await linkCustomer(admin, userId, idOf(session.customer));
   const packId = session.metadata?.pack_id ?? null;
   let credits = Number(session.metadata?.credits ?? 0);
+  let kind = session.metadata?.kind === "sms_pack" ? "sms" : "signatures";
   if (packId) {
     const { data: pack } = await admin
       .from("credit_packs")
-      .select("credits")
+      .select("credits, kind")
       .eq("id", packId)
       .maybeSingle();
-    if (pack) credits = pack.credits; // catalogue is the source of truth
+    if (pack) {
+      credits = pack.credits; // catalogue is the source of truth
+      kind = pack.kind;
+    }
   }
   if (!Number.isInteger(credits) || credits <= 0)
     throw new Error(`Checkout ${session.id} without credits`);
   const paymentRef = idOf(session.payment_intent) ?? session.id;
-  const { error } = await admin.rpc("grant_pack_credits", {
+  const { error } = await admin.rpc(kind === "sms" ? "grant_sms_pack" : "grant_pack_credits", {
     p_user_id: userId,
     p_amount: credits,
     p_payment_ref: paymentRef,

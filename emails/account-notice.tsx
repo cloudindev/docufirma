@@ -1,12 +1,14 @@
 import { EmailButton, EmailHeading, EmailLayout, EmailText } from "./components/layout";
 import { type EmailLocale, emailTranslator } from "./i18n";
 
-/** Account-level emails: welcome, payment failed, low credits. */
+/** Account-level emails: welcome, payment failed, low credits, no SMS left. */
 export type AccountNoticeProps = {
   locale: EmailLocale;
   appUrl: string;
-  kind: "welcome" | "paymentFailed" | "creditsLow";
+  kind: "welcome" | "paymentFailed" | "creditsLow" | "smsEmpty";
   name?: string;
+  /** Envelope title (smsEmpty). */
+  title?: string;
   count?: number;
   ctaUrl: string;
 };
@@ -19,7 +21,12 @@ export function accountNoticeSubject(p: AccountNoticeProps) {
 
 export default function AccountNotice(p: AccountNoticeProps) {
   const t = emailTranslator(p.locale);
-  const vars = { name: p.name ?? "", count: p.count ?? 0, credits: p.count ?? 0 };
+  const vars = {
+    name: p.name ?? "",
+    count: p.count ?? 0,
+    credits: p.count ?? 0,
+    title: p.title ?? "",
+  };
   return (
     <EmailLayout
       lang={p.locale}

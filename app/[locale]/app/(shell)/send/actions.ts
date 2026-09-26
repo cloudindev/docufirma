@@ -6,6 +6,7 @@ import { z } from "zod";
 import { type ActionResult, fail, ok, zodFieldErrors } from "@/lib/actions/result";
 import { getSessionUser } from "@/lib/auth/session";
 import { LIMITS } from "@/lib/config";
+import { getSmsBalance } from "@/lib/credits";
 import { processUpload } from "@/lib/envelopes/documents";
 import {
   envelopeSettingsSchema,
@@ -245,8 +246,13 @@ export async function sendEnvelope(
   if (!owned.user.emailVerified) return fail("email_not_verified");
   const parsed = sendEnvelopeSchema.safeParse(raw);
   if (!parsed.success) return fail("validation", zodFieldErrors(parsed.error));
-  if (parsed.data.signers.some((s) => s.requireSmsOtp) && !isSmsAvailable())
-    return fail("sms_unavailable");
+  const smsSigners = parsed.data.signers.filter((s) => s.requireSmsOtp).length;
+  if (smsSigners > 0) {
+    if (!isSmsAvailable()) return fail("sms_unavailable");
+    // Each SMS signer needs at least one code; top-ups happen on the billing page.
+    const smsBalance = await getSmsBalance(createAdminClient(), owned.user.id).catch(() => 0);
+    if (smsBalance < smsSigners) return fail("sms_no_credits");
+  }
 
   const saved = await saveDraft(envelopeId, parsed.data);
   if (!saved.ok) return saved;

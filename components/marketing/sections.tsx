@@ -7,8 +7,10 @@ import {
   Files,
   Fingerprint,
   Globe2,
+  Handshake,
   Lock,
   type LucideIcon,
+  MessageSquareLock,
   ScrollText,
   SearchCheck,
   ShieldCheck,
@@ -27,7 +29,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Link } from "@/lib/i18n/navigation";
 import type { Locale } from "@/lib/i18n/routing";
-import { getPackOffers, planOffer, trialCredits } from "@/lib/pricing";
+import { getPackOffers, getSmsPackOffers, planOffer, trialCredits } from "@/lib/pricing";
 import { Reveal } from "./reveal";
 import { SectionHeading } from "./section-heading";
 
@@ -129,13 +131,23 @@ export async function HowItWorksSection({ locale }: Props) {
 export async function FeaturesSection({ locale }: Props) {
   const t = await getTranslations({ locale, namespace: "marketing.features" });
   const items: {
-    key: "biometric" | "timestamp" | "evidence" | "verification" | "multidoc" | "reminders";
+    key:
+      | "biometric"
+      | "timestamp"
+      | "evidence"
+      | "verification"
+      | "smsOtp"
+      | "inPerson"
+      | "multidoc"
+      | "reminders";
     icon: LucideIcon;
   }[] = [
     { key: "biometric", icon: Fingerprint },
     { key: "timestamp", icon: Clock },
     { key: "evidence", icon: ScrollText },
     { key: "verification", icon: SearchCheck },
+    { key: "smsOtp", icon: MessageSquareLock },
+    { key: "inPerson", icon: Handshake },
     { key: "multidoc", icon: Files },
     { key: "reminders", icon: BellRing },
   ];
@@ -148,9 +160,9 @@ export async function FeaturesSection({ locale }: Props) {
           title={t("title")}
           subtitle={t("subtitle")}
         />
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {items.map(({ key, icon: Icon }, i) => (
-            <Reveal key={key} delay={(i % 3) * 0.06}>
+            <Reveal key={key} delay={(i % 4) * 0.06}>
               <Card interactive className="h-full space-y-4 p-6">
                 <span className="inline-flex size-11 items-center justify-center rounded-xl bg-bg-tint text-primary">
                   <Icon className="size-5.5" strokeWidth={1.75} aria-hidden />
@@ -218,7 +230,7 @@ export async function PricingSection({
 }: Props & { headingAs?: "h1" | "h2" }) {
   const t = await getTranslations({ locale, namespace: "marketing.pricing" });
   const format = await getFormatter({ locale });
-  const packs = await getPackOffers();
+  const [packs, smsPacks] = await Promise.all([getPackOffers(), getSmsPackOffers()]);
   const eur = (cents: number) => format.number(cents / 100, "eur");
   const features = [
     "credits",
@@ -226,6 +238,7 @@ export async function PricingSection({
     "timestamp",
     "evidence",
     "multi",
+    "identity",
     "reminders",
     "verification",
     "support",
@@ -300,6 +313,36 @@ export async function PricingSection({
           </ul>
           <p className="text-center text-sm text-ink-muted">{t("whatIsSignature")}</p>
         </div>
+        {smsPacks.length > 0 ? (
+          <div className="mx-auto max-w-3xl space-y-6">
+            <div className="space-y-2 text-center">
+              <PacksHeading className="text-xl">{t("smsPacksTitle")}</PacksHeading>
+              <p className="text-ink-muted">{t("smsPacksSubtitle")}</p>
+            </div>
+            <ul className="grid gap-4 sm:grid-cols-3">
+              {smsPacks.map((p) => (
+                <li key={p.slug}>
+                  <Card interactive className="h-full space-y-1 p-5 text-center">
+                    <p className="inline-flex items-center justify-center gap-2 font-medium">
+                      <MessageSquareLock
+                        className="size-4 text-primary"
+                        strokeWidth={1.75}
+                        aria-hidden
+                      />
+                      {t("smsPackCredits", { count: p.credits })}
+                    </p>
+                    <p className="text-2xl font-semibold tracking-tight">{eur(p.priceCents)}</p>
+                    <p className="text-xs text-ink-muted">
+                      {t("smsPackUnit", {
+                        price: format.number(p.priceCents / p.credits / 100, "eur"),
+                      })}
+                    </p>
+                  </Card>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
       </div>
     </section>
   );
@@ -307,7 +350,7 @@ export async function PricingSection({
 
 export async function FaqSection({ locale }: Props) {
   const t = await getTranslations({ locale, namespace: "marketing.faq" });
-  const keys = ["q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8"] as const;
+  const keys = ["q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8", "q9", "q10"] as const;
   return (
     <section id="faq" className="section-y bg-bg-soft" aria-labelledby="faq-title">
       <div className="container-page grid gap-10 lg:grid-cols-[1fr_1.6fr]">

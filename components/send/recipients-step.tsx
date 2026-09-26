@@ -12,6 +12,7 @@ import { NativeSelect } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { LIMITS } from "@/lib/config";
+import { Link } from "@/lib/i18n/navigation";
 import {
   EXPIRY_OPTIONS,
   type EnvelopeSettingsInput,
@@ -91,6 +92,7 @@ function SignerRow({
   onMove,
   sequential,
   smsAvailable,
+  smsBalance,
 }: {
   form: Form;
   index: number;
@@ -100,6 +102,7 @@ function SignerRow({
   onMove: (delta: -1 | 1) => void;
   sequential: boolean;
   smsAvailable: boolean;
+  smsBalance: number;
 }) {
   const t = useTranslations("send.recipients");
   const te = useTranslateError();
@@ -319,7 +322,7 @@ function SignerRow({
                 <Switch
                   id={`s-${index}-sms`}
                   checked={Boolean(field.value)}
-                  disabled={!smsAvailable}
+                  disabled={!smsAvailable || (smsBalance <= 0 && !field.value)}
                   onCheckedChange={(on) => {
                     field.onChange(on);
                     void form.trigger(`signers.${index}.phone`);
@@ -329,7 +332,24 @@ function SignerRow({
                 <label htmlFor={`s-${index}-sms`} className="text-sm">
                   <span className="font-medium">{t("smsOtp")}</span>
                   <span className="block text-xs text-ink-muted">
-                    {smsAvailable ? t("smsOtpHint") : t("smsOtpUnavailable")}
+                    {!smsAvailable ? (
+                      t("smsOtpUnavailable")
+                    ) : smsBalance <= 0 ? (
+                      t.rich("smsOtpNoCredits", {
+                        link: (chunks) => (
+                          <Link
+                            href={{ pathname: "/app/billing", hash: "sms" }}
+                            className="text-brand font-medium underline-offset-2 hover:underline"
+                          >
+                            {chunks}
+                          </Link>
+                        ),
+                      })
+                    ) : (
+                      <>
+                        {t("smsOtpHint")} {t("smsOtpBalance", { count: smsBalance })}
+                      </>
+                    )}
                   </span>
                 </label>
               </div>
@@ -345,12 +365,14 @@ export function RecipientsStep({
   form,
   contacts,
   smsAvailable,
+  smsBalance,
   onBack,
   onContinue,
 }: {
   form: Form;
   contacts: WizardContact[];
   smsAvailable: boolean;
+  smsBalance: number;
   onBack: () => void;
   onContinue: () => void;
 }) {
@@ -382,6 +404,7 @@ export function RecipientsStep({
             contacts={contacts}
             sequential={Boolean(sequential)}
             smsAvailable={smsAvailable}
+            smsBalance={smsBalance}
             onRemove={() => remove(index)}
             onMove={(delta) => move(index, index + delta)}
           />

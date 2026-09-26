@@ -187,7 +187,7 @@
       },
       "two": {
         "title": "2. Send",
-        "body": "Enter each signer's first name, last name and email. They receive a unique, secure link."
+        "body": "Enter each signer's first name, last name and email. They receive a unique, secure link, or sign next to you in person. Optionally, require an SMS code."
       },
       "three": {
         "title": "3. Signed and sealed",
@@ -221,6 +221,14 @@
       "reminders": {
         "title": "Automatic reminders",
         "body": "We remind your signers about pending documents and keep you posted at every step."
+      },
+      "smsOtp": {
+        "title": "SMS code before signing",
+        "body": "Optional per signer: before signing they must enter a one-time code we text to their mobile."
+      },
+      "inPerson": {
+        "title": "In-person signing",
+        "body": "Your client signs next to you, on your tablet or phone, without any email. The certificate records that it was in person."
       }
     },
     "legal": {
@@ -230,11 +238,11 @@
       "points": {
         "unique": {
           "title": "Uniquely linked to the signer",
-          "body": "Each signer receives a unique, personal link by email and signs with their own stroke."
+          "body": "Each signer receives a unique, personal link by email, or signs in the presence of the sender, and signs with their own stroke."
         },
         "identify": {
           "title": "Capable of identifying them",
-          "body": "We record name, email, IP address, device and the biometric data of the signature."
+          "body": "We record name, email, IP address, device and the biometric data of the signature. With the optional SMS code, also possession of their mobile."
         },
         "control": {
           "title": "Under their sole control",
@@ -264,7 +272,8 @@
         "multi": "Up to 10 documents and 10 signers per envelope",
         "reminders": "Automatic reminders and expiry",
         "verification": "Public document verification",
-        "support": "Email support in Spanish and English"
+        "support": "Email support in Spanish and English",
+        "identity": "In-person signing and SMS code before signing (SMS sold in packs)"
       },
       "cta": "Start for free",
       "trialNote": "Start with {credits} trial signatures, no card required.",
@@ -272,7 +281,11 @@
       "packsSubtitle": "One-off packs. They never expire and are used after your monthly signatures.",
       "packCredits": "{credits} signatures",
       "packUnit": "{price} per signature",
-      "whatIsSignature": "1 signature = 1 signer completing an envelope (with all of its documents)."
+      "whatIsSignature": "1 signature = 1 signer completing an envelope (with all of its documents).",
+      "smsPacksTitle": "SMS packs to verify signers",
+      "smsPacksSubtitle": "Only if you turn on the SMS code. Each code sent uses 1 SMS. One-off payment, never expire.",
+      "smsPackCredits": "{count} SMS",
+      "smsPackUnit": "{price} per SMS"
     },
     "faq": {
       "eyebrow": "FAQ",
@@ -309,6 +322,14 @@
         "q8": {
           "q": "Can I cancel anytime?",
           "a": "Yes. You can cancel your subscription from your dashboard at any time. You keep access to your history and your signed documents."
+        },
+        "q9": {
+          "q": "Can I strengthen the signer's identification?",
+          "a": "Yes. When preparing the envelope you can require, per signer, a one-time code we text to their mobile: without it they cannot sign. It adds a second factor (possession of the phone) to the email evidence. SMS codes are paid separately with SMS packs; each code sent uses 1 SMS."
+        },
+        "q10": {
+          "q": "Can someone sign in person, at my office?",
+          "a": "Yes. Mark the signer as \"In-person signing\": they receive no email and you get a \"Sign now\" button on the envelope so they can sign on your tablet, phone or computer. The evidence certificate states that the signature was in person and before whom. You can combine it with the SMS code."
         }
       }
     },
@@ -336,13 +357,13 @@
       "signer": "For the signer",
       "senderSteps": {
         "s1": "Create your account and upload one or more PDFs, images or Word documents.",
-        "s2": "Add the signers with first name, last name and email. Choose whether they sign in parallel or in order.",
+        "s2": "Add the signers with first name, last name and email. Choose whether they sign in parallel or in order, whether anyone signs in person next to you and whether they must confirm an SMS code.",
         "s3": "Track every envelope in real time and receive the signed PDF, the evidence certificate and the timestamp."
       },
       "signerSteps": {
-        "s1": "Opens the link in the email: no account, nothing to install.",
+        "s1": "Opens the link in the email, or signs on your device if they are with you: no account, nothing to install.",
         "s2": "Reviews the full document in the browser, on a phone or a computer.",
-        "s3": "Accepts the consent and signs on screen. Gets a signed copy instantly."
+        "s3": "Accepts the consent, confirms the SMS code if you require it and signs on screen. Gets a signed copy instantly."
       },
       "behindTitle": "What happens behind the scenes",
       "behind": {
@@ -354,7 +375,7 @@
     },
     "pricingPage": {
       "metaTitle": "Pricing",
-      "metaDescription": "DocuFirma Pro plan: €9/month with 10 signatures included, VAT included. Extra signature packs that never expire."
+      "metaDescription": "DocuFirma Pro plan: €9/month with 10 signatures included, VAT included. Extra signature packs that never expire and SMS packs to verify signers."
     },
     "home": {
       "metaTitle": "Advanced electronic signature with qualified timestamp"
@@ -414,7 +435,7 @@
           },
           "s4": {
             "h": "Signers' data",
-            "p": "For documents sent by our users, CLOUDIN acts as data processor through DocuFirma. We process first name, last name, email, IP address, device data, approximate location and the events of the signing process to generate the signature evidence."
+            "p": "For documents sent by our users, CLOUDIN acts as data processor through DocuFirma. We process first name, last name, email, mobile number (only if the sender turns on SMS verification), IP address, device data, approximate location and the events of the signing process to generate the signature evidence."
           },
           "s5": {
             "h": "Biometric signature data",
@@ -430,7 +451,7 @@
           },
           "s8": {
             "h": "Data processors for the DocuFirma service",
-            "p": "To provide the DocuFirma service we use providers located in, or with servers in, the EU, acting as data processors: Supabase (database and storage, Frankfurt), Vercel (hosting, Frankfurt), Stripe (payments), Resend (email), Mensatek (qualified timestamping) and Sentry (error monitoring). Any international transfer is covered by standard contractual clauses."
+            "p": "To provide the DocuFirma service we use providers located in, or with servers in, the EU, acting as data processors: Supabase (database and storage, Frankfurt), Vercel (hosting, Frankfurt), Stripe (payments), Resend (email), Mensatek (qualified timestamping and SMS delivery) and Sentry (error monitoring). Any international transfer is covered by standard contractual clauses."
           },
           "s9": {
             "h": "Data retention period",
@@ -532,7 +553,7 @@
           },
           "s2": {
             "h": "Signer identification",
-            "p": "The signer receives by email a unique link with 256 bits of entropy. Only the SHA-256 hash of the link is stored. Name, email, IP address, user agent, device, approximate location and the event timeline are recorded."
+            "p": "By default, the signer receives by email a unique link with 256 bits of entropy; only the SHA-256 hash of the link is stored. The sender may also require a 6-digit one-time code texted to the signer's mobile (valid for 10 minutes, with limited attempts; only its hash is stored), or that the signature takes place in person on the sender's own device, in which case no email link is sent and the certificate states before whom it was signed. Name, email, mobile number (if SMS is used), IP address, user agent, device, approximate location and the event timeline are recorded."
           },
           "s3": {
             "h": "Signature creation",
@@ -960,6 +981,13 @@
       "heading": "You're running low on signatures",
       "body": "You have {count, plural, =0 {0 signatures} one {# signature} other {# signatures}} left. Subscribe to the Pro plan or buy a pack to keep sending documents.",
       "cta": "See options"
+    },
+    "smsEmpty": {
+      "subject": "A signer cannot receive the SMS code",
+      "preview": "You have run out of SMS for signing codes.",
+      "heading": "You have run out of SMS",
+      "body": "{name} wants to sign “{title}”, but you have no SMS left to send the verification code. Buy an SMS pack and ask them to try again.",
+      "cta": "Buy SMS"
     }
   },
   "send": {
@@ -1038,7 +1066,9 @@
       "inPersonHint": "They will sign on your device, next to you. No email link is sent; you will get a “Sign now” button on the envelope.",
       "smsOtp": "Verify with SMS code",
       "smsOtpHint": "Before signing they must enter a 6-digit code we text to their mobile.",
-      "smsOtpUnavailable": "Not available: SMS credentials are missing on the server."
+      "smsOtpUnavailable": "Not available: SMS credentials are missing on the server.",
+      "smsOtpBalance": "You have {count, plural, one {# SMS} other {# SMS}} left.",
+      "smsOtpNoCredits": "You have no SMS left. <link>Buy an SMS pack</link> to turn it on."
     },
     "review": {
       "title": "Review and send",
@@ -1078,7 +1108,8 @@
       "not_draft": "This envelope had already been sent.",
       "no_documents": "Add at least one document.",
       "phoneRequired": "To verify by SMS, enter the signer's mobile number.",
-      "sms_unavailable": "SMS verification is not available right now."
+      "sms_unavailable": "SMS verification is not available right now.",
+      "sms_no_credits": "You don’t have enough SMS for every signer with a code. Buy an SMS pack in Billing."
     }
   },
   "signing": {
@@ -1208,7 +1239,8 @@
         "otp_too_many_attempts": "Too many failed attempts. Request a new code.",
         "otp_rate_limited": "You have requested too many codes. Wait a few minutes.",
         "rate_limited": "Too many attempts. Wait a few minutes.",
-        "sms_failed": "We could not send the SMS. Try again in a few minutes."
+        "sms_failed": "We could not send the SMS. Try again in a few minutes.",
+        "sms_no_credits": "We cannot send your code right now: the sender has no SMS left. We have let them know; please try again later."
       }
     },
     "inPerson": {
@@ -1277,6 +1309,14 @@
       "stripe_error": "We couldn't reach the payment system. Please try again.",
       "pack_not_found": "This pack is no longer available.",
       "generic": "We couldn't start the payment."
+    },
+    "sms": {
+      "title": "SMS for verification codes",
+      "subtitle": "Every code sent to a signer uses 1 SMS. Packs never expire.",
+      "balance": "You have <strong>{count}</strong> SMS left",
+      "credits": "{credits} SMS",
+      "unit": "{price} per SMS",
+      "buy": "Buy SMS"
     }
   }
 }

@@ -61,17 +61,25 @@ los emite una TSA local de pruebas (sin valor legal).
 
 ### 2. Stripe
 
+Variables: `STRIPE_SECRET_KEY` (`sk_live_…`) y `STRIPE_WEBHOOK_SECRET` (`whsec_…`). Opcionales:
+`NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` y `STRIPE_PRICE_PRO_MONTHLY` (si falta, se busca el precio por su `lookup_key`).
+
 1. Activa **Stripe Tax** (registro de IVA en España) y el **Customer Portal** en el dashboard.
-2. Crea productos y precios (Pro 9 €/mes IVA incl. y packs 25/100/500, todos `tax_behavior=inclusive`), sincroniza los
-   packs con la tabla `credit_packs` y crea la configuración del portal:
+2. Con `STRIPE_SECRET_KEY` y `CRON_SECRET` ya en Vercel, crea productos y precios (Pro 9 €/mes, packs de firmas y packs
+   de SMS, todos con IVA incluido), la configuración del portal y el endpoint del webhook desde la app desplegada:
    ```bash
-   STRIPE_SECRET_KEY=sk_live_... NEXT_PUBLIC_SUPABASE_URL=... SUPABASE_SERVICE_ROLE_KEY=... pnpm stripe:setup --portal
+   curl -X POST https://docufirma.es/api/admin/stripe-setup \
+     -H "Authorization: Bearer $CRON_SECRET" -H "content-type: application/json" \
+     -d '{"portal":true,"webhook":true}'
    ```
-   Guarda el `STRIPE_PRICE_PRO_MONTHLY` que imprime.
-3. **Developers → Webhooks**: endpoint `https://docufirma.es/api/stripe/webhook` con los eventos
-   `checkout.session.completed`, `checkout.session.async_payment_succeeded`, `customer.subscription.created`,
-   `customer.subscription.updated`, `customer.subscription.deleted`, `customer.subscription.paused`,
-   `customer.subscription.resumed`, `invoice.paid`, `invoice.payment_failed`. Copia el _signing secret_.
+   La respuesta incluye `webhook.secret` (solo la primera vez, al crear el endpoint): guárdalo como
+   `STRIPE_WEBHOOK_SECRET` y vuelve a desplegar. Es idempotente; alternativa local: `pnpm stripe:setup --portal --webhook`.
+3. Si prefieres crear el webhook a mano: **Developers → Webhooks**, endpoint `https://docufirma.es/api/stripe/webhook`
+   con los eventos `checkout.session.completed`, `checkout.session.async_payment_succeeded`,
+   `customer.subscription.created`, `customer.subscription.updated`, `customer.subscription.deleted`,
+   `customer.subscription.paused`, `customer.subscription.resumed`, `invoice.paid`, `invoice.payment_failed`.
+4. Los precios de los packs viven en la tabla `credit_packs` (`kind = 'signatures' | 'sms'`); tras cambiarlos, repite el
+   paso 2 para crear los precios nuevos en Stripe.
 
 ### 3. Resend
 
@@ -87,7 +95,9 @@ Recomendado: exporta la cadena de certificados de la TSA a `TSA_TRUSTED_CERTS_PE
 `PADES_DOC_TIMESTAMP=true` añade además un sello PAdES visible en Adobe Reader (un sello extra por documento).
 Para el **código SMS** antes de firmar, rellena `MENSATEK_SMS_USER` (email de la cuenta de SMS de Mensatek) y
 `MENSATEK_SMS_PASSWORD`; `SMS_SENDER` es el remitente alfanumérico (máx. 11 caracteres). Sin ellas la opción aparece
-desactivada en el asistente de envío.
+desactivada en el asistente de envío. Los usuarios pagan los SMS con packs (Facturación → SMS); cada código enviado
+consume 1 SMS. Prueba de envío real:
+`curl -X POST https://docufirma.es/api/admin/sms-test -H "Authorization: Bearer $CRON_SECRET" -H "content-type: application/json" -d '{"to":"600123456"}'`.
 
 ### 5. Vercel
 

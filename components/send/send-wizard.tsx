@@ -32,6 +32,7 @@ export function SendWizard({
   credits,
   docxEnabled,
   smsAvailable,
+  smsBalance,
 }: {
   initialEnvelopeId: string | null;
   initialDocuments: WizardDocument[];
@@ -40,6 +41,7 @@ export function SendWizard({
   credits: number;
   docxEnabled: boolean;
   smsAvailable: boolean;
+  smsBalance: number;
 }) {
   const t = useTranslations("send");
   const te = useTranslations();
@@ -244,6 +246,7 @@ export function SendWizard({
           form={form}
           contacts={contacts}
           smsAvailable={smsAvailable}
+          smsBalance={smsBalance}
           onBack={() => goTo(0)}
           onContinue={toReview}
         />

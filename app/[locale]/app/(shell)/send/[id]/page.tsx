@@ -35,6 +35,7 @@ export default async function EditDraftPage({ params }: PageProps<"/[locale]/app
       credits={data.credits}
       docxEnabled={data.docxEnabled}
       smsAvailable={data.smsAvailable}
+      smsBalance={data.smsBalance}
     />
   );
 }

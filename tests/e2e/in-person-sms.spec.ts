@@ -5,7 +5,7 @@ import { registerAndOnboard } from "./helpers/auth";
 import { extractSignLink, waitForEmail } from "./helpers/outbox";
 import { sendEnvelope } from "./helpers/send";
 import { drawSignature, readAllDocuments } from "./helpers/sign";
-import { waitForSmsCode } from "./helpers/sms";
+import { grantSms, waitForSmsCode } from "./helpers/sms";
 
 const randomMobile = () => `6${String(Math.floor(Math.random() * 1e8)).padStart(8, "0")}`;
 const outboxHas = (email: string, tag: string) => {
@@ -21,7 +21,8 @@ test.describe("in-person signing and SMS codes", () => {
   test("in person + SMS: the host starts the session, the signer confirms the code and signs", async ({
     page,
   }) => {
-    await registerAndOnboard(page, { firstName: "Hana" });
+    const { email: host } = await registerAndOnboard(page, { firstName: "Hana" });
+    await grantSms(host, 5);
     const mobile = randomMobile();
     const { signers, envelopeUrl } = await sendEnvelope(page, {
       files: ["tests/fixtures/contrato.pdf"],
@@ -72,13 +73,30 @@ test.describe("in-person signing and SMS codes", () => {
     await expect(page.getByText("Código SMS confirmado").first()).toBeVisible({ timeout: 30_000 });
     await expect(page.getByText("Firma presencial iniciada").first()).toBeVisible();
 
+    // One code sent → one SMS consumed from the balance.
+    await page.goto("/es/app/billing");
+    await expect(page.locator("#sms")).toContainText("Te quedan 4 SMS");
+
     // The signer still receives the signed copy by email.
     const done = await waitForEmail(email, "envelope-completed-signer", 60_000);
     expect(done.subject).toContain("firmado y sellado");
   });
 
-  test("remote + SMS: the link alone is not enough to sign", async ({ page, browser, baseURL }) => {
+  test("without SMS left the code switch is off and links to the SMS packs", async ({ page }) => {
     await registerAndOnboard(page);
+    await page.goto("/es/app/send");
+    await page.locator("#wizard-files").setInputFiles(["tests/fixtures/anexo.pdf"]);
+    await expect(page.getByText("anexo.pdf", { exact: true })).toBeVisible({ timeout: 30_000 });
+    await page.getByRole("button", { name: "Continuar" }).click();
+    await expect(page.locator("#s-0-sms")).toBeDisabled();
+    await page.getByRole("link", { name: "Compra un pack de SMS" }).click();
+    await expect(page).toHaveURL(/\/es\/app\/[^/]+#sms$/);
+    await expect(page.locator("#sms")).toContainText("Te quedan 0 SMS");
+  });
+
+  test("remote + SMS: the link alone is not enough to sign", async ({ page, browser, baseURL }) => {
+    const { email: host } = await registerAndOnboard(page);
+    await grantSms(host, 1);
     const mobile = randomMobile();
     const { signers } = await sendEnvelope(page, {
       files: ["tests/fixtures/contrato.pdf"],

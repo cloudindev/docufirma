@@ -1,3 +1,4 @@
+import { createClient } from "@supabase/supabase-js";
 import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
@@ -35,4 +36,26 @@ export function smsCount(phone: string) {
   } catch {
     return 0;
   }
+}
+
+/** Tops up the SMS balance of a user (as if they had bought a pack) through the service role. */
+export async function grantSms(email: string, amount = 10) {
+  const admin = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+    { auth: { persistSession: false } },
+  );
+  const { data: profile, error } = await admin
+    .from("profiles")
+    .select("id")
+    .eq("email", email)
+    .single();
+  if (error || !profile) throw new Error(`No profile for ${email}`);
+  const { error: rpcError } = await admin.rpc("adjust_sms_credits", {
+    p_user_id: profile.id,
+    p_amount: amount,
+    p_note: "e2e",
+  });
+  if (rpcError) throw rpcError;
+  return profile.id as string;
 }

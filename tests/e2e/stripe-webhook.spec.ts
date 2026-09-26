@@ -128,6 +128,28 @@ test.describe("stripe webhook", () => {
     // Same payment re-delivered with a different event id is still granted once.
     expect((await post(request, { ...checkout, id: `${checkout.id}_again` })).ok()).toBeTruthy();
 
+    // SMS pack purchase → +100 SMS (separate balance, signatures unchanged).
+    const { data: smsPack } = await admin()
+      .from("credit_packs")
+      .select("id")
+      .eq("slug", "sms-100")
+      .single();
+    const smsCheckout = evt("checkout.session.completed", {
+      id: `cs_sms_${Date.now()}`,
+      object: "checkout.session",
+      mode: "payment",
+      payment_status: "paid",
+      customer,
+      payment_intent: `pi_sms_${Date.now()}`,
+      metadata: { user_id: userId, kind: "sms_pack", pack_id: smsPack!.id, credits: "100" },
+    });
+    expect((await post(request, smsCheckout)).ok()).toBeTruthy();
+    expect(
+      (await post(request, { ...smsCheckout, id: `${smsCheckout.id}_again` })).ok(),
+    ).toBeTruthy();
+    const { data: smsBalance } = await admin().rpc("get_sms_balance", { p_user_id: userId });
+    expect(smsBalance).toBe(100);
+
     await page.goto("/es/app/billing");
     await expect(page.getByText("Plan Pro", { exact: true })).toBeVisible();
     await expect(page.getByText("Activa", { exact: true })).toBeVisible();

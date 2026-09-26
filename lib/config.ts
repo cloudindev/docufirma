@@ -15,6 +15,13 @@ export const DEFAULT_PACKS = [
   { slug: "pack-500", credits: 500, priceCents: 19900 },
 ] as const;
 
+/** SMS packs for signer verification codes (1 code sent = 1 SMS). Mirrors the migration seed. */
+export const DEFAULT_SMS_PACKS = [
+  { slug: "sms-100", credits: 100, priceCents: 900 },
+  { slug: "sms-500", credits: 500, priceCents: 3900 },
+  { slug: "sms-1000", credits: 1000, priceCents: 6900 },
+] as const;
+
 export const LIMITS = {
   maxFileBytes: 25 * 1024 * 1024,
   maxDocumentsPerEnvelope: 10,

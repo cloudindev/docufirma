@@ -227,4 +227,21 @@ Opciones por firmante en el asistente de envío:
 - El certificado de evidencias muestra el método (a distancia / presencial ante X) y la verificación SMS (móvil
   enmascarado y hora). Proveedor: Mensatek SMS API v5 por POST (credenciales en el cuerpo, nunca en la URL); en
   desarrollo y e2e, outbox en disco. Sin credenciales en producción la opción aparece desactivada. Los SMS no consumen
-  firmas del usuario: su coste lo asume la cuenta de Mensatek.
+  firmas: se pagan con un saldo de SMS propio (ver D-038).
+
+## D-038 · SMS de pago con saldo propio
+
+- Cada código enviado a un firmante consume **1 SMS** de un saldo independiente de las firmas. Motivo: el coste del SMS
+  es variable y proporcional al uso (reenvíos incluidos); meterlo en el precio de la firma encarecería a quien no lo usa.
+- Catálogo único `credit_packs` con `kind in ('signatures','sms')`; packs iniciales 100/500/1000 SMS a 9/39/69 € IVA
+  incl. (editables en la tabla y sincronizados con Stripe por `runStripeSetup`).
+- Libro `sms_ledger` (append-only, igual que `credit_ledger`): `purchase` (único por `payment_ref`, idempotente frente a
+  reintentos del webhook), `consume` (−1 por código, dentro de `request_signer_otp` con bloqueo por usuario),
+  `refund` (si el proveedor falla al enviar) y `adjustment` (soporte). El saldo es siempre `sum(amount)`.
+- Sin saldo, `request_signer_otp` falla con `sms_no_credits`: el firmante ve un aviso y el remitente recibe un email
+  (máx. 1 por firmante y hora). El asistente muestra el saldo, desactiva el interruptor a 0 con enlace a
+  `/app/billing#sms` y `sendEnvelope` rechaza el envío si hay más firmantes con SMS que SMS disponibles.
+- Stripe: mismo Checkout de pago único que los packs de firmas (`metadata.kind = 'sms_pack'`); el webhook abona con
+  `grant_sms_pack`. La configuración de Stripe (precios por `lookup_key`, portal y endpoint del webhook) puede lanzarse
+  desde la app desplegada con `POST /api/admin/stripe-setup` (protegido con `CRON_SECRET`), sin CLI local.
+  `STRIPE_PRICE_PRO_MONTHLY` pasa a ser opcional: si falta, el precio Pro se busca por su `lookup_key`.

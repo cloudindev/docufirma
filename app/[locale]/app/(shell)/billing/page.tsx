@@ -1,4 +1,4 @@
-import { CalendarClock, Package, PenLine } from "lucide-react";
+import { MessageSquareLock, CalendarClock, Package, PenLine } from "lucide-react";
 import type { Metadata } from "next";
 import { getFormatter, getTranslations } from "next-intl/server";
 import { BillingButton } from "@/components/app/billing-actions";
@@ -16,9 +16,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { requireProfile } from "@/lib/auth/session";
-import { getCredits } from "@/lib/credits";
+import { getCredits, getSmsBalance } from "@/lib/credits";
 import { resolveLocale } from "@/lib/i18n/server";
-import { getPackOffers, planOffer } from "@/lib/pricing";
+import { getPackOffers, getSmsPackOffers, planOffer } from "@/lib/pricing";
 import { listInvoices } from "@/lib/stripe/billing";
 import { createClient } from "@/lib/supabase/server";
 
@@ -42,11 +42,13 @@ export default async function BillingPage({
   const format = await getFormatter({ locale });
   const supabase = await createClient();
 
-  const [credits, { data: subs }, packs, invoices] = await Promise.all([
+  const [credits, { data: subs }, packs, invoices, smsPacks, smsBalance] = await Promise.all([
     getCredits(supabase, profile.id),
     supabase.from("subscriptions").select("*").order("created_at", { ascending: false }).limit(1),
     getPackOffers(),
     listInvoices(profile.stripe_customer_id),
+    getSmsPackOffers(),
+    getSmsBalance(supabase, profile.id).catch(() => 0),
   ]);
   const sub = subs?.[0];
   const hasLiveSub =
@@ -207,6 +209,53 @@ export default async function BillingPage({
           ))}
         </ul>
       </section>
+
+      {smsPacks.length > 0 ? (
+        <section id="sms" className="mt-8 space-y-4" aria-labelledby="sms-title">
+          <div className="flex flex-wrap items-end justify-between gap-2">
+            <div>
+              <h2 id="sms-title" className="flex items-center gap-2 text-lg">
+                <MessageSquareLock className="size-5 text-primary" strokeWidth={1.75} />{" "}
+                {t("sms.title")}
+              </h2>
+              <p className="text-sm text-ink-muted">{t("sms.subtitle")}</p>
+            </div>
+            <p className="text-sm">
+              {t.rich("sms.balance", {
+                count: smsBalance,
+                strong: (c) => <strong className="text-lg font-semibold">{c}</strong>,
+              })}
+            </p>
+          </div>
+          <ul className="grid gap-4 sm:grid-cols-3">
+            {smsPacks.map((p) => (
+              <li key={p.slug}>
+                <Card interactive className="flex h-full flex-col gap-3 p-5">
+                  <p className="font-medium">{t("sms.credits", { credits: p.credits })}</p>
+                  <p className="text-3xl font-semibold tracking-tight">{eur(p.priceCents)}</p>
+                  <p className="text-xs text-ink-muted">
+                    {t("sms.unit", {
+                      price: format.number(p.priceCents / p.credits / 100, {
+                        style: "currency",
+                        currency: "EUR",
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 3,
+                      }),
+                    })}
+                  </p>
+                  <BillingButton
+                    action={{ kind: "pack", slug: p.slug }}
+                    variant="secondary"
+                    className="mt-auto"
+                  >
+                    {t("sms.buy")}
+                  </BillingButton>
+                </Card>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
 
       <Card className="mt-8">
         <CardHeader>

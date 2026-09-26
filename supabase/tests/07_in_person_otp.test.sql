@@ -17,6 +17,7 @@ select tests.assert_raises(format($q$insert into public.signers (envelope_id, fi
   'signers_phone_format', 'phone must be E.164');
 
 select tests.as_service();
+select public.adjust_sms_credits(tests.id('u'), 20, 'test balance');
 select public.send_envelope(tests.id('e'), tests.id('u'),
   jsonb_build_array(
     jsonb_build_object('signer_id', tests.id('sp'), 'token_hash', repeat('1', 64)),

@@ -95,3 +95,6 @@ Implementado en `delete_user_account` (ver `docs/DECISIONS.md` D-015):
   Recomendable combinarla con el código SMS o con la comprobación visual del DNI por parte del remitente.
 - El teléfono del firmante es un dato personal tratado por cuenta del remitente (encargo del tratamiento); se borra con
   el sobre o la cuenta.
+- Textos actualizados el 2026-09-26: la política de privacidad incluye el móvil del firmante (solo con verificación
+  SMS) y a Mensatek como encargado también del envío de SMS; la política de firma describe el código SMS y la firma
+  presencial.

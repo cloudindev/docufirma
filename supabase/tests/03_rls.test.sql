@@ -41,7 +41,8 @@ select tests.assert_eq((select title from public.envelopes where id = tests.id('
 
 -- Anonymous visitors only see the active pack catalog.
 select tests.as_anon();
-select tests.assert_eq((select count(*)::int from public.credit_packs), 3, 'anon sees packs');
+select tests.assert_eq((select count(*)::int from public.credit_packs where kind = 'signatures'), 3, 'anon sees packs');
+select tests.assert_eq((select count(*)::int from public.credit_packs where kind = 'sms'), 3, 'anon sees SMS packs');
 select tests.assert_raises('select * from public.envelopes', 'permission denied', 'anon no envelopes');
 select tests.assert_raises('select * from public.profiles', 'permission denied', 'anon no profiles');
 

@@ -151,6 +151,7 @@ export type Database = {
           credits: number;
           currency: string;
           id: string;
+          kind: string;
           name_en: string;
           name_es: string;
           price_cents: number;
@@ -165,6 +166,7 @@ export type Database = {
           credits: number;
           currency?: string;
           id?: string;
+          kind?: string;
           name_en: string;
           name_es: string;
           price_cents: number;
@@ -179,6 +181,7 @@ export type Database = {
           credits?: number;
           currency?: string;
           id?: string;
+          kind?: string;
           name_en?: string;
           name_es?: string;
           price_cents?: number;
@@ -891,6 +894,74 @@ export type Database = {
           },
         ];
       };
+      sms_ledger: {
+        Row: {
+          amount: number;
+          created_at: string;
+          envelope_id: string | null;
+          id: string;
+          kind: string;
+          note: string | null;
+          pack_id: string | null;
+          signer_id: string | null;
+          stripe_payment_intent_id: string | null;
+          user_id: string;
+        };
+        Insert: {
+          amount: number;
+          created_at?: string;
+          envelope_id?: string | null;
+          id?: string;
+          kind: string;
+          note?: string | null;
+          pack_id?: string | null;
+          signer_id?: string | null;
+          stripe_payment_intent_id?: string | null;
+          user_id: string;
+        };
+        Update: {
+          amount?: number;
+          created_at?: string;
+          envelope_id?: string | null;
+          id?: string;
+          kind?: string;
+          note?: string | null;
+          pack_id?: string | null;
+          signer_id?: string | null;
+          stripe_payment_intent_id?: string | null;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "sms_ledger_envelope_id_fkey";
+            columns: ["envelope_id"];
+            isOneToOne: false;
+            referencedRelation: "envelopes";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "sms_ledger_pack_id_fkey";
+            columns: ["pack_id"];
+            isOneToOne: false;
+            referencedRelation: "credit_packs";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "sms_ledger_signer_id_fkey";
+            columns: ["signer_id"];
+            isOneToOne: false;
+            referencedRelation: "signers";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "sms_ledger_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       stripe_events: {
         Row: {
           created_at: string;
@@ -973,6 +1044,7 @@ export type Database = {
     Views: { [_ in never]: never };
     Functions: {
       adjust_credits: { Args: { p_user_id: string; p_amount: number; p_note: string }; Returns: undefined };
+      adjust_sms_credits: { Args: { p_user_id: string; p_amount: number; p_note: string }; Returns: undefined };
       cancel_envelope: { Args: { p_envelope_id: string; p_user_id: string }; Returns: Json };
       claim_expired_biometrics: { Args: { p_years: number; p_limit?: number }; Returns: { evidence_id: string; biometric_data_path: string }[] };
       claim_job_by_key: { Args: { p_dedupe_key: string }; Returns: { id: string; type: string; payload: Json; status: Database["public"]["Enums"]["job_status"]; run_at: string; attempts: number; max_attempts: number; last_error: string; locked_at: string; dedupe_key: string; created_at: string; updated_at: string }[] };
@@ -987,8 +1059,10 @@ export type Database = {
       expire_due_envelopes: { Args: { p_limit?: number }; Returns: { envelope_id: string; released: number }[] };
       fail_job: { Args: { p_job_id: string; p_error: string; p_retry_at?: string }; Returns: Database["public"]["Enums"]["job_status"] };
       get_available_credits: { Args: { p_user_id: string }; Returns: { monthly_available: number; pack_available: number; total: number; monthly_granted: number; monthly_expires_at: string; reserved: number }[] };
+      get_sms_balance: { Args: { p_user_id: string }; Returns: number };
       grant_monthly_credits: { Args: { p_user_id: string; p_amount: number; p_expires_at: string; p_invoice_id: string }; Returns: boolean };
       grant_pack_credits: { Args: { p_user_id: string; p_amount: number; p_payment_ref: string; p_pack_id?: string }; Returns: boolean };
+      grant_sms_pack: { Args: { p_user_id: string; p_amount: number; p_payment_ref: string; p_pack_id?: string }; Returns: boolean };
       issue_signer_token: { Args: { p_signer_id: string; p_token_hash: string }; Returns: undefined };
       log_envelope_event: { Args: { p_envelope_id: string; p_signer_id: string; p_type: Database["public"]["Enums"]["envelope_event_type"]; p_metadata?: Json; p_ip?: string; p_user_agent?: string }; Returns: string };
       mark_envelope_completed: { Args: { p_envelope_id: string }; Returns: boolean };
@@ -1000,6 +1074,7 @@ export type Database = {
       record_reminder: { Args: { p_signer_id: string; p_resend_id?: string }; Returns: undefined };
       record_signer_event: { Args: { p_token_hash: string; p_type: Database["public"]["Enums"]["envelope_event_type"]; p_metadata?: Json; p_ip?: string; p_user_agent?: string }; Returns: undefined };
       record_tsa_result: { Args: { p_artifact_id: string; p_granted: boolean; p_fields: Json; p_error?: string; p_next_attempt_at?: string }; Returns: { id: string; envelope_id: string; kind: Database["public"]["Enums"]["signed_artifact_kind"]; document_id: string; signed_path: string; signed_sha256: string; size_bytes: number; evidence_pdf_path: string; evidence_sha256: string; tsa_provider: string; tsq_path: string; tsr_path: string; tsa_serial: string; tsa_gen_time: string; tsa_policy_oid: string; tsa_name: string; tsa_hash_alg: string; tsa_status: Database["public"]["Enums"]["tsa_status"]; tsa_error: string; tsa_attempts: number; tsa_next_attempt_at: string; created_at: string; updated_at: string } };
+      refund_signer_sms: { Args: { p_signer_id: string; p_note?: string }; Returns: undefined };
       release_credit: { Args: { p_signer_id: string; p_note?: string }; Returns: boolean };
       request_signer_otp: { Args: { p_token_hash: string; p_code_hash: string; p_ip?: string; p_user_agent?: string }; Returns: string };
       reserve_credits: { Args: { p_user_id: string; p_envelope_id: string; p_signer_ids: string[] }; Returns: undefined };

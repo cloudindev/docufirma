@@ -7,6 +7,7 @@ import type { Locale } from "@/lib/i18n/routing";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { fullName } from "@/lib/utils";
 import { requireStripe } from "./client";
+import { PRO_LOOKUP_KEY } from "./setup";
 
 export class BillingError extends Error {
   constructor(
@@ -75,10 +76,27 @@ const checkoutBase = (
   cancel_url: billingUrl(locale, "?checkout=canceled"),
 });
 
+let cachedProPrice: string | undefined;
+
+/** STRIPE_PRICE_PRO_MONTHLY, or the price created by the Stripe setup (found by lookup key). */
+async function proPriceId(stripe: Stripe): Promise<string> {
+  const fromEnv = process.env.STRIPE_PRICE_PRO_MONTHLY;
+  if (fromEnv) return fromEnv;
+  if (cachedProPrice) return cachedProPrice;
+  const { data } = await stripe.prices.list({
+    lookup_keys: [PRO_LOOKUP_KEY],
+    active: true,
+    limit: 1,
+  });
+  if (!data[0])
+    throw new BillingError("not_configured", "No Pro price: run the Stripe setup first");
+  cachedProPrice = data[0].id;
+  return cachedProPrice;
+}
+
 export async function createSubscriptionCheckout(userId: string, locale: Locale): Promise<string> {
-  const price = process.env.STRIPE_PRICE_PRO_MONTHLY;
-  if (!price) throw new BillingError("not_configured", "STRIPE_PRICE_PRO_MONTHLY is not set");
   const stripe = requireStripe();
+  const price = await proPriceId(stripe);
   const customer = await ensureCustomer(userId);
   const session = await stripe.checkout.sessions.create({
     ...checkoutBase(customer, locale, userId),
@@ -114,7 +132,7 @@ export async function createPackCheckout(
   const customer = await ensureCustomer(userId);
   const metadata = {
     user_id: userId,
-    kind: "pack",
+    kind: pack.kind === "sms" ? "sms_pack" : "pack",
     pack_id: pack.id,
     credits: String(pack.credits),
   };

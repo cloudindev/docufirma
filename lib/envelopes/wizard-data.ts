@@ -1,6 +1,6 @@
 import "server-only";
 import type { WizardContact, WizardDocument } from "@/components/send/types";
-import { getCredits } from "@/lib/credits";
+import { getCredits, getSmsBalance } from "@/lib/credits";
 import type { EnvelopeSettingsInput } from "@/lib/envelopes/schemas";
 import { isDocxConversionEnabled } from "@/lib/pdf/convert";
 import { isSmsAvailable } from "@/lib/sms";
@@ -11,7 +11,7 @@ export async function loadWizardData(
   userId: string,
   envelopeId?: string,
 ) {
-  const [{ data: contacts }, credits, { data: profile }] = await Promise.all([
+  const [{ data: contacts }, credits, { data: profile }, smsBalance] = await Promise.all([
     supabase
       .from("contacts")
       .select("first_name, last_name, email")
@@ -19,6 +19,7 @@ export async function loadWizardData(
       .limit(500),
     getCredits(supabase, userId),
     supabase.from("profiles").select("locale").eq("id", userId).single(),
+    getSmsBalance(supabase, userId).catch(() => 0),
   ]);
 
   let documents: WizardDocument[] = [];
@@ -85,5 +86,6 @@ export async function loadWizardData(
     credits: credits.total,
     docxEnabled: isDocxConversionEnabled(),
     smsAvailable: isSmsAvailable(),
+    smsBalance,
   };
 }

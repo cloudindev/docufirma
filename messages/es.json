@@ -187,7 +187,7 @@
       },
       "two": {
         "title": "2. Envía",
-        "body": "Indica nombre, apellidos y email de cada firmante. Reciben un enlace único y seguro."
+        "body": "Indica nombre, apellidos y email de cada firmante. Reciben un enlace único y seguro, o firman a tu lado en modo presencial. Si quieres, exige un código SMS."
       },
       "three": {
         "title": "3. Firmado y sellado",
@@ -221,6 +221,14 @@
       "reminders": {
         "title": "Recordatorios automáticos",
         "body": "Recordamos a tus firmantes que tienen documentos pendientes y te avisamos en cada paso."
+      },
+      "smsOtp": {
+        "title": "Código SMS antes de firmar",
+        "body": "Opcional por firmante: antes de firmar debe introducir un código de un solo uso que le enviamos al móvil."
+      },
+      "inPerson": {
+        "title": "Firma presencial",
+        "body": "Tu cliente firma a tu lado, en tu tableta o tu móvil, sin email. El certificado deja constancia de que fue presencial."
       }
     },
     "legal": {
@@ -230,11 +238,11 @@
       "points": {
         "unique": {
           "title": "Vinculada al firmante",
-          "body": "Cada firmante recibe un enlace único y personal en su email y firma con su propio trazo."
+          "body": "Cada firmante recibe un enlace único y personal en su email, o firma en presencia del remitente, y firma con su propio trazo."
         },
         "identify": {
           "title": "Permite identificarle",
-          "body": "Registramos nombre, email, dirección IP, dispositivo y los datos biométricos de la firma."
+          "body": "Registramos nombre, email, IP, dispositivo y los datos biométricos de la firma. Con el código SMS opcional, además, la posesión de su móvil."
         },
         "control": {
           "title": "Bajo su control exclusivo",
@@ -264,7 +272,8 @@
         "multi": "Hasta 10 documentos y 10 firmantes por envío",
         "reminders": "Recordatorios y caducidad automáticos",
         "verification": "Verificación pública de documentos",
-        "support": "Soporte por email en español e inglés"
+        "support": "Soporte por email en español e inglés",
+        "identity": "Firma presencial y código SMS antes de firmar (SMS en packs aparte)"
       },
       "cta": "Empezar gratis",
       "trialNote": "Empieza con {credits} firmas de prueba, sin tarjeta.",
@@ -272,7 +281,11 @@
       "packsSubtitle": "Packs de pago único. No caducan y se usan después de las firmas del mes.",
       "packCredits": "{credits} firmas",
       "packUnit": "{price} por firma",
-      "whatIsSignature": "1 firma = 1 firmante que completa un envío (con todos sus documentos)."
+      "whatIsSignature": "1 firma = 1 firmante que completa un envío (con todos sus documentos).",
+      "smsPacksTitle": "Packs de SMS para verificar firmantes",
+      "smsPacksSubtitle": "Solo si activas el código SMS. Cada código enviado consume 1 SMS. Pago único, sin caducidad.",
+      "smsPackCredits": "{count} SMS",
+      "smsPackUnit": "{price} por SMS"
     },
     "faq": {
       "eyebrow": "Preguntas frecuentes",
@@ -309,6 +322,14 @@
         "q8": {
           "q": "¿Puedo cancelar cuando quiera?",
           "a": "Sí. Puedes cancelar la suscripción desde tu panel en cualquier momento. Seguirás teniendo acceso a tu historial y a tus documentos firmados."
+        },
+        "q9": {
+          "q": "¿Puedo reforzar la identificación del firmante?",
+          "a": "Sí. Al preparar el envío puedes exigir, por firmante, un código de un solo uso que le enviamos por SMS al móvil: sin él no puede firmar. Añade un segundo factor (la posesión del móvil) a la prueba del email. El código SMS se paga aparte con packs de SMS; cada código enviado consume 1 SMS."
+        },
+        "q10": {
+          "q": "¿Se puede firmar en persona, en mi oficina?",
+          "a": "Sí. Marca al firmante como «Firma presencial»: no recibirá ningún email y verás un botón «Firmar ahora» en el envío para que firme en tu tableta, móvil u ordenador. El certificado de evidencias indica que la firma fue presencial y ante quién. Puedes combinarlo con el código SMS."
         }
       }
     },
@@ -336,13 +357,13 @@
       "signer": "Para quien firma",
       "senderSteps": {
         "s1": "Crea tu cuenta y sube uno o varios PDF, imágenes o documentos Word.",
-        "s2": "Añade a los firmantes con nombre, apellidos y email. Elige si firman en paralelo o en orden.",
+        "s2": "Añade a los firmantes con nombre, apellidos y email. Elige si firman en paralelo o en orden, si alguno firma presencialmente a tu lado y si deben confirmar un código SMS.",
         "s3": "Sigue el estado de cada envío en tiempo real y recibe el PDF firmado, el certificado de evidencias y el sello de tiempo."
       },
       "signerSteps": {
-        "s1": "Abre el enlace del email: no necesita cuenta ni instalar nada.",
+        "s1": "Abre el enlace del email, o firma en tu dispositivo si está contigo: no necesita cuenta ni instalar nada.",
         "s2": "Revisa el documento completo en su navegador, en el móvil o en el ordenador.",
-        "s3": "Acepta el consentimiento y firma en pantalla. Recibe una copia firmada al instante."
+        "s3": "Acepta el consentimiento, confirma el código SMS si se lo pides y firma en pantalla. Recibe una copia firmada al instante."
       },
       "behindTitle": "Qué ocurre por detrás",
       "behind": {
@@ -354,7 +375,7 @@
     },
     "pricingPage": {
       "metaTitle": "Precios",
-      "metaDescription": "Plan Pro de DocuFirma: 9 €/mes con 10 firmas incluidas, IVA incluido. Packs de firmas adicionales sin caducidad."
+      "metaDescription": "Plan Pro de DocuFirma: 9 €/mes con 10 firmas incluidas, IVA incluido. Packs de firmas adicionales sin caducidad y packs de SMS para verificar a los firmantes."
     },
     "home": {
       "metaTitle": "Firma electrónica avanzada con sello de tiempo cualificado"
@@ -414,7 +435,7 @@
           },
           "s4": {
             "h": "Datos de los firmantes",
-            "p": "Respecto de los documentos que envían nuestros usuarios, CLOUDIN actúa como encargado del tratamiento a través de DocuFirma. Tratamos nombre, apellidos, email, dirección IP, datos del dispositivo, ubicación aproximada y los eventos del proceso de firma para generar la evidencia de firma."
+            "p": "Respecto de los documentos que envían nuestros usuarios, CLOUDIN actúa como encargado del tratamiento a través de DocuFirma. Tratamos nombre, apellidos, email, número de móvil (solo si el remitente activa la verificación por SMS), dirección IP, datos del dispositivo, ubicación aproximada y los eventos del proceso de firma para generar la evidencia de firma."
           },
           "s5": {
             "h": "Datos biométricos de la firma",
@@ -430,7 +451,7 @@
           },
           "s8": {
             "h": "Encargados del tratamiento del servicio DocuFirma",
-            "p": "Para prestar el servicio DocuFirma usamos proveedores situados o con servidores en la UE, que actúan como encargados del tratamiento: Supabase (base de datos y almacenamiento, Frankfurt), Vercel (alojamiento, Frankfurt), Stripe (pagos), Resend (email), Mensatek (sello de tiempo cualificado) y Sentry (monitorización de errores). Cuando exista transferencia internacional, se ampara en cláusulas contractuales tipo."
+            "p": "Para prestar el servicio DocuFirma usamos proveedores situados o con servidores en la UE, que actúan como encargados del tratamiento: Supabase (base de datos y almacenamiento, Frankfurt), Vercel (alojamiento, Frankfurt), Stripe (pagos), Resend (email), Mensatek (sello de tiempo cualificado y envío de SMS) y Sentry (monitorización de errores). Cuando exista transferencia internacional, se ampara en cláusulas contractuales tipo."
           },
           "s9": {
             "h": "Tiempo de conservación de los datos",
@@ -532,7 +553,7 @@
           },
           "s2": {
             "h": "Identificación del firmante",
-            "p": "El firmante recibe en su email un enlace único de 256 bits de entropía. Solo se almacena la huella SHA-256 del enlace. Se registran nombre, apellidos, email, IP, agente de usuario, dispositivo, ubicación aproximada y la cronología de eventos."
+            "p": "Por defecto, el firmante recibe en su email un enlace único de 256 bits de entropía; solo se almacena la huella SHA-256 del enlace. El remitente puede exigir, además, un código de un solo uso de 6 cifras enviado por SMS al móvil del firmante (válido 10 minutos, con intentos limitados; solo se guarda su huella), o que la firma sea presencial en su propio dispositivo, en cuyo caso no se envía el enlace por email y el certificado indica ante quién se firmó. Se registran nombre, apellidos, email, móvil (si se usa el SMS), IP, agente de usuario, dispositivo, ubicación aproximada y la cronología de eventos."
           },
           "s3": {
             "h": "Creación de la firma",
@@ -960,6 +981,13 @@
       "heading": "Tu saldo de firmas se está agotando",
       "body": "Te {count, plural, =0 {quedan 0 firmas} one {queda # firma} other {quedan # firmas}}. Suscríbete al Plan Pro o compra un pack para seguir enviando documentos.",
       "cta": "Ver opciones"
+    },
+    "smsEmpty": {
+      "subject": "Un firmante no puede recibir el código SMS",
+      "preview": "Te has quedado sin SMS para los códigos de firma.",
+      "heading": "Te has quedado sin SMS",
+      "body": "{name} quiere firmar «{title}», pero no tienes SMS disponibles para enviarle el código de verificación. Compra un pack de SMS y pídele que lo intente de nuevo.",
+      "cta": "Comprar SMS"
     }
   },
   "send": {
@@ -1038,7 +1066,9 @@
       "inPersonHint": "Firmará en tu dispositivo, a tu lado. No recibirá el enlace por email; tendrás un botón «Firmar ahora» en el envío.",
       "smsOtp": "Verificar con código SMS",
       "smsOtpHint": "Antes de firmar tendrá que escribir un código de 6 cifras que le enviaremos al móvil.",
-      "smsOtpUnavailable": "No disponible: faltan las credenciales de SMS en el servidor."
+      "smsOtpUnavailable": "No disponible: faltan las credenciales de SMS en el servidor.",
+      "smsOtpBalance": "Te {count, plural, one {queda # SMS} other {quedan # SMS}}.",
+      "smsOtpNoCredits": "No te quedan SMS. <link>Compra un pack de SMS</link> para activarlo."
     },
     "review": {
       "title": "Revisa y envía",
@@ -1078,7 +1108,8 @@
       "not_draft": "Este envío ya se había enviado.",
       "no_documents": "Añade al menos un documento.",
       "phoneRequired": "Para verificar por SMS, indica el móvil del firmante.",
-      "sms_unavailable": "La verificación por SMS no está disponible ahora mismo."
+      "sms_unavailable": "La verificación por SMS no está disponible ahora mismo.",
+      "sms_no_credits": "No tienes SMS suficientes para todos los firmantes con código. Compra un pack de SMS en Facturación."
     }
   },
   "signing": {
@@ -1208,7 +1239,8 @@
         "otp_too_many_attempts": "Demasiados intentos fallidos. Pide un código nuevo.",
         "otp_rate_limited": "Has pedido demasiados códigos. Espera unos minutos.",
         "rate_limited": "Demasiados intentos. Espera unos minutos.",
-        "sms_failed": "No hemos podido enviar el SMS. Inténtalo de nuevo en unos minutos."
+        "sms_failed": "No hemos podido enviar el SMS. Inténtalo de nuevo en unos minutos.",
+        "sms_no_credits": "Ahora mismo no podemos enviarte el código: el remitente no tiene SMS disponibles. Ya le hemos avisado; inténtalo más tarde."
       }
     },
     "inPerson": {
@@ -1277,6 +1309,14 @@
       "stripe_error": "No hemos podido conectar con el sistema de pagos. Inténtalo de nuevo.",
       "pack_not_found": "Este pack ya no está disponible.",
       "generic": "No hemos podido iniciar el pago."
+    },
+    "sms": {
+      "title": "SMS para códigos de verificación",
+      "subtitle": "Cada código que envías a un firmante consume 1 SMS. Los packs no caducan.",
+      "balance": "Te quedan <strong>{count}</strong> SMS",
+      "credits": "{credits} SMS",
+      "unit": "{price} por SMS",
+      "buy": "Comprar SMS"
     }
   }
 }

@@ -5,7 +5,7 @@ import { headers } from "next/headers";
 import { z } from "zod";
 import { closeEnvelope } from "@/lib/closure";
 import { LIMITS } from "@/lib/config";
-import { sendEnvelopeNotice } from "@/lib/email";
+import { sendAccountNotice, sendEnvelopeNotice } from "@/lib/email";
 import { appUrl } from "@/lib/env-public";
 import { clientIpFrom, geoFrom } from "@/lib/http";
 import { getPathname } from "@/lib/i18n/navigation";
@@ -294,6 +294,10 @@ export async function requestSigningCode(
   if (error || !phone) {
     if (error?.message.includes("otp_rate_limited"))
       return { ok: false, error: "otp_rate_limited" };
+    if (error?.message.includes("sms_no_credits")) {
+      after(() => notifySenderNoSms(ctx));
+      return { ok: false, error: "sms_no_credits" };
+    }
     const state = stateFromSqlError(error?.message ?? "");
     if (state !== "error") return { ok: false, error: "state", state };
     console.error("[sign] request_signer_otp", error?.message);
@@ -302,6 +306,8 @@ export async function requestSigningCode(
   const sms = await sendSms(phone, otpSmsText(ctx.envelope.locale, code));
   if (!sms.ok) {
     console.error("[sign] SMS not sent:", sms.error);
+    // The SMS was charged when the code was created: give it back.
+    await admin.rpc("refund_signer_sms", { p_signer_id: ctx.signer.id, p_note: "provider_error" });
     return { ok: false, error: "sms_failed" };
   }
   return { ok: true, phone: ctx.signer.phoneMasked };
@@ -345,4 +351,28 @@ export async function verifySigningCode(
           : "otp_invalid",
     attemptsLeft: result.attempts_left,
   };
+}
+
+/** Tells the sender (at most once per signer and hour) that a signer is blocked without SMS. */
+async function notifySenderNoSms(ctx: Awaited<ReturnType<typeof resolveSigningToken>>) {
+  const envelope = ctx.envelope;
+  const signer = ctx.signer;
+  if (!envelope?.userId || !signer) return;
+  const { allowed } = await rateLimit(`sms-empty:${signer.id}`, 1, 3600);
+  if (!allowed) return;
+  const admin = createAdminClient();
+  const { data: sender } = await admin
+    .from("profiles")
+    .select("email, locale")
+    .eq("id", envelope.userId)
+    .maybeSingle();
+  if (!sender) return;
+  const locale = sender.locale === "en" ? "en" : "es";
+  await sendAccountNotice(sender.email, {
+    locale,
+    kind: "smsEmpty",
+    name: `${signer.firstName} ${signer.lastName}`,
+    title: envelope.title,
+    ctaUrl: appUrl(getPathname({ href: "/app/billing", locale })),
+  });
 }
