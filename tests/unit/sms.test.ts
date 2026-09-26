@@ -70,9 +70,10 @@ describe("SMS providers", () => {
     });
     vi.stubGlobal("fetch", fetchMock);
     expect(isSmsAvailable()).toBe(true);
-    await expect(sendSms("+34600123456", "hola código 123456")).resolves.toEqual({
+    await expect(sendSms("+34600123456", "hola código 123456")).resolves.toMatchObject({
       ok: true,
       id: "abc123",
+      raw: JSON.stringify({ Res: 1, Msgid: "abc123" }),
     });
     expect(fetchMock).toHaveBeenCalledTimes(1);
   });

@@ -11,7 +11,9 @@ import { join } from "node:path";
  * In production without credentials SMS is unavailable and the option is hidden in the app.
  */
 export type SmsProvider = "mensatek" | "outbox";
-export type SmsResult = { ok: true; id: string } | { ok: false; error: string };
+/** `raw` is the provider's answer (diagnostics only; never contains our credentials). */
+export type SmsResult =
+  { ok: true; id: string; raw?: string } | { ok: false; error: string; raw?: string };
 
 export function smsProvider(): SmsProvider | null {
   const explicit = process.env.SMS_PROVIDER?.trim().toLowerCase();
@@ -69,9 +71,17 @@ async function sendMensatek(to: string, text: string): Promise<SmsResult> {
     }
     const sent = Number(parsed.Res);
     if (res.ok && Number.isFinite(sent) && sent > 0) {
-      return { ok: true, id: String(parsed.Msgid ?? `mensatek-${Date.now()}`) };
+      return {
+        ok: true,
+        id: String(parsed.Msgid ?? `mensatek-${Date.now()}`),
+        raw: raw.slice(0, 500),
+      };
     }
-    return { ok: false, error: `mensatek: HTTP ${res.status} ${raw.slice(0, 200)}` };
+    return {
+      ok: false,
+      error: `mensatek: HTTP ${res.status} ${raw.slice(0, 200)}`,
+      raw: raw.slice(0, 500),
+    };
   } catch (error) {
     return { ok: false, error: `mensatek: ${(error as Error).message}` };
   }
