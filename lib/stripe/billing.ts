@@ -149,13 +149,31 @@ export async function createPackCheckout(
   return session.url;
 }
 
+let portalConfigId: Promise<string | undefined> | null = null;
+
+/** Portal configuration created by the Stripe setup (metadata app=docufirma); account default otherwise. */
+function docufirmaPortalConfig(stripe: Stripe): Promise<string | undefined> {
+  portalConfigId ??= stripe.billingPortal.configurations
+    .list({ limit: 100, active: true })
+    .then((list) => list.data.find((c) => c.metadata?.app === "docufirma")?.id)
+    .catch(() => {
+      portalConfigId = null;
+      return undefined;
+    });
+  return portalConfigId;
+}
+
 export async function createPortalSession(userId: string, locale: Locale): Promise<string> {
   const stripe = requireStripe();
-  const customer = await ensureCustomer(userId);
+  const [customer, configuration] = await Promise.all([
+    ensureCustomer(userId),
+    docufirmaPortalConfig(stripe),
+  ]);
   const session = await stripe.billingPortal.sessions.create({
     customer,
     locale,
     return_url: billingUrl(locale),
+    ...(configuration ? { configuration } : {}),
   });
   return session.url;
 }
