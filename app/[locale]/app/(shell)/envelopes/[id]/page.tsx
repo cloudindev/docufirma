@@ -12,11 +12,13 @@ import { notFound } from "next/navigation";
 import { getFormatter, getTranslations } from "next-intl/server";
 import { DownloadButton, EnvelopeActions } from "@/components/app/envelope-actions";
 import { RemindButton } from "@/components/app/remind-button";
+import { SignNowButton } from "@/components/app/sign-now-button";
 import { EnvelopeStatusBadge, SignerStatusBadge } from "@/components/app/status-badge";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { type EnvelopeDetail, getEnvelopeDetail } from "@/lib/data/envelopes";
 import { Link, redirect } from "@/lib/i18n/navigation";
+import { maskPhone } from "@/lib/validation/phone";
 import { resolveLocale } from "@/lib/i18n/server";
 import { createClient } from "@/lib/supabase/server";
 import { formatBytes } from "@/lib/utils";
@@ -68,6 +70,13 @@ export default async function EnvelopeDetailPage({
     (envelope.status === "sent" || envelope.status === "viewed") && !envelope.all_signed_at;
   const evidence = signed.find((s) => s.kind === "evidence");
   const pendingSigners = signers.filter((s) => s.status === "sent" || s.status === "viewed");
+  // In sequential envelopes only the first unsigned signer may sign now.
+  const firstUnsigned = signers.find((s) => s.status !== "signed");
+  const canSignNow = (s: (typeof signers)[number]) =>
+    cancelable &&
+    s.delivery === "in_person" &&
+    (s.status === "sent" || s.status === "viewed" || s.status === "pending") &&
+    (!envelope.sequential || firstUnsigned?.id === s.id);
 
   const tsaLabel = (s: (typeof signed)[number]) =>
     s.tsa_status === "granted"
@@ -151,17 +160,39 @@ export default async function EnvelopeDetailPage({
                               : s.status === "sent"
                                 ? t("signerMeta.sentAt", { date: date(s.sent_at) })
                                 : t("signerMeta.waiting")}
-                        {s.status === "sent" || s.status === "viewed"
+                        {(s.status === "sent" || s.status === "viewed") &&
+                        s.delivery !== "in_person"
                           ? ` · ${t("signerMeta.reminders", { count: s.reminder_count })}`
                           : ""}
                       </p>
+                      {s.delivery === "in_person" || s.require_sms_otp ? (
+                        <p className="flex flex-wrap gap-1.5 pt-1">
+                          {s.delivery === "in_person" ? (
+                            <Badge variant="neutral">{t("signerMeta.inPerson")}</Badge>
+                          ) : null}
+                          {s.require_sms_otp ? (
+                            <Badge variant="neutral">
+                              {t("signerMeta.sms", { phone: maskPhone(s.phone) ?? "" })}
+                            </Badge>
+                          ) : null}
+                        </p>
+                      ) : null}
                       {s.decline_reason ? (
                         <p className="text-sm text-danger">
                           {t("signerMeta.reason", { reason: s.decline_reason })}
                         </p>
                       ) : null}
                     </div>
-                    <SignerStatusBadge status={s.status} />
+                    <div className="flex shrink-0 items-center gap-2">
+                      {canSignNow(s) ? (
+                        <SignNowButton
+                          envelopeId={envelope.id}
+                          signerId={s.id}
+                          signerName={`${s.first_name} ${s.last_name}`}
+                        />
+                      ) : null}
+                      <SignerStatusBadge status={s.status} />
+                    </div>
                   </li>
                 ))}
               </ul>

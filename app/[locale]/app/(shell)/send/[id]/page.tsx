@@ -34,6 +34,7 @@ export default async function EditDraftPage({ params }: PageProps<"/[locale]/app
       contacts={data.contacts}
       credits={data.credits}
       docxEnabled={data.docxEnabled}
+      smsAvailable={data.smsAvailable}
     />
   );
 }

@@ -90,6 +90,7 @@ function SignerRow({
   onRemove,
   onMove,
   sequential,
+  smsAvailable,
 }: {
   form: Form;
   index: number;
@@ -98,6 +99,7 @@ function SignerRow({
   onRemove: () => void;
   onMove: (delta: -1 | 1) => void;
   sequential: boolean;
+  smsAvailable: boolean;
 }) {
   const t = useTranslations("send.recipients");
   const te = useTranslateError();
@@ -273,6 +275,68 @@ function SignerRow({
           </div>
         </FormField>
       </div>
+      <div className="mt-4 grid gap-4 border-t border-border pt-4 md:grid-cols-[1fr_1.3fr]">
+        <FormField
+          id={`s-${index}-phone`}
+          label={t("phone")}
+          hint={t("phoneHint")}
+          error={te(errors?.phone?.message)}
+        >
+          <Input
+            id={`s-${index}-phone`}
+            type="tel"
+            inputMode="tel"
+            autoComplete="off"
+            placeholder="600 123 456"
+            aria-invalid={!!errors?.phone}
+            {...form.register(`signers.${index}.phone`)}
+          />
+        </FormField>
+        <div className="space-y-3">
+          <Controller
+            control={form.control}
+            name={`signers.${index}.delivery`}
+            render={({ field }) => (
+              <div className="flex items-start gap-3">
+                <Switch
+                  id={`s-${index}-in-person`}
+                  checked={field.value === "in_person"}
+                  onCheckedChange={(on) => field.onChange(on ? "in_person" : "email")}
+                  className="mt-0.5"
+                />
+                <label htmlFor={`s-${index}-in-person`} className="text-sm">
+                  <span className="font-medium">{t("inPerson")}</span>
+                  <span className="block text-xs text-ink-muted">{t("inPersonHint")}</span>
+                </label>
+              </div>
+            )}
+          />
+          <Controller
+            control={form.control}
+            name={`signers.${index}.requireSmsOtp`}
+            render={({ field }) => (
+              <div className="flex items-start gap-3">
+                <Switch
+                  id={`s-${index}-sms`}
+                  checked={Boolean(field.value)}
+                  disabled={!smsAvailable}
+                  onCheckedChange={(on) => {
+                    field.onChange(on);
+                    void form.trigger(`signers.${index}.phone`);
+                  }}
+                  className="mt-0.5"
+                />
+                <label htmlFor={`s-${index}-sms`} className="text-sm">
+                  <span className="font-medium">{t("smsOtp")}</span>
+                  <span className="block text-xs text-ink-muted">
+                    {smsAvailable ? t("smsOtpHint") : t("smsOtpUnavailable")}
+                  </span>
+                </label>
+              </div>
+            )}
+          />
+        </div>
+      </div>
     </Card>
   );
 }
@@ -280,11 +344,13 @@ function SignerRow({
 export function RecipientsStep({
   form,
   contacts,
+  smsAvailable,
   onBack,
   onContinue,
 }: {
   form: Form;
   contacts: WizardContact[];
+  smsAvailable: boolean;
   onBack: () => void;
   onContinue: () => void;
 }) {
@@ -315,6 +381,7 @@ export function RecipientsStep({
             count={fields.length}
             contacts={contacts}
             sequential={Boolean(sequential)}
+            smsAvailable={smsAvailable}
             onRemove={() => remove(index)}
             onMove={(delta) => move(index, index + delta)}
           />
@@ -330,7 +397,17 @@ export function RecipientsStep({
             variant="secondary"
             disabled={fields.length >= LIMITS.maxSignersPerEnvelope}
             onClick={() =>
-              append({ firstName: "", lastName: "", email: "" }, { shouldFocus: true })
+              append(
+                {
+                  firstName: "",
+                  lastName: "",
+                  email: "",
+                  phone: "",
+                  requireSmsOtp: false,
+                  delivery: "email",
+                },
+                { shouldFocus: true },
+              )
             }
           >
             <Plus /> {t("add")}

@@ -94,6 +94,8 @@ jobs:
           STRIPE_WEBHOOK_SECRET=whsec_$(openssl rand -hex 24)
           STRIPE_PRICE_PRO_MONTHLY=price_ci_pro
           EMAIL_OUTBOX_DIR=${{ github.workspace }}/.local-stack/mail
+          SMS_PROVIDER=outbox
+          SMS_OUTBOX_DIR=${{ github.workspace }}/.local-stack/sms
           ENV
       - name: Start local Supabase (GoTrue + PostgREST + Storage emulator)
         run: |
@@ -112,6 +114,7 @@ jobs:
         env:
           E2E_SKIP_BUILD: "1"
           EMAIL_OUTBOX_DIR: ${{ github.workspace }}/.local-stack/mail
+          SMS_OUTBOX_DIR: ${{ github.workspace }}/.local-stack/sms
       - uses: actions/upload-artifact@v4
         if: failure()
         with:

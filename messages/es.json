@@ -41,7 +41,8 @@
     "passwordWeak": "La contraseña debe incluir letras y números.",
     "passwordMismatch": "Las contraseñas no coinciden.",
     "acceptTerms": "Debes aceptar los términos para continuar.",
-    "invalid": "El valor no es válido."
+    "invalid": "El valor no es válido.",
+    "phone": "Introduce un móvil válido, por ejemplo 600 123 456 o +34 600 123 456."
   },
   "auth": {
     "panel": {
@@ -726,7 +727,9 @@
         "declinedAt": "Rechazó el {date}",
         "reason": "Motivo: {reason}",
         "reminders": "{count, plural, =0 {Sin recordatorios} one {# recordatorio} other {# recordatorios}}",
-        "waiting": "Recibirá el enlace cuando firmen los anteriores"
+        "waiting": "Recibirá el enlace cuando firmen los anteriores",
+        "inPerson": "Presencial",
+        "sms": "Código SMS {phone}"
       },
       "actions": {
         "continue": "Continuar editando",
@@ -735,7 +738,9 @@
         "cancel": "Cancelar envío",
         "duplicate": "Duplicar",
         "delete": "Eliminar borrador",
-        "more": "Más acciones"
+        "more": "Más acciones",
+        "signNow": "Firmar ahora",
+        "signNowFor": "Firmar ahora: {name}"
       },
       "confirm": {
         "cancelTitle": "¿Cancelar este envío?",
@@ -752,7 +757,8 @@
         "deleted": "Borrador eliminado.",
         "reminded": "Recordatorio enviado.",
         "remindedMany": "{count, plural, =0 {No había firmantes pendientes} one {Recordatorio enviado a # firmante} other {Recordatorios enviados a # firmantes}}.",
-        "error": "No hemos podido completar la acción."
+        "error": "No hemos podido completar la acción.",
+        "notYourTurn": "Todavía no es su turno: faltan firmas anteriores."
       },
       "events": {
         "created": "Envío creado",
@@ -772,7 +778,11 @@
         "canceled": "Envío cancelado",
         "tsa_granted": "Sello de tiempo aplicado",
         "tsa_failed": "Error al aplicar el sello de tiempo (se reintentará)",
-        "downloaded": "Descarga de {document}"
+        "downloaded": "Descarga de {document}",
+        "otp_sent": "Código SMS enviado",
+        "otp_verified": "Código SMS confirmado",
+        "otp_failed": "Código SMS incorrecto",
+        "in_person_started": "Firma presencial iniciada"
       },
       "someone": "El firmante",
       "aDocument": "un documento",
@@ -998,7 +1008,7 @@
     },
     "recipients": {
       "title": "¿Quién tiene que firmar?",
-      "subtitle": "Cada firmante recibirá un enlace personal por email.",
+      "subtitle": "Cada firmante recibirá un enlace personal por email, o firmará en persona en tu dispositivo.",
       "signer": "Firmante {n}",
       "firstName": "Nombre",
       "lastName": "Apellidos",
@@ -1021,7 +1031,14 @@
       "remindersOption": "{days, plural, one {Cada día} other {Cada # días}}",
       "locale": "Idioma de los emails al firmante",
       "back": "Atrás",
-      "continue": "Revisar envío"
+      "continue": "Revisar envío",
+      "phone": "Móvil (opcional)",
+      "phoneHint": "Necesario para verificar por SMS.",
+      "inPerson": "Firma presencial",
+      "inPersonHint": "Firmará en tu dispositivo, a tu lado. No recibirá el enlace por email; tendrás un botón «Firmar ahora» en el envío.",
+      "smsOtp": "Verificar con código SMS",
+      "smsOtpHint": "Antes de firmar tendrá que escribir un código de 6 cifras que le enviaremos al móvil.",
+      "smsOtpUnavailable": "No disponible: faltan las credenciales de SMS en el servidor."
     },
     "review": {
       "title": "Revisa y envía",
@@ -1042,7 +1059,9 @@
       "back": "Atrás",
       "send": "Enviar para firmar",
       "sent": "¡Enviado! Hemos notificado a {count, plural, one {# firmante} other {# firmantes}}.",
-      "verifyEmail": "Confirma tu email antes de enviar documentos."
+      "verifyEmail": "Confirma tu email antes de enviar documentos.",
+      "inPersonBadge": "Presencial",
+      "smsBadge": "Código SMS"
     },
     "noCredits": {
       "title": "No tienes firmas suficientes",
@@ -1057,7 +1076,9 @@
       "duplicateEmail": "Este email ya está en la lista de firmantes.",
       "generic": "No hemos podido enviar el sobre. Inténtalo de nuevo.",
       "not_draft": "Este envío ya se había enviado.",
-      "no_documents": "Añade al menos un documento."
+      "no_documents": "Añade al menos un documento.",
+      "phoneRequired": "Para verificar por SMS, indica el móvil del firmante.",
+      "sms_unavailable": "La verificación por SMS no está disponible ahora mismo."
     }
   },
   "signing": {
@@ -1166,7 +1187,33 @@
       "generic": "No hemos podido registrar la firma. Inténtalo de nuevo.",
       "rate_limited": "Demasiados intentos. Espera unos minutos.",
       "signature_image": "No hemos podido procesar tu firma. Bórrala y dibújala de nuevo.",
-      "biometrics": "La firma no es válida. Dibújala de nuevo, sin prisa."
+      "biometrics": "La firma no es válida. Dibújala de nuevo, sin prisa.",
+      "otp_required": "Antes de firmar tienes que verificar tu móvil."
+    },
+    "otp": {
+      "title": "Verifica tu móvil",
+      "description": "Para firmar, confirma el código de 6 cifras que te enviaremos por SMS al {phone}.",
+      "send": "Enviar código por SMS",
+      "sentTo": "Te hemos enviado un código al {phone}. Caduca en 10 minutos.",
+      "codeLabel": "Código de verificación",
+      "codeHint": "Si no te llega en un minuto, pide otro.",
+      "verify": "Verificar y continuar",
+      "resend": "Enviar otro código",
+      "expiredNotice": "Tu verificación ha caducado. Confirma un código nuevo para firmar.",
+      "errors": {
+        "generic": "No hemos podido completar la verificación. Inténtalo de nuevo.",
+        "otp_invalid": "El código no es correcto.",
+        "invalidLeft": "El código no es correcto. {count, plural, one {Te queda # intento.} other {Te quedan # intentos.}}",
+        "otp_expired": "El código ha caducado. Pide uno nuevo.",
+        "otp_too_many_attempts": "Demasiados intentos fallidos. Pide un código nuevo.",
+        "otp_rate_limited": "Has pedido demasiados códigos. Espera unos minutos.",
+        "rate_limited": "Demasiados intentos. Espera unos minutos.",
+        "sms_failed": "No hemos podido enviar el SMS. Inténtalo de nuevo en unos minutos."
+      }
+    },
+    "inPerson": {
+      "banner": "Firma presencial: esta pantalla es para {name}. Revisa los documentos y firma en este dispositivo.",
+      "back": "Volver al envío"
     }
   },
   "billing": {

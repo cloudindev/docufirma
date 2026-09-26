@@ -41,7 +41,8 @@
     "passwordWeak": "The password must contain letters and numbers.",
     "passwordMismatch": "The passwords don't match.",
     "acceptTerms": "You must accept the terms to continue.",
-    "invalid": "The value is not valid."
+    "invalid": "The value is not valid.",
+    "phone": "Enter a valid mobile number, e.g. +34 600 123 456."
   },
   "auth": {
     "panel": {
@@ -726,7 +727,9 @@
         "declinedAt": "Declined on {date}",
         "reason": "Reason: {reason}",
         "reminders": "{count, plural, =0 {No reminders} one {# reminder} other {# reminders}}",
-        "waiting": "Will receive the link once previous signers have signed"
+        "waiting": "Will receive the link once previous signers have signed",
+        "inPerson": "In person",
+        "sms": "SMS code {phone}"
       },
       "actions": {
         "continue": "Continue editing",
@@ -735,7 +738,9 @@
         "cancel": "Cancel envelope",
         "duplicate": "Duplicate",
         "delete": "Delete draft",
-        "more": "More actions"
+        "more": "More actions",
+        "signNow": "Sign now",
+        "signNowFor": "Sign now: {name}"
       },
       "confirm": {
         "cancelTitle": "Cancel this envelope?",
@@ -752,7 +757,8 @@
         "deleted": "Draft deleted.",
         "reminded": "Reminder sent.",
         "remindedMany": "{count, plural, =0 {There were no pending signers} one {Reminder sent to # signer} other {Reminders sent to # signers}}.",
-        "error": "We couldn't complete the action."
+        "error": "We couldn't complete the action.",
+        "notYourTurn": "It is not their turn yet: earlier signatures are missing."
       },
       "events": {
         "created": "Envelope created",
@@ -772,7 +778,11 @@
         "canceled": "Envelope canceled",
         "tsa_granted": "Timestamp applied",
         "tsa_failed": "Timestamping failed (will retry)",
-        "downloaded": "Download of {document}"
+        "downloaded": "Download of {document}",
+        "otp_sent": "SMS code sent",
+        "otp_verified": "SMS code confirmed",
+        "otp_failed": "Wrong SMS code",
+        "in_person_started": "In-person signing started"
       },
       "someone": "The signer",
       "aDocument": "a document",
@@ -998,7 +1008,7 @@
     },
     "recipients": {
       "title": "Who needs to sign?",
-      "subtitle": "Each signer will receive a personal link by email.",
+      "subtitle": "Each signer will get a personal link by email, or sign in person on your device.",
       "signer": "Signer {n}",
       "firstName": "First name",
       "lastName": "Last name",
@@ -1021,7 +1031,14 @@
       "remindersOption": "{days, plural, one {Every day} other {Every # days}}",
       "locale": "Language of emails to signers",
       "back": "Back",
-      "continue": "Review envelope"
+      "continue": "Review envelope",
+      "phone": "Mobile (optional)",
+      "phoneHint": "Required to verify by SMS.",
+      "inPerson": "In-person signing",
+      "inPersonHint": "They will sign on your device, next to you. No email link is sent; you will get a “Sign now” button on the envelope.",
+      "smsOtp": "Verify with SMS code",
+      "smsOtpHint": "Before signing they must enter a 6-digit code we text to their mobile.",
+      "smsOtpUnavailable": "Not available: SMS credentials are missing on the server."
     },
     "review": {
       "title": "Review and send",
@@ -1042,7 +1059,9 @@
       "back": "Back",
       "send": "Send for signature",
       "sent": "Sent! We notified {count, plural, one {# signer} other {# signers}}.",
-      "verifyEmail": "Confirm your email before sending documents."
+      "verifyEmail": "Confirm your email before sending documents.",
+      "inPersonBadge": "In person",
+      "smsBadge": "SMS code"
     },
     "noCredits": {
       "title": "You don't have enough signatures",
@@ -1057,7 +1076,9 @@
       "duplicateEmail": "This email is already in the list of signers.",
       "generic": "We couldn't send the envelope. Please try again.",
       "not_draft": "This envelope had already been sent.",
-      "no_documents": "Add at least one document."
+      "no_documents": "Add at least one document.",
+      "phoneRequired": "To verify by SMS, enter the signer's mobile number.",
+      "sms_unavailable": "SMS verification is not available right now."
     }
   },
   "signing": {
@@ -1166,7 +1187,33 @@
       "generic": "We couldn't record the signature. Please try again.",
       "rate_limited": "Too many attempts. Please wait a few minutes.",
       "signature_image": "We couldn't process your signature. Clear it and draw it again.",
-      "biometrics": "The signature is not valid. Please draw it again, calmly."
+      "biometrics": "The signature is not valid. Please draw it again, calmly.",
+      "otp_required": "You need to verify your mobile before signing."
+    },
+    "otp": {
+      "title": "Verify your mobile",
+      "description": "To sign, confirm the 6-digit code we will text to {phone}.",
+      "send": "Text me a code",
+      "sentTo": "We have sent a code to {phone}. It expires in 10 minutes.",
+      "codeLabel": "Verification code",
+      "codeHint": "If it does not arrive within a minute, request another one.",
+      "verify": "Verify and continue",
+      "resend": "Send another code",
+      "expiredNotice": "Your verification has expired. Confirm a new code to sign.",
+      "errors": {
+        "generic": "We could not complete the verification. Please try again.",
+        "otp_invalid": "The code is not correct.",
+        "invalidLeft": "The code is not correct. {count, plural, one {# attempt left.} other {# attempts left.}}",
+        "otp_expired": "The code has expired. Request a new one.",
+        "otp_too_many_attempts": "Too many failed attempts. Request a new code.",
+        "otp_rate_limited": "You have requested too many codes. Wait a few minutes.",
+        "rate_limited": "Too many attempts. Wait a few minutes.",
+        "sms_failed": "We could not send the SMS. Try again in a few minutes."
+      }
+    },
+    "inPerson": {
+      "banner": "In-person signing: this screen is for {name}. Review the documents and sign on this device.",
+      "back": "Back to the envelope"
     }
   },
   "billing": {

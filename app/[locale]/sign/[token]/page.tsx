@@ -161,6 +161,20 @@ export default async function SignPage({ params }: PageProps<"/[locale]/sign/[to
         }
         documents={documents}
         consentVersion={CONSENT_TEXT_VERSION}
+        otp={{
+          required: signer.requireSmsOtp,
+          verified: signer.otpVerified,
+          phoneMasked: signer.phoneMasked,
+        }}
+        inPerson={signer.delivery === "in_person"}
+        backHref={
+          signer.delivery === "in_person"
+            ? getPathname({
+                href: { pathname: "/app/envelopes/[id]", params: { id: envelope.id } },
+                locale,
+              })
+            : null
+        }
       />
     </Shell>
   );

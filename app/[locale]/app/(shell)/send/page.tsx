@@ -27,6 +27,7 @@ export default async function NewEnvelopePage({ params }: PageProps<"/[locale]/a
       contacts={data.contacts}
       credits={data.credits}
       docxEnabled={data.docxEnabled}
+      smsAvailable={data.smsAvailable}
     />
   );
 }

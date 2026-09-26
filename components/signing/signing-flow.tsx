@@ -41,6 +41,7 @@ import { Link } from "@/lib/i18n/navigation";
 import { BIOMETRIC_LIMITS, computeMetrics } from "@/lib/signing/biometrics";
 import { cn } from "@/lib/utils";
 import { PdfViewer } from "./pdf-viewer";
+import { OtpStep } from "./otp-step";
 import { SignaturePad, type SignaturePadHandle } from "./signature-pad";
 import { SigningState } from "./signing-state";
 
@@ -68,6 +69,9 @@ export function SigningFlow({
   expiresLabel,
   documents,
   consentVersion,
+  otp,
+  inPerson,
+  backHref,
 }: {
   token: string;
   senderName: string;
@@ -78,8 +82,16 @@ export function SigningFlow({
   expiresLabel: string | null;
   documents: SigningDocument[];
   consentVersion: string;
+  /** SMS one-time code required before signing (sender's choice). */
+  otp: { required: boolean; verified: boolean; phoneMasked: string | null };
+  /** Signing on the sender's device, in their presence. */
+  inPerson: boolean;
+  /** Where the host goes back to after an in-person signature. */
+  backHref: string | null;
 }) {
   const t = useTranslations("signing");
+  const [otpVerified, setOtpVerified] = useState(otp.verified);
+  const [otpNotice, setOtpNotice] = useState<string>();
   const [phase, setPhase] = useState<Phase>("review");
   const [active, setActive] = useState(0);
   const [read, setRead] = useState<Set<string>>(new Set());
@@ -181,6 +193,11 @@ export function SigningFlow({
       });
       if (!res.ok) {
         if (res.error === "state" && res.state) return setPhase({ state: res.state });
+        if (res.error === "otp_required") {
+          setOtpVerified(false);
+          setOtpNotice(t("otp.expiredNotice"));
+          return setPhase("sign");
+        }
         setPhase("sign");
         const key = res.error.startsWith("biometrics") ? "biometrics" : res.error;
         return setSignError(
@@ -210,6 +227,11 @@ export function SigningFlow({
 
   return (
     <div className="mx-auto w-full max-w-4xl">
+      {inPerson && (phase === "review" || phase === "sign") ? (
+        <Alert variant="info" className="mb-5">
+          {t("inPerson.banner", { name: `${signer.firstName} ${signer.lastName}` })}
+        </Alert>
+      ) : null}
       {phase === "review" || phase === "sign" ? (
         <ol
           className="mb-6 flex items-center gap-3 text-sm"
@@ -375,77 +397,89 @@ export function SigningFlow({
               </p>
             </header>
 
-            <Card className="space-y-4 p-4 sm:p-6">
-              {portrait ? (
-                <p className="flex items-center gap-2 rounded-lg bg-bg-tint px-3 py-2 text-sm text-primary">
-                  <RotateCcw className="size-4 shrink-0" aria-hidden /> {t("sign.rotateHint")}
-                </p>
-              ) : null}
-              <SignaturePad
-                ref={pad}
-                height={portrait ? 200 : 240}
-                label={t("sign.padLabel")}
-                hint={t("sign.padHint")}
-                onChange={setEmpty}
+            {otp.required && !otpVerified ? (
+              <OtpStep
+                token={token}
+                phoneMasked={otp.phoneMasked}
+                notice={otpNotice}
+                onVerified={() => {
+                  setOtpNotice(undefined);
+                  setOtpVerified(true);
+                }}
               />
-              <div className="flex flex-wrap justify-between gap-2">
-                <Button
-                  variant="secondary"
-                  size="sm"
-                  onClick={() => pad.current?.clear()}
-                  disabled={empty}
-                >
-                  <Eraser /> {t("sign.clear")}
-                </Button>
-                <Button
-                  variant="secondary"
-                  size="sm"
-                  className="sm:hidden"
-                  onClick={() => setFullscreen(true)}
-                >
-                  <Expand /> {t("sign.fullscreen")}
-                </Button>
-              </div>
-              <label className="flex items-start gap-3 rounded-xl bg-bg-soft p-4 text-sm leading-relaxed">
-                <Checkbox
-                  className="mt-0.5"
-                  checked={consent}
-                  onCheckedChange={(v) => setConsent(v === true)}
-                  aria-describedby="consent-text"
+            ) : (
+              <Card className="space-y-4 p-4 sm:p-6">
+                {portrait ? (
+                  <p className="flex items-center gap-2 rounded-lg bg-bg-tint px-3 py-2 text-sm text-primary">
+                    <RotateCcw className="size-4 shrink-0" aria-hidden /> {t("sign.rotateHint")}
+                  </p>
+                ) : null}
+                <SignaturePad
+                  ref={pad}
+                  height={portrait ? 200 : 240}
+                  label={t("sign.padLabel")}
+                  hint={t("sign.padHint")}
+                  onChange={setEmpty}
                 />
-                <span id="consent-text">
-                  {t.rich("sign.consent", {
-                    policy: (c) => (
-                      <Link
-                        href={{ pathname: "/legal/[slug]", params: { slug: "signature-policy" } }}
-                        target="_blank"
-                        className="text-primary underline"
-                      >
-                        {c}
-                      </Link>
-                    ),
-                    privacy: (c) => (
-                      <Link
-                        href={{ pathname: "/legal/[slug]", params: { slug: "privacy" } }}
-                        target="_blank"
-                        className="text-primary underline"
-                      >
-                        {c}
-                      </Link>
-                    ),
-                  })}
-                </span>
-              </label>
-              {signError ? <Alert variant="danger">{signError}</Alert> : null}
-              <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-between">
-                <Button variant="ghost" onClick={() => setPhase("review")}>
-                  <ArrowLeft /> {t("sign.back")}
-                </Button>
-                <Button size="lg" onClick={submit} loading={submitting} disabled={!consent}>
-                  {submitting ? null : <ShieldCheck />} {t("sign.submit")}
-                </Button>
-              </div>
-            </Card>
+                <div className="flex flex-wrap justify-between gap-2">
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    onClick={() => pad.current?.clear()}
+                    disabled={empty}
+                  >
+                    <Eraser /> {t("sign.clear")}
+                  </Button>
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    className="sm:hidden"
+                    onClick={() => setFullscreen(true)}
+                  >
+                    <Expand /> {t("sign.fullscreen")}
+                  </Button>
+                </div>
+                <label className="flex items-start gap-3 rounded-xl bg-bg-soft p-4 text-sm leading-relaxed">
+                  <Checkbox
+                    className="mt-0.5"
+                    checked={consent}
+                    onCheckedChange={(v) => setConsent(v === true)}
+                    aria-describedby="consent-text"
+                  />
+                  <span id="consent-text">
+                    {t.rich("sign.consent", {
+                      policy: (c) => (
+                        <Link
+                          href={{ pathname: "/legal/[slug]", params: { slug: "signature-policy" } }}
+                          target="_blank"
+                          className="text-primary underline"
+                        >
+                          {c}
+                        </Link>
+                      ),
+                      privacy: (c) => (
+                        <Link
+                          href={{ pathname: "/legal/[slug]", params: { slug: "privacy" } }}
+                          target="_blank"
+                          className="text-primary underline"
+                        >
+                          {c}
+                        </Link>
+                      ),
+                    })}
+                  </span>
+                </label>
+                {signError ? <Alert variant="danger">{signError}</Alert> : null}
+                <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-between">
+                  <Button variant="ghost" onClick={() => setPhase("review")}>
+                    <ArrowLeft /> {t("sign.back")}
+                  </Button>
+                  <Button size="lg" onClick={submit} loading={submitting} disabled={!consent}>
+                    {submitting ? null : <ShieldCheck />} {t("sign.submit")}
+                  </Button>
+                </div>
+              </Card>
+            )}
 
             {fullscreen ? (
               <div
@@ -553,7 +587,15 @@ export function SigningFlow({
                   ) : null}
                 </div>
               ) : null}
-              <p className="text-sm text-ink-muted">{t("success.close")}</p>
+              {backHref ? (
+                <Button asChild variant="secondary" className="w-full">
+                  <a href={backHref}>
+                    <ArrowLeft /> {t("inPerson.back")}
+                  </a>
+                </Button>
+              ) : (
+                <p className="text-sm text-ink-muted">{t("success.close")}</p>
+              )}
             </Card>
           </motion.section>
         ) : null}

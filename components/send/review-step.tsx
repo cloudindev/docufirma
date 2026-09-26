@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import type { UseFormReturn } from "react-hook-form";
 import { useWatch } from "react-hook-form";
 import { Alert } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import type { EnvelopeSettingsInput } from "@/lib/envelopes/schemas";
@@ -104,6 +105,14 @@ export function ReviewStep({
                   {s?.firstName} {s?.lastName}
                 </span>
                 <span className="block truncate text-ink-muted">{s?.email}</span>
+                {s?.delivery === "in_person" || s?.requireSmsOtp ? (
+                  <span className="mt-1 flex flex-wrap gap-1.5">
+                    {s?.delivery === "in_person" ? (
+                      <Badge variant="neutral">{t("inPersonBadge")}</Badge>
+                    ) : null}
+                    {s?.requireSmsOtp ? <Badge variant="neutral">{t("smsBadge")}</Badge> : null}
+                  </span>
+                ) : null}
               </li>
             ))}
           </ol>

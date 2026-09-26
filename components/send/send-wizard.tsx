@@ -31,6 +31,7 @@ export function SendWizard({
   contacts,
   credits,
   docxEnabled,
+  smsAvailable,
 }: {
   initialEnvelopeId: string | null;
   initialDocuments: WizardDocument[];
@@ -38,6 +39,7 @@ export function SendWizard({
   contacts: WizardContact[];
   credits: number;
   docxEnabled: boolean;
+  smsAvailable: boolean;
 }) {
   const t = useTranslations("send");
   const te = useTranslations();
@@ -111,7 +113,16 @@ export function SendWizard({
   // while typing instead of on blur — avoids layout shifts that swallow the next click.
   const toReview = () => {
     if ((form.getValues("signers") ?? []).length === 0)
-      form.setValue("signers", [{ firstName: "", lastName: "", email: "" }]);
+      form.setValue("signers", [
+        {
+          firstName: "",
+          lastName: "",
+          email: "",
+          phone: "",
+          requireSmsOtp: false,
+          delivery: "email",
+        },
+      ]);
     void form.handleSubmit(() => goTo(2))();
   };
 
@@ -214,7 +225,16 @@ export function SendWizard({
           docxEnabled={docxEnabled}
           onContinue={() => {
             if (signersCount === 0)
-              form.setValue("signers", [{ firstName: "", lastName: "", email: "" }]);
+              form.setValue("signers", [
+                {
+                  firstName: "",
+                  lastName: "",
+                  email: "",
+                  phone: "",
+                  requireSmsOtp: false,
+                  delivery: "email",
+                },
+              ]);
             goTo(1);
           }}
         />
@@ -223,6 +243,7 @@ export function SendWizard({
         <RecipientsStep
           form={form}
           contacts={contacts}
+          smsAvailable={smsAvailable}
           onBack={() => goTo(0)}
           onContinue={toReview}
         />

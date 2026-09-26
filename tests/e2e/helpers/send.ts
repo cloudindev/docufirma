@@ -6,7 +6,14 @@ export async function sendEnvelope(
   page: Page,
   opts: {
     files?: string[];
-    signers?: { first: string; last: string; email?: string }[];
+    signers?: {
+      first: string;
+      last: string;
+      email?: string;
+      phone?: string;
+      sms?: boolean;
+      inPerson?: boolean;
+    }[];
     title?: string;
     sequential?: boolean;
   } = {},
@@ -32,6 +39,9 @@ export async function sendEnvelope(
     await page.locator(`#s-${i}-first`).fill(s.first);
     await page.locator(`#s-${i}-last`).fill(s.last);
     await page.locator(`#s-${i}-email`).fill(s.email);
+    if (s.phone) await page.locator(`#s-${i}-phone`).fill(s.phone);
+    if (s.inPerson) await page.locator(`#s-${i}-in-person`).click();
+    if (s.sms) await page.locator(`#s-${i}-sms`).click();
   }
   if (opts.sequential) await page.locator("#w-sequential").click();
   if (opts.title) await page.locator("#w-title").fill(opts.title);
