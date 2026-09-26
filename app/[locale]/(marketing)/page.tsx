@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import {
+  AnywhereSection,
   FaqSection,
   FeaturesSection,
   FinalCta,
@@ -54,6 +55,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
       />
       <Hero locale={locale} />
+      <AnywhereSection locale={locale} />
       <HowItWorksSection locale={locale} />
       <FeaturesSection locale={locale} />
       <LegalSection locale={locale} />

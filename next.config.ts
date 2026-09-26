@@ -1,3 +1,4 @@
+import { existsSync } from "node:fs";
 import type { NextConfig } from "next";
 import { withSentryConfig } from "@sentry/nextjs/config";
 import createNextIntlPlugin from "next-intl/plugin";
@@ -13,7 +14,13 @@ const securityHeaders = [
   { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=(), payment=()" },
 ];
 
+/** Home photo section renders only once the image is committed (checked at build time). */
+const HOME_PHOTO_PATH = "/images/firma-movil.jpg";
+
 const nextConfig: NextConfig = {
+  env: {
+    NEXT_PUBLIC_HOME_PHOTO: existsSync(`public${HOME_PHOTO_PATH}`) ? HOME_PHOTO_PATH : "",
+  },
   poweredByHeader: false,
   reactStrictMode: true,
   // Native / heavy server-only deps stay out of the bundle.

@@ -170,6 +170,36 @@
       "ctaSecondary": "See how it works",
       "note": "Pro plan €9/month · {credits} welcome signatures included"
     },
+    "anywhere": {
+      "eyebrow": "From anywhere",
+      "title": "Your contracts, signed while you get on with your day",
+      "body": "Send the document and move on: your clients sign from their phone in a couple of minutes and you are notified instantly, with the sealed PDF ready to download.",
+      "points": {
+        "noApp": "Signers install nothing and create no accounts: they just open the link.",
+        "notify": "We email you as soon as each person signs.",
+        "instant": "Signed PDF, timestamp and evidence certificate right away."
+      },
+      "cta": "Get started",
+      "alt": "Smiling woman signing a document on her tablet",
+      "notifications": {
+        "n1": {
+          "title": "Contract signed",
+          "meta": "Lucía G. · 1 min ago"
+        },
+        "n2": {
+          "title": "Quote accepted",
+          "meta": "Reformas Norte S.L. · 3 min ago"
+        },
+        "n3": {
+          "title": "Timestamp applied",
+          "meta": "PDF ready to download"
+        },
+        "n4": {
+          "title": "Lease agreement signed",
+          "meta": "2 of 2 signers · now"
+        }
+      }
+    },
     "badges": {
       "label": "Guarantees",
       "eidas": "eIDAS",

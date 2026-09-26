@@ -170,6 +170,36 @@
       "ctaSecondary": "Ver cómo funciona",
       "note": "Plan Pro 9 €/mes · {credits} firmas de bienvenida incluidas"
     },
+    "anywhere": {
+      "eyebrow": "Desde cualquier lugar",
+      "title": "Tus contratos, firmados mientras sigues con tu día",
+      "body": "Envía el documento y olvídate: tus clientes firman desde el móvil en un par de minutos y tú recibes el aviso al instante, con el PDF sellado listo para descargar.",
+      "points": {
+        "noApp": "Quien firma no instala nada ni crea cuentas: solo abre el enlace.",
+        "notify": "Te avisamos por email en cuanto cada persona firma.",
+        "instant": "PDF firmado, sello de tiempo y certificado de evidencias al momento."
+      },
+      "cta": "Empezar ahora",
+      "alt": "Mujer sonriendo mientras firma un documento en su tableta",
+      "notifications": {
+        "n1": {
+          "title": "Contrato firmado",
+          "meta": "Lucía G. · hace 1 min"
+        },
+        "n2": {
+          "title": "Presupuesto aceptado",
+          "meta": "Reformas Norte S.L. · hace 3 min"
+        },
+        "n3": {
+          "title": "Sello de tiempo aplicado",
+          "meta": "PDF listo para descargar"
+        },
+        "n4": {
+          "title": "Contrato de alquiler firmado",
+          "meta": "2 de 2 firmantes · ahora"
+        }
+      }
+    },
     "badges": {
       "label": "Garantías",
       "eidas": "eIDAS",

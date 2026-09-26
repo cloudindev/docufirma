@@ -30,7 +30,9 @@ import { Card } from "@/components/ui/card";
 import { Link } from "@/lib/i18n/navigation";
 import type { Locale } from "@/lib/i18n/routing";
 import { getPackOffers, getSmsPackOffers, planOffer } from "@/lib/pricing";
+import Image from "next/image";
 import { Reveal } from "./reveal";
+import { SignedNotifications } from "./signed-notifications";
 import { SectionHeading } from "./section-heading";
 
 type Props = { locale: Locale };
@@ -93,6 +95,62 @@ export async function Hero({ locale }: Props) {
             </li>
           ))}
         </ul>
+      </div>
+    </section>
+  );
+}
+
+/** Second home section: photo with live "signed" notifications. Hidden until the photo exists. */
+export async function AnywhereSection({ locale }: Props) {
+  const photo = process.env.NEXT_PUBLIC_HOME_PHOTO;
+  if (!photo) return null;
+  const t = await getTranslations({ locale, namespace: "marketing.anywhere" });
+  const points = ["noApp", "notify", "instant"] as const;
+  const notifications = (["n1", "n2", "n3", "n4"] as const).map((k) => ({
+    title: t(`notifications.${k}.title`),
+    meta: t(`notifications.${k}.meta`),
+  }));
+  return (
+    <section className="section-y" aria-labelledby="anywhere-title">
+      <div className="container-page grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+        <Reveal className="relative order-2 mx-auto w-full max-w-md lg:order-1">
+          <div className="relative aspect-[4/5] overflow-hidden rounded-2xl shadow-card">
+            <Image
+              src={photo}
+              alt={t("alt")}
+              fill
+              sizes="(min-width: 1024px) 28rem, 90vw"
+              className="object-cover"
+            />
+          </div>
+          <div className="absolute bottom-6 -left-3 sm:-left-8">
+            <SignedNotifications items={notifications} />
+          </div>
+        </Reveal>
+        <div className="order-1 space-y-6 lg:order-2">
+          <SectionHeading
+            id="anywhere-title"
+            align="left"
+            eyebrow={t("eyebrow")}
+            title={t("title")}
+            subtitle={t("body")}
+          />
+          <ul className="space-y-3">
+            {points.map((k) => (
+              <li key={k} className="flex items-start gap-3">
+                <span className="mt-0.5 inline-flex size-5 shrink-0 items-center justify-center rounded-full bg-success/12 text-success">
+                  <Check className="size-3.5" strokeWidth={2.5} aria-hidden />
+                </span>
+                <span className="text-ink-muted">{t(`points.${k}`)}</span>
+              </li>
+            ))}
+          </ul>
+          <Button asChild size="lg">
+            <Link href="/register">
+              {t("cta")} <ArrowRight />
+            </Link>
+          </Button>
+        </div>
       </div>
     </section>
   );
