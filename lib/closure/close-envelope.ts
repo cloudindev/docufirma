@@ -124,6 +124,10 @@ async function buildEvidenceData(
         biometricSha256: ev.biometric_sha256,
         consentVersion: s.consent_text_version,
         consentAcceptedAt: s.consent_accepted_at,
+        delivery: ev.delivery === "in_person" ? ("in_person" as const) : ("email" as const),
+        inPersonHost: ev.in_person_host,
+        otpPhoneMasked: ev.otp_phone_masked,
+        otpVerifiedAt: ev.otp_verified_at,
       };
     }),
   );

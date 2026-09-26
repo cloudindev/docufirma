@@ -1,6 +1,10 @@
 import "server-only";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { maskPhone } from "@/lib/validation/phone";
 import { hashToken, isWellFormedToken } from "./tokens";
+
+/** An SMS confirmation stays valid for this long (same window as complete_signature). */
+export const OTP_VALIDITY_MS = 30 * 60 * 1000;
 
 export type SignerState =
   "invalid" | "expired" | "canceled" | "declined" | "already_signed" | "not_your_turn" | "ready";
@@ -15,6 +19,11 @@ export type SigningContext = {
     email: string;
     status: string;
     orderIndex: number;
+    delivery: "email" | "in_person";
+    requireSmsOtp: boolean;
+    phoneMasked: string | null;
+    /** Code confirmed recently enough to sign. */
+    otpVerified: boolean;
   };
   envelope?: {
     id: string;
@@ -51,7 +60,9 @@ export async function resolveSigningToken(token: string): Promise<SigningContext
 
   const { data: signer } = await admin
     .from("signers")
-    .select("id, first_name, last_name, email, status, order_index, envelope_id")
+    .select(
+      "id, first_name, last_name, email, status, order_index, envelope_id, delivery, phone, require_sms_otp, otp_verified_at",
+    )
     .eq("id", access.signer_id)
     .single();
   if (!signer) return { state: "invalid", tokenHash };
@@ -92,6 +103,13 @@ export async function resolveSigningToken(token: string): Promise<SigningContext
       email: signer.email,
       status: signer.status,
       orderIndex: signer.order_index,
+      delivery: signer.delivery === "in_person" ? "in_person" : "email",
+      requireSmsOtp: signer.require_sms_otp,
+      phoneMasked: maskPhone(signer.phone),
+      otpVerified: Boolean(
+        signer.otp_verified_at &&
+        Date.now() - Date.parse(signer.otp_verified_at) < OTP_VALIDITY_MS - 60_000,
+      ),
     },
     envelope: {
       id: envelope.id,

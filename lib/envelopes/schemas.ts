@@ -1,12 +1,27 @@
 import { z } from "zod";
 import { LIMITS } from "@/lib/config";
 import { emailSchema, localeSchema, personNameSchema, V } from "@/lib/validation/common";
+import { normalizePhone } from "@/lib/validation/phone";
 
-export const signerSchema = z.object({
-  firstName: personNameSchema(80),
-  lastName: personNameSchema(120),
-  email: emailSchema,
-});
+export const DELIVERY_OPTIONS = ["email", "in_person"] as const;
+export type Delivery = (typeof DELIVERY_OPTIONS)[number];
+
+export const signerSchema = z
+  .object({
+    firstName: personNameSchema(80),
+    lastName: personNameSchema(120),
+    email: emailSchema,
+    /** Optional; required when requireSmsOtp. Normalised to E.164 when saved. */
+    phone: z.string().trim().max(32, V.tooLong).optional().default(""),
+    requireSmsOtp: z.boolean().optional().default(false),
+    delivery: z.enum(DELIVERY_OPTIONS).optional().default("email"),
+  })
+  .superRefine((s, ctx) => {
+    if (s.phone && !normalizePhone(s.phone))
+      ctx.addIssue({ code: "custom", path: ["phone"], message: V.phone });
+    else if (s.requireSmsOtp && !s.phone)
+      ctx.addIssue({ code: "custom", path: ["phone"], message: "send.errors.phoneRequired" });
+  });
 
 export const EXPIRY_OPTIONS = [7, 15, 30, 60, 90] as const;
 export const REMINDER_OPTIONS = [0, 1, 2, 3, 5, 7] as const;

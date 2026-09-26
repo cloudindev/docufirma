@@ -13,6 +13,8 @@ import { rateLimit } from "@/lib/rate-limit";
 import { canonicalJson, computeMetrics } from "@/lib/signing/biometrics";
 import { encryptEvidence } from "@/lib/signing/evidence-crypto";
 import { issueTokenAndEmail } from "@/lib/signing/notify";
+import { generateOtp, hashOtp, otpSmsText } from "@/lib/signing/otp";
+import { sendSms } from "@/lib/sms";
 import { completeSignatureSchema } from "@/lib/signing/schemas";
 import { resolveSigningToken, type SignerState, stateFromSqlError } from "@/lib/signing/session";
 import { normaliseSignaturePng } from "@/lib/signing/signature-image";
@@ -76,6 +78,9 @@ export async function completeSignature(
   const ctx = await resolveSigningToken(token);
   if (ctx.state !== "ready" || !ctx.signer || !ctx.envelope)
     return { ok: false, error: "state", state: ctx.state };
+  // Checked again (authoritatively) inside complete_signature.
+  if (ctx.signer.requireSmsOtp && !ctx.signer.otpVerified)
+    return { ok: false, error: "otp_required" };
 
   const image = await normaliseSignaturePng(parsed.data.signaturePng);
   if (!image) return { ok: false, error: "signature_image" };
@@ -131,6 +136,7 @@ export async function completeSignature(
     },
   });
   if (error) {
+    if (error.message.includes("otp_required")) return { ok: false, error: "otp_required" };
     const state = stateFromSqlError(error.message);
     if (state === "error") console.error("[sign] complete_signature", error.message);
     return {
@@ -261,4 +267,82 @@ export async function getSigningStatus(token: string): Promise<SigningStatus | n
   }
   const sealing = (artifacts ?? []).some((a) => a.tsa_status !== "granted");
   return { phase: sealing ? "sealing" : "done", downloads };
+}
+
+/**
+ * Sends a 6-digit code by SMS to the signer's phone (only when the sender required it).
+ * Limits: 3 codes / 10 min and 10 per signer (in SQL), plus a per-IP limit here.
+ */
+export async function requestSigningCode(
+  token: string,
+): Promise<{ ok: true; phone: string | null } | Fail> {
+  if (await limited("otp-send", token, 5, 600)) return { ok: false, error: "rate_limited" };
+  const ctx = await resolveSigningToken(token);
+  if (ctx.state !== "ready" || !ctx.signer || !ctx.envelope)
+    return { ok: false, error: "state", state: ctx.state };
+  if (!ctx.signer.requireSmsOtp) return { ok: false, error: "otp_not_required" };
+
+  const code = generateOtp();
+  const { ip, userAgent } = await requestMeta();
+  const admin = createAdminClient();
+  const { data: phone, error } = await admin.rpc("request_signer_otp", {
+    p_token_hash: ctx.tokenHash,
+    p_code_hash: hashOtp(ctx.tokenHash, code),
+    p_ip: ip ?? undefined,
+    p_user_agent: userAgent ?? undefined,
+  });
+  if (error || !phone) {
+    if (error?.message.includes("otp_rate_limited"))
+      return { ok: false, error: "otp_rate_limited" };
+    const state = stateFromSqlError(error?.message ?? "");
+    if (state !== "error") return { ok: false, error: "state", state };
+    console.error("[sign] request_signer_otp", error?.message);
+    return { ok: false, error: "generic" };
+  }
+  const sms = await sendSms(phone, otpSmsText(ctx.envelope.locale, code));
+  if (!sms.ok) {
+    console.error("[sign] SMS not sent:", sms.error);
+    return { ok: false, error: "sms_failed" };
+  }
+  return { ok: true, phone: ctx.signer.phoneMasked };
+}
+
+const codeSchema = z
+  .string()
+  .trim()
+  .regex(/^\d{6}$/);
+
+export async function verifySigningCode(
+  token: string,
+  rawCode: unknown,
+): Promise<{ ok: true } | (Fail & { attemptsLeft?: number })> {
+  if (await limited("otp-verify", token, 15, 600)) return { ok: false, error: "rate_limited" };
+  const parsed = codeSchema.safeParse(rawCode);
+  if (!parsed.success) return { ok: false, error: "otp_invalid" };
+  const ctx = await resolveSigningToken(token);
+  if (ctx.state !== "ready" || !ctx.signer) return { ok: false, error: "state", state: ctx.state };
+
+  const { ip, userAgent } = await requestMeta();
+  const { data, error } = await createAdminClient().rpc("verify_signer_otp", {
+    p_token_hash: ctx.tokenHash,
+    p_code_hash: hashOtp(ctx.tokenHash, parsed.data),
+    p_ip: ip ?? undefined,
+    p_user_agent: userAgent ?? undefined,
+  });
+  if (error) {
+    const state = stateFromSqlError(error.message);
+    return { ok: false, error: "state", state: state === "error" ? undefined : state };
+  }
+  const result = data as { ok: boolean; reason?: string; attempts_left?: number };
+  if (result.ok) return { ok: true };
+  return {
+    ok: false,
+    error:
+      result.reason === "expired"
+        ? "otp_expired"
+        : result.reason === "too_many_attempts"
+          ? "otp_too_many_attempts"
+          : "otp_invalid",
+    attemptsLeft: result.attempts_left,
+  };
 }

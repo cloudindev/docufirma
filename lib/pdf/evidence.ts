@@ -88,6 +88,16 @@ export async function generateEvidencePdf(data: EvidenceData): Promise<Uint8Arra
     f(L.strokes, `${s.strokeCount} / ${s.pointsCount} / ${(s.durationMs / 1000).toFixed(2)} s`);
     f(L.biometricHash, s.biometricSha256, true);
     f(L.consent, `${s.consentVersion ?? "—"} · ${formatUtc(s.consentAcceptedAt)}`);
+    f(
+      L.signingMethod,
+      s.delivery === "in_person" ? L.methodInPerson(s.inPersonHost ?? "—") : L.methodRemote,
+    );
+    f(
+      L.smsVerification,
+      s.otpPhoneMasked && s.otpVerifiedAt
+        ? L.smsVerified(s.otpPhoneMasked, formatUtc(s.otpVerifiedAt))
+        : L.notUsed,
+    );
     w.space(8);
   }
 

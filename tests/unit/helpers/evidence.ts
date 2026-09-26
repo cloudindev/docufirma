@@ -30,6 +30,11 @@ export async function sampleEvidence(locale: "es" | "en" = "es"): Promise<Eviden
     biometricSha256: "b".repeat(64),
     consentVersion: "2026-09-v1",
     consentAcceptedAt: "2026-09-23T10:15:29Z",
+    // The second signer signs in person with SMS verification, the first one remotely.
+    delivery: i === 1 ? ("in_person" as const) : ("email" as const),
+    inPersonHost: i === 1 ? "Ana Martín <ana@example.com>" : null,
+    otpPhoneMasked: i === 1 ? "+34 ••• ••• 456" : null,
+    otpVerifiedAt: i === 1 ? "2026-09-23T10:14:02Z" : null,
   });
   return {
     locale,

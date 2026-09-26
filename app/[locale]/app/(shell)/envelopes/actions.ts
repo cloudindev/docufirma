@@ -1,12 +1,16 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { headers } from "next/headers";
 import { z } from "zod";
 import { type ActionResult, fail, ok } from "@/lib/actions/result";
 import { getSessionUser } from "@/lib/auth/session";
 import { LIMITS } from "@/lib/config";
 import { logEvent } from "@/lib/events";
-import { issueTokenAndEmail } from "@/lib/signing/notify";
+import { clientIpFrom } from "@/lib/http";
+import { issueTokenAndEmail, signUrl } from "@/lib/signing/notify";
+import { generateSignerToken, hashToken } from "@/lib/signing/tokens";
+import { fullName } from "@/lib/utils";
 import { BUCKETS, paths, safeFileName } from "@/lib/storage/paths";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
@@ -205,6 +209,7 @@ export async function remindPendingSigners(
     .from("signers")
     .select("id, last_reminder_at, sent_at")
     .eq("envelope_id", envelopeId)
+    .eq("delivery", "email")
     .in("status", ["sent", "viewed"]);
   const hourAgo = Date.now() - 60 * 60 * 1000;
   let sent = 0;
@@ -223,4 +228,43 @@ export async function remindPendingSigners(
   }
   revalidatePath("/[locale]/app", "layout");
   return ok({ sent });
+}
+
+/**
+ * In-person signing: the sender hands their device to a signer who is physically present.
+ * Revokes that signer's previous links, issues a fresh one and records who hosted the session.
+ * Returns the signing URL for the browser to open.
+ */
+export async function startInPersonSigning(
+  envelopeId: string,
+  signerId: string,
+): Promise<ActionResult<{ url: string }>> {
+  const owned = await ownedEnvelope(envelopeId);
+  if (!owned || !uuid.safeParse(signerId).success) return fail("not_found");
+  const admin = createAdminClient();
+  const { data: profile } = await admin
+    .from("profiles")
+    .select("first_name, last_name, email")
+    .eq("id", owned.user.id)
+    .single();
+  const hostName = fullName(profile?.first_name, profile?.last_name) || owned.user.email;
+  const h = await headers();
+  const token = generateSignerToken();
+  const { error } = await admin.rpc("start_in_person_signing", {
+    p_signer_id: signerId,
+    p_user_id: owned.user.id,
+    p_token_hash: hashToken(token),
+    p_host: `${hostName} <${profile?.email ?? owned.user.email}>`,
+    p_ip: clientIpFrom(h) ?? undefined,
+    p_user_agent: h.get("user-agent")?.slice(0, 512) ?? undefined,
+  });
+  if (error) {
+    if (error.message.includes("not_your_turn")) return fail("not_your_turn");
+    if (error.message.includes("signer_not_found") || error.message.includes("not_in_person"))
+      return fail("not_found");
+    console.error("[in-person]", error.message);
+    return fail("not_active");
+  }
+  const locale = owned.envelope.locale === "en" ? "en" : "es";
+  return ok({ url: signUrl(locale, token) });
 }

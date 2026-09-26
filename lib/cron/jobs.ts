@@ -17,6 +17,7 @@ export async function runReminders(limit = 50) {
       "id, sent_at, last_reminder_at, reminder_count, envelopes!inner(id, status, reminder_days, expires_at)",
     )
     .in("status", ["sent", "viewed"])
+    .eq("delivery", "email")
     .lt("reminder_count", LIMITS.maxReminders)
     .in("envelopes.status", ["sent", "viewed"])
     .gt("envelopes.reminder_days", 0)

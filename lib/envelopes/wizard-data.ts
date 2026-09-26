@@ -3,6 +3,7 @@ import type { WizardContact, WizardDocument } from "@/components/send/types";
 import { getCredits } from "@/lib/credits";
 import type { EnvelopeSettingsInput } from "@/lib/envelopes/schemas";
 import { isDocxConversionEnabled } from "@/lib/pdf/convert";
+import { isSmsAvailable } from "@/lib/sms";
 import type { ServerSupabase } from "@/lib/supabase/server";
 
 export async function loadWizardData(
@@ -48,7 +49,7 @@ export async function loadWizardData(
         .order("order_index"),
       supabase
         .from("signers")
-        .select("first_name, last_name, email")
+        .select("first_name, last_name, email, phone, require_sms_otp, delivery")
         .eq("envelope_id", envelopeId)
         .order("order_index"),
     ]);
@@ -69,6 +70,9 @@ export async function loadWizardData(
         firstName: s.first_name,
         lastName: s.last_name,
         email: s.email,
+        phone: s.phone ?? "",
+        requireSmsOtp: s.require_sms_otp,
+        delivery: s.delivery === "in_person" ? ("in_person" as const) : ("email" as const),
       })),
     };
   }
@@ -80,5 +84,6 @@ export async function loadWizardData(
     contacts: (contacts ?? []) as WizardContact[],
     credits: credits.total,
     docxEnabled: isDocxConversionEnabled(),
+    smsAvailable: isSmsAvailable(),
   };
 }

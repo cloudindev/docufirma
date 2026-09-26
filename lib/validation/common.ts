@@ -13,6 +13,7 @@ export const V = {
   passwordMismatch: "validation.passwordMismatch",
   acceptTerms: "validation.acceptTerms",
   invalid: "validation.invalid",
+  phone: "validation.phone",
 } as const;
 
 export const emailSchema = z

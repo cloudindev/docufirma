@@ -58,4 +58,12 @@ describe("evidence certificate", () => {
     );
     expect((await inspectPdf(bytes)).ok).toBe(true);
   });
+
+  it("records how each signer was identified", async () => {
+    const text = (await pdfText(await generateEvidencePdf(await sampleEvidence("es")))).join("\n");
+    expect(text).toContain("A distancia (enlace personal por email)");
+    expect(text).toContain("Presencial, ante Ana Martín <ana@example.com>");
+    expect(text).toContain("Código confirmado en +34 ••• ••• 456");
+    expect(text).toContain("No utilizada");
+  });
 });

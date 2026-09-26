@@ -22,6 +22,11 @@ export type EvidenceSigner = {
   biometricSha256: string;
   consentVersion: string | null;
   consentAcceptedAt: string | null;
+  /** How the signer was identified (snapshot taken when signing). */
+  delivery: "email" | "in_person";
+  inPersonHost: string | null;
+  otpPhoneMasked: string | null;
+  otpVerifiedAt: string | null;
 };
 
 export type EvidenceDocument = {

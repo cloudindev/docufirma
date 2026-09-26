@@ -14,7 +14,7 @@ export function signUrl(locale: "es" | "en", token: string) {
 async function loadContext(admin: AdminSupabase, signerId: string) {
   const { data: signer } = await admin
     .from("signers")
-    .select("id, first_name, last_name, email, envelope_id")
+    .select("id, first_name, last_name, email, envelope_id, delivery")
     .eq("id", signerId)
     .single();
   if (!signer) throw new Error(`signer ${signerId} not found`);
@@ -47,6 +47,9 @@ export async function emailSigner(
   opts: { reminder?: boolean } = {},
 ) {
   const { signer, envelope, documents, logoPath } = await loadContext(admin, signerId);
+  // In-person signers sign on the sender's device: their link is never emailed.
+  if (signer.delivery === "in_person")
+    return { ok: false, skipped: true, name: fullName(signer.first_name, signer.last_name) };
   const locale = envelope.locale === "en" ? "en" : "es";
   const senderDisplay = envelope.sender_company
     ? `${envelope.sender_name} (${envelope.sender_company})`
@@ -88,7 +91,11 @@ export async function emailSigner(
       error: result.error ?? null,
     },
   });
-  return { ok: Boolean(result.id), name: fullName(signer.first_name, signer.last_name) };
+  return {
+    ok: Boolean(result.id),
+    skipped: false,
+    name: fullName(signer.first_name, signer.last_name),
+  };
 }
 
 /** Issues a fresh token for a signer (next sequential signer, or reminder) and emails it. */

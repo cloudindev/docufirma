@@ -105,7 +105,7 @@ export async function getEnvelopeDetail(supabase: ServerSupabase, id: string) {
     supabase
       .from("signers")
       .select(
-        "id, first_name, last_name, email, order_index, status, sent_at, viewed_at, signed_at, declined_at, decline_reason, reminder_count, last_reminder_at",
+        "id, first_name, last_name, email, order_index, status, sent_at, viewed_at, signed_at, declined_at, decline_reason, reminder_count, last_reminder_at, delivery, phone, require_sms_otp",
       )
       .eq("envelope_id", id)
       .order("order_index"),

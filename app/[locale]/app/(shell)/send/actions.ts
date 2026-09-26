@@ -17,7 +17,9 @@ import {
 import { sendDraftEnvelope } from "@/lib/envelopes/send";
 import { logEvent } from "@/lib/events";
 import { BUCKETS, paths } from "@/lib/storage/paths";
+import { isSmsAvailable } from "@/lib/sms";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { normalizePhone } from "@/lib/validation/phone";
 import { createClient } from "@/lib/supabase/server";
 
 async function ownedDraft(envelopeId: string) {
@@ -212,13 +214,19 @@ export async function saveDraft(envelopeId: string, raw: unknown): Promise<Actio
   await admin.from("signers").delete().eq("envelope_id", envelopeId);
   if (unique.length) {
     const { error: sErr } = await admin.from("signers").insert(
-      unique.map((s, i) => ({
-        envelope_id: envelopeId,
-        first_name: s.firstName,
-        last_name: s.lastName,
-        email: s.email,
-        order_index: i,
-      })),
+      unique.map((s, i) => {
+        const phone = normalizePhone(s.phone);
+        return {
+          envelope_id: envelopeId,
+          first_name: s.firstName,
+          last_name: s.lastName,
+          email: s.email,
+          order_index: i,
+          phone,
+          require_sms_otp: Boolean(s.requireSmsOtp && phone),
+          delivery: s.delivery,
+        };
+      }),
     );
     if (sErr) return fail("generic");
   }
@@ -237,6 +245,8 @@ export async function sendEnvelope(
   if (!owned.user.emailVerified) return fail("email_not_verified");
   const parsed = sendEnvelopeSchema.safeParse(raw);
   if (!parsed.success) return fail("validation", zodFieldErrors(parsed.error));
+  if (parsed.data.signers.some((s) => s.requireSmsOtp) && !isSmsAvailable())
+    return fail("sms_unavailable");
 
   const saved = await saveDraft(envelopeId, parsed.data);
   if (!saved.ok) return saved;
