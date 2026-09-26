@@ -528,6 +528,7 @@ export type Database = {
           client_time: string | null;
           consent_text_version: string | null;
           created_at: string;
+          delivery: string | null;
           device_type: string | null;
           duration_ms: number;
           envelope_id: string;
@@ -535,7 +536,10 @@ export type Database = {
           geo_country: string | null;
           geo_region: string | null;
           id: string;
+          in_person_host: string | null;
           ip: string | null;
+          otp_phone_masked: string | null;
+          otp_verified_at: string | null;
           pointer_type: string | null;
           points_count: number;
           pressure_supported: boolean;
@@ -557,6 +561,7 @@ export type Database = {
           client_time?: string | null;
           consent_text_version?: string | null;
           created_at?: string;
+          delivery?: string | null;
           device_type?: string | null;
           duration_ms: number;
           envelope_id: string;
@@ -564,7 +569,10 @@ export type Database = {
           geo_country?: string | null;
           geo_region?: string | null;
           id?: string;
+          in_person_host?: string | null;
           ip?: string | null;
+          otp_phone_masked?: string | null;
+          otp_verified_at?: string | null;
           pointer_type?: string | null;
           points_count: number;
           pressure_supported?: boolean;
@@ -586,6 +594,7 @@ export type Database = {
           client_time?: string | null;
           consent_text_version?: string | null;
           created_at?: string;
+          delivery?: string | null;
           device_type?: string | null;
           duration_ms?: number;
           envelope_id?: string;
@@ -593,7 +602,10 @@ export type Database = {
           geo_country?: string | null;
           geo_region?: string | null;
           id?: string;
+          in_person_host?: string | null;
           ip?: string | null;
+          otp_phone_masked?: string | null;
+          otp_verified_at?: string | null;
           pointer_type?: string | null;
           points_count?: number;
           pressure_supported?: boolean;
@@ -749,6 +761,44 @@ export type Database = {
           },
         ];
       };
+      signer_otps: {
+        Row: {
+          attempts: number;
+          code_hash: string;
+          consumed_at: string | null;
+          created_at: string;
+          expires_at: string;
+          id: string;
+          signer_id: string;
+        };
+        Insert: {
+          attempts?: number;
+          code_hash: string;
+          consumed_at?: string | null;
+          created_at?: string;
+          expires_at: string;
+          id?: string;
+          signer_id: string;
+        };
+        Update: {
+          attempts?: number;
+          code_hash?: string;
+          consumed_at?: string | null;
+          created_at?: string;
+          expires_at?: string;
+          id?: string;
+          signer_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "signer_otps_signer_id_fkey";
+            columns: ["signer_id"];
+            isOneToOne: false;
+            referencedRelation: "signers";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
       signers: {
         Row: {
           consent_accepted_at: string | null;
@@ -756,14 +806,19 @@ export type Database = {
           created_at: string;
           decline_reason: string | null;
           declined_at: string | null;
+          delivery: string;
           email: string;
           envelope_id: string;
           first_name: string;
           id: string;
+          in_person_host: string | null;
           last_name: string;
           last_reminder_at: string | null;
           order_index: number;
+          otp_verified_at: string | null;
+          phone: string | null;
           reminder_count: number;
+          require_sms_otp: boolean;
           sent_at: string | null;
           signed_at: string | null;
           status: Database["public"]["Enums"]["signer_status"];
@@ -778,14 +833,19 @@ export type Database = {
           created_at?: string;
           decline_reason?: string | null;
           declined_at?: string | null;
+          delivery?: string;
           email: string;
           envelope_id: string;
           first_name: string;
           id?: string;
+          in_person_host?: string | null;
           last_name: string;
           last_reminder_at?: string | null;
           order_index?: number;
+          otp_verified_at?: string | null;
+          phone?: string | null;
           reminder_count?: number;
+          require_sms_otp?: boolean;
           sent_at?: string | null;
           signed_at?: string | null;
           status?: Database["public"]["Enums"]["signer_status"];
@@ -800,14 +860,19 @@ export type Database = {
           created_at?: string;
           decline_reason?: string | null;
           declined_at?: string | null;
+          delivery?: string;
           email?: string;
           envelope_id?: string;
           first_name?: string;
           id?: string;
+          in_person_host?: string | null;
           last_name?: string;
           last_reminder_at?: string | null;
           order_index?: number;
+          otp_verified_at?: string | null;
+          phone?: string | null;
           reminder_count?: number;
+          require_sms_otp?: boolean;
           sent_at?: string | null;
           signed_at?: string | null;
           status?: Database["public"]["Enums"]["signer_status"];
@@ -936,13 +1001,16 @@ export type Database = {
       record_signer_event: { Args: { p_token_hash: string; p_type: Database["public"]["Enums"]["envelope_event_type"]; p_metadata?: Json; p_ip?: string; p_user_agent?: string }; Returns: undefined };
       record_tsa_result: { Args: { p_artifact_id: string; p_granted: boolean; p_fields: Json; p_error?: string; p_next_attempt_at?: string }; Returns: { id: string; envelope_id: string; kind: Database["public"]["Enums"]["signed_artifact_kind"]; document_id: string; signed_path: string; signed_sha256: string; size_bytes: number; evidence_pdf_path: string; evidence_sha256: string; tsa_provider: string; tsq_path: string; tsr_path: string; tsa_serial: string; tsa_gen_time: string; tsa_policy_oid: string; tsa_name: string; tsa_hash_alg: string; tsa_status: Database["public"]["Enums"]["tsa_status"]; tsa_error: string; tsa_attempts: number; tsa_next_attempt_at: string; created_at: string; updated_at: string } };
       release_credit: { Args: { p_signer_id: string; p_note?: string }; Returns: boolean };
+      request_signer_otp: { Args: { p_token_hash: string; p_code_hash: string; p_ip?: string; p_user_agent?: string }; Returns: string };
       reserve_credits: { Args: { p_user_id: string; p_envelope_id: string; p_signer_ids: string[] }; Returns: undefined };
       send_envelope: { Args: { p_envelope_id: string; p_user_id: string; p_tokens: Json; p_verification_code: string; p_expires_at: string; p_sender?: Json }; Returns: Json };
+      start_in_person_signing: { Args: { p_signer_id: string; p_user_id: string; p_token_hash: string; p_host: string; p_ip?: string; p_user_agent?: string }; Returns: undefined };
+      verify_signer_otp: { Args: { p_token_hash: string; p_code_hash: string; p_ip?: string; p_user_agent?: string }; Returns: Json };
     };
     Enums: {
       credit_kind: "monthly_grant" | "pack_purchase" | "trial_grant" | "reserve" | "consume" | "release" | "adjustment";
       credit_pool: "monthly" | "pack";
-      envelope_event_type: "created" | "sent" | "email_sent" | "email_delivered" | "email_failed" | "opened" | "document_viewed" | "scrolled_to_end" | "consent_accepted" | "signed" | "declined" | "reminder_sent" | "completed" | "expired" | "canceled" | "tsa_granted" | "tsa_failed" | "downloaded";
+      envelope_event_type: "created" | "sent" | "email_sent" | "email_delivered" | "email_failed" | "opened" | "document_viewed" | "scrolled_to_end" | "consent_accepted" | "signed" | "declined" | "reminder_sent" | "completed" | "expired" | "canceled" | "tsa_granted" | "tsa_failed" | "downloaded" | "otp_sent" | "otp_verified" | "otp_failed" | "in_person_started";
       envelope_status: "draft" | "sent" | "viewed" | "completed" | "declined" | "expired" | "canceled";
       job_status: "pending" | "running" | "done" | "failed";
       signed_artifact_kind: "document" | "evidence";
@@ -965,7 +1033,7 @@ export const Constants = {
     Enums: {
       credit_kind: ["monthly_grant", "pack_purchase", "trial_grant", "reserve", "consume", "release", "adjustment"],
       credit_pool: ["monthly", "pack"],
-      envelope_event_type: ["created", "sent", "email_sent", "email_delivered", "email_failed", "opened", "document_viewed", "scrolled_to_end", "consent_accepted", "signed", "declined", "reminder_sent", "completed", "expired", "canceled", "tsa_granted", "tsa_failed", "downloaded"],
+      envelope_event_type: ["created", "sent", "email_sent", "email_delivered", "email_failed", "opened", "document_viewed", "scrolled_to_end", "consent_accepted", "signed", "declined", "reminder_sent", "completed", "expired", "canceled", "tsa_granted", "tsa_failed", "downloaded", "otp_sent", "otp_verified", "otp_failed", "in_person_started"],
       envelope_status: ["draft", "sent", "viewed", "completed", "declined", "expired", "canceled"],
       job_status: ["pending", "running", "done", "failed"],
       signed_artifact_kind: ["document", "evidence"],
