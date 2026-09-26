@@ -212,3 +212,19 @@ crons se programan en Postgres con `pg_cron` y cada ejecución hace un `GET` as�
 `/api/cron/*` de la app, con `Authorization: Bearer <CRON_SECRET>`. La lógica sigue en la app (emails, Mensatek,
 Storage). La URL y el secreto viven en Supabase Vault, nunca en las migraciones. En bases sin estas extensiones
 (tests SQL, stack local) la migración se omite. `vercel.json` ya no declara crons.
+
+## D-037 · Firma presencial y código SMS de un solo uso
+
+Opciones por firmante en el asistente de envío:
+
+- **Firma presencial** (`signers.delivery = 'in_person'`): no se envía el enlace por email ni recordatorios. El remitente
+  pulsa «Firmar ahora» en el envío; `start_in_person_signing` revoca los enlaces anteriores de ese firmante, emite uno
+  nuevo y registra quién acogió la firma (`in_person_host`, evento `in_person_started`). El firmante firma en el
+  dispositivo del remitente y recibe igualmente la copia firmada por email.
+- **Código SMS** (`require_sms_otp` + `phone` en E.164): antes del trazo el firmante confirma un código de 6 cifras.
+  Solo se guarda `SHA-256(token_hash:código)`; caduca a los 10 min, 5 intentos por código, 3 códigos cada 10 min y 10
+  por firmante. `complete_signature` rechaza la firma si no hay confirmación en los últimos 30 min.
+- El certificado de evidencias muestra el método (a distancia / presencial ante X) y la verificación SMS (móvil
+  enmascarado y hora). Proveedor: Mensatek SMS API v5 por POST (credenciales en el cuerpo, nunca en la URL); en
+  desarrollo y e2e, outbox en disco. Sin credenciales en producción la opción aparece desactivada. Los SMS no consumen
+  firmas del usuario: su coste lo asume la cuenta de Mensatek.

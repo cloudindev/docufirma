@@ -84,3 +84,14 @@ Implementado en `delete_user_account` (ver `docs/DECISIONS.md` D-015):
 - Revisar el plazo de retención (5 años) y la base jurídica del tratamiento de biometría.
 - Redactar el contrato de encargo del tratamiento (art. 28 RGPD) como anexo de los Términos.
 - Confirmar la política de firma frente a la Ley 6/2020 y la LEC (arts. 326 y 3.2 Ley 6/2020).
+
+## Identificación reforzada del firmante (D-037)
+
+- **Código SMS**: añade un segundo factor independiente del email (posesión del móvil). Refuerza el requisito del
+  art. 26.b eIDAS («capaz de identificar al firmante»). El certificado de evidencias recoge el móvil enmascarado y la
+  hora de confirmación; los eventos `otp_sent`, `otp_failed` y `otp_verified` quedan en la cronología.
+- **Firma presencial**: el firmante firma en el dispositivo del remitente, que actúa como testigo de su identidad. El
+  certificado indica «Presencial, ante <remitente>» y el evento `in_person_started` registra IP y dispositivo.
+  Recomendable combinarla con el código SMS o con la comprobación visual del DNI por parte del remitente.
+- El teléfono del firmante es un dato personal tratado por cuenta del remitente (encargo del tratamiento); se borra con
+  el sobre o la cuenta.

@@ -85,6 +85,9 @@ Con las credenciales HTTP Basic del panel de Mensatek rellena `MENSATEK_TSA_USER
 (`MENSATEK_TSA_ENDPOINT` = `…/tsaMENSATEK`, 1 crédito por sello; `…/tsaFNMT` usa la TSA de FNMT, 2 créditos).
 Recomendado: exporta la cadena de certificados de la TSA a `TSA_TRUSTED_CERTS_PEM` para validar la cadena de cada token.
 `PADES_DOC_TIMESTAMP=true` añade además un sello PAdES visible en Adobe Reader (un sello extra por documento).
+Para el **código SMS** antes de firmar, rellena `MENSATEK_SMS_USER` (email de la cuenta de SMS de Mensatek) y
+`MENSATEK_SMS_PASSWORD`; `SMS_SENDER` es el remitente alfanumérico (máx. 11 caracteres). Sin ellas la opción aparece
+desactivada en el asistente de envío.
 
 ### 5. Vercel
 

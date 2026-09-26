@@ -102,3 +102,9 @@ Leyenda: `[x]` hecho · `[~]` hecho parcialmente / pendiente de credenciales ext
 - [x] GitHub Actions: formato + lint + typecheck + unit y tests SQL en PR; e2e completos en `main`
 - [x] README de despliegue desde cero
 - [~] Pendiente fuera del sandbox: sello real de Mensatek, Checkout/Portal de Stripe en vivo y ejecución del workflow en GitHub
+
+## Mejoras posteriores al lanzamiento
+
+- [x] Firma presencial en el dispositivo del remitente (D-037)
+- [x] Código SMS de un solo uso antes de firmar, con Mensatek (D-037)
+- [~] Probar el envío real de SMS con las credenciales de Mensatek en producción
