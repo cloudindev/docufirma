@@ -1,14 +1,22 @@
 import { EmailButton, EmailHeading, EmailLayout, EmailText } from "./components/layout";
 import { type EmailLocale, emailTranslator } from "./i18n";
 
-/** Account-level emails: welcome, payment failed, low credits, no SMS left. */
+/** Account-level emails: welcome, payment failed, low credits, no SMS left, automatic top-ups. */
 export type AccountNoticeProps = {
   locale: EmailLocale;
   appUrl: string;
-  kind: "welcome" | "paymentFailed" | "creditsLow" | "smsEmpty";
+  kind:
+    | "welcome"
+    | "paymentFailed"
+    | "creditsLow"
+    | "smsEmpty"
+    | "autoRecharged"
+    | "autoRechargeFailed";
   name?: string;
-  /** Envelope title (smsEmpty). */
+  /** Envelope title (smsEmpty) or pack label (automatic top-ups). */
   title?: string;
+  /** Formatted amount charged (autoRecharged). */
+  amount?: string;
   count?: number;
   ctaUrl: string;
 };
@@ -26,6 +34,7 @@ export default function AccountNotice(p: AccountNoticeProps) {
     count: p.count ?? 0,
     credits: p.count ?? 0,
     title: p.title ?? "",
+    amount: p.amount ?? "",
   };
   return (
     <EmailLayout

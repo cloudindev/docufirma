@@ -4,6 +4,7 @@ import { after } from "next/server";
 import { headers } from "next/headers";
 import { z } from "zod";
 import { closeEnvelope } from "@/lib/closure";
+import { triggerAutoRecharge } from "@/lib/credits/auto-recharge";
 import { LIMITS } from "@/lib/config";
 import { sendAccountNotice, sendEnvelopeNotice } from "@/lib/email";
 import { appUrl } from "@/lib/env-public";
@@ -295,7 +296,12 @@ export async function requestSigningCode(
     if (error?.message.includes("otp_rate_limited"))
       return { ok: false, error: "otp_rate_limited" };
     if (error?.message.includes("sms_no_credits")) {
-      after(() => notifySenderNoSms(ctx));
+      const owner = ctx.envelope.userId;
+      after(async () => {
+        // With automatic top-up the signer can simply retry; otherwise tell the sender.
+        const topUp = owner ? await triggerAutoRecharge(owner, "sms") : null;
+        if (topUp?.status !== "charged") await notifySenderNoSms(ctx);
+      });
       return { ok: false, error: "sms_no_credits" };
     }
     const state = stateFromSqlError(error?.message ?? "");
@@ -310,6 +316,8 @@ export async function requestSigningCode(
     await admin.rpc("refund_signer_sms", { p_signer_id: ctx.signer.id, p_note: "provider_error" });
     return { ok: false, error: "sms_failed" };
   }
+  const owner = ctx.envelope.userId;
+  if (owner) after(() => triggerAutoRecharge(owner, "sms"));
   return { ok: true, phone: ctx.signer.phoneMasked };
 }
 

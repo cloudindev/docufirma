@@ -10,6 +10,7 @@ import { getSessionUser } from "@/lib/auth/session";
 import { redirect } from "@/lib/i18n/navigation";
 import { isLocale } from "@/lib/i18n/routing";
 import {
+  autoRechargeSchema,
   LOGO_MAX_BYTES,
   LOGO_TYPES,
   preferencesSchema,
@@ -69,6 +70,32 @@ export async function updatePreferences(raw: unknown): Promise<ActionResult> {
 }
 
 /** Logo: validated, normalised to a PNG (max 480×160) and stored in the private branding bucket. */
+/** Saves the automatic top-up settings of one kind (signatures or SMS). */
+export async function saveAutoRecharge(raw: unknown): Promise<ActionResult> {
+  const user = await getSessionUser();
+  if (!user) return fail("unauthorized");
+  const parsed = autoRechargeSchema.safeParse(raw);
+  if (!parsed.success) return fail("validation", zodFieldErrors(parsed.error));
+  const { kind, enabled, threshold, packSlug } = parsed.data;
+  const admin = createAdminClient();
+  const { data: pack } = await admin
+    .from("credit_packs")
+    .select("id")
+    .eq("slug", packSlug)
+    .eq("kind", kind)
+    .eq("active", true)
+    .maybeSingle();
+  if (!pack) return fail("validation", { packSlug: "invalid" });
+  const { error } = await admin.from("auto_recharge").upsert(
+    // Saving clears a previous failure so the user can resume after fixing the card.
+    { user_id: user.id, kind, enabled, threshold, pack_id: pack.id, last_error: null },
+    { onConflict: "user_id,kind" },
+  );
+  if (error) return fail("generic");
+  revalidateApp();
+  return ok();
+}
+
 export async function uploadLogo(formData: FormData): Promise<ActionResult> {
   const user = await getSessionUser();
   if (!user) return fail("unauthorized");

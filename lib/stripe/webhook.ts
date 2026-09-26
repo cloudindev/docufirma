@@ -5,6 +5,7 @@ import { appUrl } from "@/lib/env-public";
 import { getPathname } from "@/lib/i18n/navigation";
 import { type AdminSupabase, createAdminClient } from "@/lib/supabase/admin";
 import type { Enums } from "@/types/database";
+import { grantRechargeInvoice } from "./auto-recharge";
 import { STRIPE_APP } from "./setup";
 
 type SubStatus = Enums<"subscription_status">;
@@ -170,6 +171,12 @@ async function isDocuFirmaEvent(admin: AdminSupabase, event: Stripe.Event): Prom
         })) !== null
       );
     }
+    case "invoice.paid":
+      // Only automatic top-ups paid later (e.g. after 3-D Secure) matter here.
+      return (
+        event.data.object.metadata?.app === STRIPE_APP &&
+        event.data.object.metadata?.auto_recharge === "1"
+      );
     case "invoice.payment_failed": {
       const invoice = event.data.object;
       const meta = invoice.parent?.subscription_details?.metadata;
@@ -233,7 +240,20 @@ export async function handleStripeEvent(
       case "customer.subscription.resumed":
         await upsertSubscription(admin, event.data.object);
         break;
+      case "invoice.paid": {
+        const invoice = event.data.object;
+        await grantRechargeInvoice(admin, invoice);
+        const kind = invoice.metadata?.kind === "sms_pack" ? "sms" : "signatures";
+        await admin
+          .from("auto_recharge")
+          .update({ last_success_at: new Date().toISOString(), last_error: null })
+          .eq("user_id", invoice.metadata!.user_id!)
+          .eq("kind", kind);
+        break;
+      }
       case "invoice.payment_failed":
+        // Top-up invoices are handled where they are charged.
+        if (event.data.object.metadata?.auto_recharge === "1") break;
         await notifyPaymentFailed(admin, event.data.object);
         break;
       default:

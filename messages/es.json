@@ -924,7 +924,35 @@
         "confirm": "Eliminar cuenta",
         "mismatch": "El email no coincide."
       },
-      "error": "No hemos podido guardar los cambios."
+      "error": "No hemos podido guardar los cambios.",
+      "autoRecharge": {
+        "title": "Recarga automática",
+        "subtitle": "Compra automáticamente más firmas o SMS cuando tu saldo llegue al mínimo que elijas, para no quedarte nunca a mitad de un envío.",
+        "card": "Se cobrará a tu tarjeta {brand} •••• {last4} (caduca {exp}).",
+        "noCard": "No tienes ninguna tarjeta guardada. Se guarda al suscribirte o al comprar un pack, o puedes añadirla en el portal de pagos.",
+        "addCard": "Añadir tarjeta",
+        "changeCard": "Cambiar tarjeta",
+        "enable": "Activar la recarga automática de {kind}",
+        "thresholdHint": "Se recarga en cuanto tu saldo queda en esta cantidad o menos.",
+        "pack": "Pack que se comprará",
+        "signatures": {
+          "title": "Firmas",
+          "hint": "Compra un pack de firmas cuando te queden pocas.",
+          "threshold": "Recargar cuando queden (firmas)",
+          "option": "{credits} firmas · {price}"
+        },
+        "sms": {
+          "title": "SMS",
+          "hint": "Compra un pack de SMS para los códigos de verificación.",
+          "threshold": "Recargar cuando queden (SMS)",
+          "option": "{credits} SMS · {price}"
+        },
+        "paused": "Pausada: no pudimos cobrar la última recarga. Revisa tu tarjeta y vuelve a guardarla activada.",
+        "lastSuccess": "Última recarga: {date}",
+        "saved": "Recarga automática guardada.",
+        "error": "No hemos podido guardar la recarga automática.",
+        "footnote": "Se comprueba cada vez que usas firmas o SMS, como máximo una recarga cada 10 minutos. Recibirás la factura con el IVA y un email con cada recarga."
+      }
     },
     "billing": {
       "metaTitle": "Facturación",
@@ -1032,6 +1060,20 @@
       "heading": "Te has quedado sin SMS",
       "body": "{name} quiere firmar «{title}», pero no tienes SMS disponibles para enviarle el código de verificación. Compra un pack de SMS y pídele que lo intente de nuevo.",
       "cta": "Comprar SMS"
+    },
+    "autoRecharged": {
+      "subject": "Recarga automática realizada",
+      "preview": "Hemos recargado tu saldo automáticamente.",
+      "heading": "Hemos recargado tu saldo",
+      "body": "Tu saldo llegó al mínimo que fijaste, así que hemos comprado automáticamente {title} por {amount} (IVA incluido) con tu tarjeta guardada. Tienes la factura en Facturación.",
+      "cta": "Ver facturación"
+    },
+    "autoRechargeFailed": {
+      "subject": "No hemos podido hacer la recarga automática",
+      "preview": "Revisa tu tarjeta para seguir enviando.",
+      "heading": "La recarga automática no se ha completado",
+      "body": "Tu saldo llegó al mínimo que fijaste, pero no hemos podido cobrar {title} con tu tarjeta guardada. Hemos pausado la recarga automática: revisa tu método de pago en Facturación y vuelve a activarla en Ajustes.",
+      "cta": "Revisar pago"
     }
   },
   "send": {

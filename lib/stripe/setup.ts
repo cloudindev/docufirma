@@ -20,6 +20,7 @@ export const WEBHOOK_EVENTS: Stripe.WebhookEndpointCreateParams.EnabledEvent[] =
   "customer.subscription.deleted",
   "customer.subscription.paused",
   "customer.subscription.resumed",
+  "invoice.paid",
   "invoice.payment_failed",
 ];
 

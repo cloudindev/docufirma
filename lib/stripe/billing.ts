@@ -143,7 +143,8 @@ export async function createPackCheckout(
     line_items: [{ price: pack.stripe_price_id, quantity: 1 }],
     allow_promotion_codes: true,
     invoice_creation: { enabled: true, invoice_data: { metadata } },
-    payment_intent_data: { metadata },
+    // Keeps the card for automatic top-ups (D-040).
+    payment_intent_data: { metadata, setup_future_usage: "off_session" },
     metadata,
   });
   if (!session.url) throw new BillingError("stripe_error", "Checkout session without URL");

@@ -924,7 +924,35 @@
         "confirm": "Delete account",
         "mismatch": "The email doesn't match."
       },
-      "error": "We couldn't save your changes."
+      "error": "We couldn't save your changes.",
+      "autoRecharge": {
+        "title": "Automatic top-up",
+        "subtitle": "Automatically buy more signatures or SMS when your balance reaches the minimum you choose, so you never run out in the middle of an envelope.",
+        "card": "Your {brand} card •••• {last4} (expires {exp}) will be charged.",
+        "noCard": "You have no saved card. It is saved when you subscribe or buy a pack, or you can add one in the payments portal.",
+        "addCard": "Add card",
+        "changeCard": "Change card",
+        "enable": "Turn on automatic top-up of {kind}",
+        "thresholdHint": "We top up as soon as your balance reaches this amount or less.",
+        "pack": "Pack to buy",
+        "signatures": {
+          "title": "Signatures",
+          "hint": "Buy a signature pack when you are running low.",
+          "threshold": "Top up when left (signatures)",
+          "option": "{credits} signatures · {price}"
+        },
+        "sms": {
+          "title": "SMS",
+          "hint": "Buy an SMS pack for verification codes.",
+          "threshold": "Top up when left (SMS)",
+          "option": "{credits} SMS · {price}"
+        },
+        "paused": "Paused: we could not charge the last top-up. Check your card and save it turned on again.",
+        "lastSuccess": "Last top-up: {date}",
+        "saved": "Automatic top-up saved.",
+        "error": "We could not save the automatic top-up.",
+        "footnote": "We check every time you use signatures or SMS, at most one top-up every 10 minutes. You get a VAT invoice and an email for each top-up."
+      }
     },
     "billing": {
       "metaTitle": "Billing",
@@ -1032,6 +1060,20 @@
       "heading": "You have run out of SMS",
       "body": "{name} wants to sign “{title}”, but you have no SMS left to send the verification code. Buy an SMS pack and ask them to try again.",
       "cta": "Buy SMS"
+    },
+    "autoRecharged": {
+      "subject": "Automatic top-up completed",
+      "preview": "We topped up your balance automatically.",
+      "heading": "We topped up your balance",
+      "body": "Your balance reached the minimum you set, so we automatically bought {title} for {amount} (VAT included) with your saved card. The invoice is in Billing.",
+      "cta": "View billing"
+    },
+    "autoRechargeFailed": {
+      "subject": "We could not complete your automatic top-up",
+      "preview": "Check your card to keep sending.",
+      "heading": "Your automatic top-up did not go through",
+      "body": "Your balance reached the minimum you set, but we could not charge {title} to your saved card. Automatic top-up is paused: check your payment method in Billing and turn it back on in Settings.",
+      "cta": "Check payment"
     }
   },
   "send": {

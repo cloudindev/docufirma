@@ -7,6 +7,45 @@ export type Database = {
   __InternalSupabase: { PostgrestVersion: "13" };
   public: {
     Tables: {
+      auto_recharge: {
+        Row: {
+          created_at: string;
+          enabled: boolean;
+          kind: string;
+          last_attempt_at: string | null;
+          last_error: string | null;
+          last_success_at: string | null;
+          pack_id: string | null;
+          threshold: number;
+          updated_at: string;
+          user_id: string;
+        };
+        Insert: {
+          created_at?: string;
+          enabled?: boolean;
+          kind: string;
+          last_attempt_at?: string | null;
+          last_error?: string | null;
+          last_success_at?: string | null;
+          pack_id?: string | null;
+          threshold?: number;
+          updated_at?: string;
+          user_id: string;
+        };
+        Update: {
+          created_at?: string;
+          enabled?: boolean;
+          kind?: string;
+          last_attempt_at?: string | null;
+          last_error?: string | null;
+          last_success_at?: string | null;
+          pack_id?: string | null;
+          threshold?: number;
+          updated_at?: string;
+          user_id?: string;
+        };
+        Relationships: [];
+      };
       app_settings: {
         Row: {
           key: string;
@@ -1046,6 +1085,7 @@ export type Database = {
       adjust_credits: { Args: { p_user_id: string; p_amount: number; p_note: string }; Returns: undefined };
       adjust_sms_credits: { Args: { p_user_id: string; p_amount: number; p_note: string }; Returns: undefined };
       cancel_envelope: { Args: { p_envelope_id: string; p_user_id: string }; Returns: Json };
+      claim_auto_recharge: { Args: { p_user_id: string; p_kind: string }; Returns: { user_id: string; kind: string; enabled: boolean; threshold: number; pack_id: string; last_attempt_at: string; last_success_at: string; last_error: string; created_at: string; updated_at: string } };
       claim_expired_biometrics: { Args: { p_years: number; p_limit?: number }; Returns: { evidence_id: string; biometric_data_path: string }[] };
       claim_job_by_key: { Args: { p_dedupe_key: string }; Returns: { id: string; type: string; payload: Json; status: Database["public"]["Enums"]["job_status"]; run_at: string; attempts: number; max_attempts: number; last_error: string; locked_at: string; dedupe_key: string; created_at: string; updated_at: string }[] };
       claim_jobs: { Args: { p_type: string; p_limit?: number }; Returns: { id: string; type: string; payload: Json; status: Database["public"]["Enums"]["job_status"]; run_at: string; attempts: number; max_attempts: number; last_error: string; locked_at: string; dedupe_key: string; created_at: string; updated_at: string }[] };

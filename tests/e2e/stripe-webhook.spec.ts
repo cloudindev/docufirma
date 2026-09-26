@@ -160,6 +160,25 @@ test.describe("stripe webhook", () => {
     const { data: smsBalance } = await admin().rpc("get_sms_balance", { p_user_id: userId });
     expect(smsBalance).toBe(100);
 
+    // Automatic top-up paid later (3-D Secure) → credited once from invoice.paid.
+    const topUp = evt("invoice.paid", {
+      id: `in_topup_${Date.now()}`,
+      object: "invoice",
+      customer,
+      metadata: {
+        app: "docufirma",
+        auto_recharge: "1",
+        user_id: userId,
+        kind: "sms_pack",
+        pack_id: smsPack!.id,
+        credits: "100",
+      },
+    });
+    expect((await post(request, topUp)).ok()).toBeTruthy();
+    expect((await post(request, { ...topUp, id: `${topUp.id}_again` })).ok()).toBeTruthy();
+    const { data: afterTopUp } = await admin().rpc("get_sms_balance", { p_user_id: userId });
+    expect(afterTopUp).toBe(200);
+
     await page.goto("/es/app/billing");
     await expect(page.getByText("Plan Pro", { exact: true })).toBeVisible();
     await expect(page.getByText("Activa", { exact: true })).toBeVisible();

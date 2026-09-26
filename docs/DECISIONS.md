@@ -257,3 +257,17 @@ Opciones por firmante en el asistente de envío:
   completan hasta 5 con un ajuste. Después, las firmas se compran en packs que no caducan.
 - Packs de SMS: 100 = 12 €, 500 = 55 €, 1000 = 90 € (0,12 / 0,11 / 0,09 € por SMS). La configuración de Stripe crea los
   precios nuevos, desactiva los anteriores y actualiza la descripción de los productos.
+
+## D-040 · Recarga automática de firmas y SMS
+
+- En Ajustes, por tipo (firmas / SMS): activar, mínimo (0–1000) y pack a comprar. Tabla `auto_recharge` (lectura propia
+  por RLS; escritura solo desde el servidor).
+- Disparo: tras cada envío (firmas) y tras cada código SMS o intento sin saldo (SMS), en `after()`.
+  `claim_auto_recharge` decide en la BD (activo, pack del mismo tipo y activo, saldo ≤ mínimo) y marca el intento con un
+  enfriamiento de 10 min, así una ráfaga de envíos nunca cobra dos veces.
+- Cobro: factura de Stripe `off_session` con Stripe Tax (factura con IVA), con la tarjeta por defecto del cliente o la
+  última guardada (las compras de packs guardan la tarjeta con `setup_future_usage = off_session`). Se abona al momento
+  con referencia = id de factura (idempotente); si Stripe exige 3-D Secure, el cliente paga en la página de la factura y
+  el webhook `invoice.paid` (metadata `auto_recharge = 1`) abona los créditos.
+- Tarjeta rechazada o sin tarjeta: se anula la factura, se pausa la recarga y se avisa por email; los errores
+  transitorios se reintentan tras el enfriamiento. Cada recarga correcta envía un email con el importe.

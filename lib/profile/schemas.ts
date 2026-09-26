@@ -24,3 +24,12 @@ export type PreferencesInput = z.infer<typeof preferencesSchema>;
 
 export const LOGO_MAX_BYTES = 1024 * 1024;
 export const LOGO_TYPES = ["image/png", "image/jpeg", "image/webp"];
+
+/** Automatic top-up of signatures or SMS (D-040). */
+export const autoRechargeSchema = z.object({
+  kind: z.enum(["signatures", "sms"]),
+  enabled: z.boolean(),
+  threshold: z.coerce.number<number>().int(V.invalid).min(0, V.invalid).max(1000, V.invalid),
+  packSlug: z.string().trim().min(1, V.required).max(40),
+});
+export type AutoRechargeInput = z.infer<typeof autoRechargeSchema>;

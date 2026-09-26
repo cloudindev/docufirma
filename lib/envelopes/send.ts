@@ -1,7 +1,9 @@
 import "server-only";
 import { sendAccountNotice } from "@/lib/email";
 import { appUrl } from "@/lib/env-public";
+import { after as afterResponse } from "next/server";
 import { getCredits, hasActivePlan } from "@/lib/credits";
+import { triggerAutoRecharge } from "@/lib/credits/auto-recharge";
 import { LIMITS } from "@/lib/config";
 import { getPathname } from "@/lib/i18n/navigation";
 import { emailSigner } from "@/lib/signing/notify";
@@ -101,9 +103,22 @@ export async function sendDraftEnvelope(
     if (res.ok) notified += 1;
   }
 
+  // Automatic top-up (if enabled) replaces the low-balance warning.
+  const { data: autoTopUp } = await admin
+    .from("auto_recharge")
+    .select("enabled")
+    .eq("user_id", userId)
+    .eq("kind", "signatures")
+    .maybeSingle();
+  if (autoTopUp?.enabled) afterResponse(() => triggerAutoRecharge(userId, "signatures"));
+
   // Low balance warning when crossing the threshold.
   const after = await getCredits(admin, userId);
-  if (before.total > LIMITS.lowCreditsThreshold && after.total <= LIMITS.lowCreditsThreshold) {
+  if (
+    !autoTopUp?.enabled &&
+    before.total > LIMITS.lowCreditsThreshold &&
+    after.total <= LIMITS.lowCreditsThreshold
+  ) {
     const locale = profile.locale === "en" ? "en" : "es";
     await sendAccountNotice(profile.email, {
       locale,
