@@ -17,7 +17,7 @@ import { getPathname, useRouter } from "@/lib/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { useLocale } from "next-intl";
 import { DocumentsStep } from "./documents-step";
-import { NoCreditsDialog } from "./no-credits-dialog";
+import { NoCreditsDialog, NoPlanDialog } from "./no-credits-dialog";
 import { RecipientsStep } from "./recipients-step";
 import { ReviewStep } from "./review-step";
 import type { WizardContact, WizardDocument } from "./types";
@@ -56,6 +56,7 @@ export function SendWizard({
   const [sending, startSending] = useTransition();
   const [sendError, setSendError] = useState<string>();
   const [noCredits, setNoCredits] = useState<{ cost: number; available: number } | null>(null);
+  const [noPlan, setNoPlan] = useState(false);
   const topRef = useRef<HTMLDivElement>(null);
 
   const form = useForm<EnvelopeSettingsInput>({
@@ -137,6 +138,10 @@ export function SendWizard({
       if (res.ok) {
         toast.success(t("review.sent", { count: res.data.notified }));
         router.push({ pathname: "/app/envelopes/[id]", params: { id: envelopeId } });
+        return;
+      }
+      if (res.error === "subscription_required") {
+        setNoPlan(true);
         return;
       }
       if (res.error === "insufficient_credits" && "needed" in res) {
@@ -264,6 +269,7 @@ export function SendWizard({
         />
       ) : null}
 
+      <NoPlanDialog open={noPlan} onOpenChange={setNoPlan} />
       <NoCreditsDialog
         open={noCredits !== null}
         onOpenChange={(o) => !o && setNoCredits(null)}

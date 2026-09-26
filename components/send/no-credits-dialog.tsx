@@ -32,18 +32,42 @@ export function NoCreditsDialog({
           <DialogTitle>{t("title")}</DialogTitle>
           <DialogDescription>{t("body", { cost, available })}</DialogDescription>
         </DialogHeader>
-        <div className="grid gap-3 sm:grid-cols-2">
-          <Button asChild size="lg">
-            <Link href={{ pathname: "/app/billing", query: { intent: "subscribe" } }}>
-              <CreditCard /> {t("subscribe")}
-            </Link>
+        <Button asChild size="lg">
+          <Link href={{ pathname: "/app/billing", query: { intent: "pack" } }}>
+            <Package /> {t("buyPack")}
+          </Link>
+        </Button>
+        <DialogFooter>
+          <Button variant="ghost" onClick={() => onOpenChange(false)}>
+            {t("later")}
           </Button>
-          <Button asChild size="lg" variant="secondary">
-            <Link href={{ pathname: "/app/billing", query: { intent: "pack" } }}>
-              <Package /> {t("buyPack")}
-            </Link>
-          </Button>
-        </div>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+/** Sending requires the Pro plan (D-039). */
+export function NoPlanDialog({
+  open,
+  onOpenChange,
+}: {
+  open: boolean;
+  onOpenChange: (o: boolean) => void;
+}) {
+  const t = useTranslations("send.noPlan");
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>{t("title")}</DialogTitle>
+          <DialogDescription>{t("body")}</DialogDescription>
+        </DialogHeader>
+        <Button asChild size="lg">
+          <Link href={{ pathname: "/app/billing", query: { intent: "subscribe" } }}>
+            <CreditCard /> {t("subscribe")}
+          </Link>
+        </Button>
         <DialogFooter>
           <Button variant="ghost" onClick={() => onOpenChange(false)}>
             {t("later")}

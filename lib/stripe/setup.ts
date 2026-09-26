@@ -20,7 +20,6 @@ export const WEBHOOK_EVENTS: Stripe.WebhookEndpointCreateParams.EnabledEvent[] =
   "customer.subscription.deleted",
   "customer.subscription.paused",
   "customer.subscription.resumed",
-  "invoice.paid",
   "invoice.payment_failed",
 ];
 
@@ -56,6 +55,12 @@ async function ensurePrice(
   const existing = await stripe.prices.list({ lookup_keys: [opts.lookupKey], limit: 1 });
   const found = existing.data[0];
   if (found && found.unit_amount === opts.unitAmount && found.active) {
+    // Keep the product copy in sync (e.g. after a pricing-model change).
+    const productId = typeof found.product === "string" ? found.product : found.product.id;
+    await stripe.products.update(productId, {
+      description: opts.productDescription,
+      metadata: opts.metadata,
+    });
     log.push(`✓ ${opts.lookupKey} → ${found.id} (existing)`);
     return { id: found.id, created: false };
   }
@@ -75,7 +80,9 @@ async function ensurePrice(
     recurring: opts.recurring,
     metadata: opts.metadata,
   });
-  log.push(`＋ ${opts.lookupKey} → ${price.id} (created)`);
+  // The previous price (other amount) stops being sold; existing subscriptions keep it.
+  if (found?.active) await stripe.prices.update(found.id, { active: false });
+  log.push(`＋ ${opts.lookupKey} → ${price.id} (created${found ? `, replaces ${found.id}` : ""})`);
   return { id: price.id, created: true };
 }
 
@@ -88,10 +95,10 @@ export async function runStripeSetup(
   const pro = await ensurePrice(stripe, log, {
     lookupKey: PRO_LOOKUP_KEY,
     productName: "DocuFirma Pro",
-    productDescription: `${PLAN.monthlyCredits} firmas al mes · Firma electrónica avanzada con sello de tiempo cualificado`,
+    productDescription: `Firma electrónica avanzada con sello de tiempo cualificado · ${PLAN.welcomeCredits} firmas de bienvenida; más firmas en packs`,
     unitAmount: PLAN.monthlyPriceCents,
     recurring: { interval: "month" },
-    metadata: { plan: PLAN.slug, monthly_credits: String(PLAN.monthlyCredits) },
+    metadata: { plan: PLAN.slug },
   });
 
   const { data, error } = await admin

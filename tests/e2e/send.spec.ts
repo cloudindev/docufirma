@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { registerAndOnboard, uniqueEmail } from "./helpers/auth";
+import { activatePro, registerAndOnboard, uniqueEmail } from "./helpers/auth";
 import { extractSignLink, waitForEmail } from "./helpers/outbox";
 
 test.describe("send wizard", () => {
@@ -26,7 +26,7 @@ test.describe("send wizard", () => {
     await page.getByRole("button", { name: "Revisar envío" }).click();
 
     await expect(
-      page.getByText("Este envío consumirá 1 firma de tus 3 disponibles."),
+      page.getByText("Este envío consumirá 1 firma de tus 5 disponibles."),
     ).toBeVisible();
     await page.getByRole("button", { name: "Enviar para firmar" }).click();
     await expect(page).toHaveURL(/\/es\/app\/envelopes\/[0-9a-f-]{36}$/, { timeout: 30_000 });
@@ -38,12 +38,38 @@ test.describe("send wizard", () => {
     expect(email.subject).toContain("Contrato e2e");
     expect(extractSignLink(email)).toMatch(/^\/es\/sign\/[A-Za-z0-9_-]{43}$/);
 
-    // Credits: 1 reserved → 2 left
-    await expect(page.getByText("2 firmas disponibles").first()).toBeVisible();
+    // Credits: 1 reserved → 4 of the 5 welcome signatures left
+    await expect(page.getByText("4 firmas disponibles").first()).toBeVisible();
 
     // The signer was saved as a contact
     await page.goto("/es/app/contacts");
     await expect(page.getByRole("cell", { name: signerEmail })).toBeVisible();
+  });
+
+  test("sending requires the Pro plan", async ({ page }) => {
+    const { email } = await registerAndOnboard(page, { plan: false });
+    await expect(
+      page.getByText("Activa el Plan Pro para enviar documentos a firmar."),
+    ).toBeVisible();
+    await page.goto("/es/app/send");
+    await page.locator("#wizard-files").setInputFiles(["tests/fixtures/anexo.pdf"]);
+    await expect(page.getByText("anexo.pdf", { exact: true })).toBeVisible({ timeout: 30_000 });
+    await page.getByRole("button", { name: "Continuar" }).click();
+    await page.locator("#s-0-first").fill("Pablo");
+    await page.locator("#s-0-last").fill("Pérez");
+    await page.locator("#s-0-email").fill(uniqueEmail("noplan"));
+    await page.getByRole("button", { name: "Revisar envío" }).click();
+    await page.getByRole("button", { name: "Enviar para firmar" }).click();
+    await expect(
+      page.getByRole("heading", { name: "Activa el Plan Pro para enviar" }),
+    ).toBeVisible();
+    await expect(page.getByRole("link", { name: "Suscribirme por 9 €/mes" })).toBeVisible();
+    await page.getByRole("button", { name: "Ahora no" }).click();
+
+    // Once subscribed (Stripe webhook), the same draft can be sent.
+    await activatePro(email);
+    await page.getByRole("button", { name: "Enviar para firmar" }).click();
+    await expect(page).toHaveURL(/\/es\/app\/envelopes\/[0-9a-f-]{36}$/, { timeout: 30_000 });
   });
 
   test("validation: duplicate emails and missing signer", async ({ page }) => {

@@ -7,7 +7,7 @@ select tests.assert_eq((select locale from public.profiles where id = tests.id('
 select tests.assert_eq((select email from public.profiles where id = tests.id('u')), 'ana@example.com', 'email copied');
 select tests.assert_eq((select count(*)::int from public.credit_ledger where user_id = tests.id('u') and kind = 'trial_grant'), 1, 'one trial grant');
 select tests.as_service();
-select tests.assert_eq((select total from public.get_available_credits(tests.id('u'))), 3, 'trial balance is 3');
+select tests.assert_eq((select total from public.get_available_credits(tests.id('u'))), 5, 'welcome balance is 5');
 
 -- Google OAuth style metadata
 select tests.as_postgres();

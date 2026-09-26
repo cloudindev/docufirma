@@ -58,16 +58,13 @@ Cuando haya red, `pnpm tsx scripts/tsa-probe.ts` obtiene un TSR real para `tests
 
 - El saldo nunca se guarda: se calcula sumando `credit_ledger` (append-only, protegido por trigger).
 - `reserve` (−1) al enviar, `consume` (marcador 0) al firmar, `release` (+1) al rechazar/cancelar/expirar.
-- Las filas mensuales (grant, reserve, release) llevan el `expires_at` de su ciclo; solo cuenta el ciclo vigente más reciente,
-  así las firmas mensuales **no se acumulan** aunque Stripe envíe la factura siguiente antes de tiempo.
-- Las firmas de prueba (`trial_grant`) viven en el pool `pack` (no caducan).
+- Un único pool (`pack`): firmas de bienvenida (`trial_grant`) y de packs, sin caducidad. Las firmas mensuales se eliminaron
+  en D-039 (la restricción `credit_ledger_pack_only` impide nuevas filas mensuales).
 - Toda mutación pasa por funciones SQL `SECURITY DEFINER` con bloqueo de la fila del perfil (`FOR UPDATE`), invocables solo con service role.
 
-## D-011 · Gating de envío por créditos, no por suscripción
+## D-011 · Gating de envío: Plan Pro + créditos
 
-La especificación dice que sin suscripción no se puede enviar, pero también que las firmas de prueba y los packs se pueden
-usar/comprar sin suscripción. Regla aplicada: **se puede enviar si hay créditos suficientes** (mensuales, de pack o de prueba).
-Las mensuales solo existen con una suscripción pagada, así que el plan sigue siendo la vía normal.
+_Sustituida por D-039._ Para enviar hacen falta el Plan Pro activo y créditos suficientes.
 
 ## D-012 · Tokens de firmante en tabla propia
 
@@ -93,8 +90,8 @@ de reclamaciones), con los identificadores de red del remitente anonimizados. Se
 
 ## D-016 · Firmas de prueba configurables en BD
 
-El trigger de alta lee `app_settings.trial_credits` (por defecto 3). `TRIAL_CREDITS` se usa para los textos de la UI; ambos deben coincidir
-(`update public.app_settings set value = '0' where key = 'trial_credits'` desactiva el trial).
+El trigger de alta lee `app_settings.trial_credits` (5 desde D-039, las firmas de bienvenida). Los textos usan
+`PLAN.welcomeCredits` (`lib/config.ts`); ambos deben coincidir.
 
 ## D-017 · Supabase local sin Docker
 
@@ -170,9 +167,9 @@ cuando el firmante marca "He leído el documento completo" (alternativa accesibl
 ## D-030 · Stripe dirigido por webhooks
 
 El estado de la suscripción se refleja solo desde eventos `customer.subscription.*` (no se consulta la API en el webhook),
-las firmas mensuales se conceden en `invoice.paid` (10 firmas hasta el fin del periodo de la línea de factura) y los packs en
+los packs se abonan en
 `checkout.session.completed` / `async_payment_succeeded` con el catálogo `credit_packs` como fuente de verdad del nº de firmas.
-Idempotencia doble: tabla `stripe_events` (por id de evento) y claves únicas del ledger (por factura / payment intent).
+Idempotencia doble: tabla `stripe_events` (por id de evento) y claves únicas del ledger (por payment intent).
 Adaptado a la API `2026-08-26.dahlia` del SDK v22 (periodos en `items.data[].current_period_*`, suscripción en `invoice.parent`).
 
 ## D-031 · Packs sin suscripción y precios con IVA incluido
@@ -233,7 +230,7 @@ Opciones por firmante en el asistente de envío:
 
 - Cada código enviado a un firmante consume **1 SMS** de un saldo independiente de las firmas. Motivo: el coste del SMS
   es variable y proporcional al uso (reenvíos incluidos); meterlo en el precio de la firma encarecería a quien no lo usa.
-- Catálogo único `credit_packs` con `kind in ('signatures','sms')`; packs iniciales 100/500/1000 SMS a 9/39/69 € IVA
+- Catálogo único `credit_packs` con `kind in ('signatures','sms')`; packs 100/500/1000 SMS a 12/55/90 € IVA
   incl. (editables en la tabla y sincronizados con Stripe por `runStripeSetup`).
 - Libro `sms_ledger` (append-only, igual que `credit_ledger`): `purchase` (único por `payment_ref`, idempotente frente a
   reintentos del webhook), `consume` (−1 por código, dentro de `request_signer_otp` con bloqueo por usuario),
@@ -248,3 +245,15 @@ Opciones por firmante en el asistente de envío:
 - La cuenta de Stripe puede estar compartida con otros negocios. Todo objeto que crea DocuFirma lleva
   `metadata.app = 'docufirma'` y los precios usan `lookup_key` `docufirma_*`; el webhook responde 200 e ignora (sin
   guardar el payload) los eventos que no son de DocuFirma, para que Stripe no los reintente ni deshabilite el endpoint.
+
+## D-039 · Plan Pro obligatorio, sin firmas mensuales, 5 firmas de bienvenida
+
+- El Plan Pro (9 €/mes, IVA incl.) es **necesario para enviar** (`active`, `trialing` o `past_due` mientras Stripe reintenta
+  el cobro). Se comprueba en servidor en `sendEnvelope` y en `sendDraftEnvelope`; el asistente muestra un diálogo para
+  suscribirse y el área privada un aviso mientras no hay plan.
+- **Ya no hay firmas mensuales**: se eliminan `grant_monthly_credits`, el pool mensual del saldo y la concesión en
+  `invoice.paid` (el webhook ya no escucha ese evento). `get_available_credits` devuelve `total` y `reserved`.
+- Cada cuenta recibe **5 firmas de bienvenida** una sola vez (sustituyen a las 3 de prueba); las cuentas existentes se
+  completan hasta 5 con un ajuste. Después, las firmas se compran en packs que no caducan.
+- Packs de SMS: 100 = 12 €, 500 = 55 €, 1000 = 90 € (0,12 / 0,11 / 0,09 € por SMS). La configuración de Stripe crea los
+  precios nuevos, desactiva los anteriores y actualiza la descripción de los productos.

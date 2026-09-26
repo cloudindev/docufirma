@@ -1058,9 +1058,8 @@ export type Database = {
       enqueue_job: { Args: { p_type: string; p_payload: Json; p_run_at?: string; p_dedupe_key?: string; p_max_attempts?: number }; Returns: string };
       expire_due_envelopes: { Args: { p_limit?: number }; Returns: { envelope_id: string; released: number }[] };
       fail_job: { Args: { p_job_id: string; p_error: string; p_retry_at?: string }; Returns: Database["public"]["Enums"]["job_status"] };
-      get_available_credits: { Args: { p_user_id: string }; Returns: { monthly_available: number; pack_available: number; total: number; monthly_granted: number; monthly_expires_at: string; reserved: number }[] };
+      get_available_credits: { Args: { p_user_id: string }; Returns: { total: number; reserved: number }[] };
       get_sms_balance: { Args: { p_user_id: string }; Returns: number };
-      grant_monthly_credits: { Args: { p_user_id: string; p_amount: number; p_expires_at: string; p_invoice_id: string }; Returns: boolean };
       grant_pack_credits: { Args: { p_user_id: string; p_amount: number; p_payment_ref: string; p_pack_id?: string }; Returns: boolean };
       grant_sms_pack: { Args: { p_user_id: string; p_amount: number; p_payment_ref: string; p_pack_id?: string }; Returns: boolean };
       issue_signer_token: { Args: { p_signer_id: string; p_token_hash: string }; Returns: undefined };

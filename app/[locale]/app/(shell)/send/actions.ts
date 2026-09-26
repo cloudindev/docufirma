@@ -6,7 +6,7 @@ import { z } from "zod";
 import { type ActionResult, fail, ok, zodFieldErrors } from "@/lib/actions/result";
 import { getSessionUser } from "@/lib/auth/session";
 import { LIMITS } from "@/lib/config";
-import { getSmsBalance } from "@/lib/credits";
+import { getSmsBalance, hasActivePlan } from "@/lib/credits";
 import { processUpload } from "@/lib/envelopes/documents";
 import {
   envelopeSettingsSchema,
@@ -246,6 +246,8 @@ export async function sendEnvelope(
   if (!owned.user.emailVerified) return fail("email_not_verified");
   const parsed = sendEnvelopeSchema.safeParse(raw);
   if (!parsed.success) return fail("validation", zodFieldErrors(parsed.error));
+  if (!(await hasActivePlan(createAdminClient(), owned.user.id)))
+    return fail("subscription_required");
   const smsSigners = parsed.data.signers.filter((s) => s.requireSmsOtp).length;
   if (smsSigners > 0) {
     if (!isSmsAvailable()) return fail("sms_unavailable");

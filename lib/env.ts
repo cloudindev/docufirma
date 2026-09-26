@@ -27,7 +27,6 @@ const serverSchema = z.object({
   UPSTASH_REDIS_REST_TOKEN: optional,
   DOCX_CONVERTER_URL: optional,
   SENTRY_DSN: optional,
-  TRIAL_CREDITS: z.coerce.number().int().min(0).default(3),
   BIOMETRIC_RETENTION_YEARS: z.coerce.number().int().min(1).default(5),
 });
 

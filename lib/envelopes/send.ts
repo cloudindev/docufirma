@@ -1,7 +1,7 @@
 import "server-only";
 import { sendAccountNotice } from "@/lib/email";
 import { appUrl } from "@/lib/env-public";
-import { getCredits } from "@/lib/credits";
+import { getCredits, hasActivePlan } from "@/lib/credits";
 import { LIMITS } from "@/lib/config";
 import { getPathname } from "@/lib/i18n/navigation";
 import { emailSigner } from "@/lib/signing/notify";
@@ -12,7 +12,10 @@ import { fullName } from "@/lib/utils";
 export type SendResult =
   | { ok: true; notified: number }
   | { ok: false; error: "insufficient_credits"; needed: number; available: number }
-  | { ok: false; error: "not_draft" | "no_documents" | "no_signers" | "generic" };
+  | {
+      ok: false;
+      error: "not_draft" | "no_documents" | "no_signers" | "subscription_required" | "generic";
+    };
 
 /**
  * Sends a draft envelope: generates one token per signer (only hashes reach the DB),
@@ -40,6 +43,8 @@ export async function sendDraftEnvelope(
   if (!envelope || envelope.user_id !== userId || !profile) return { ok: false, error: "generic" };
   if (envelope.status !== "draft") return { ok: false, error: "not_draft" };
   if (!signers?.length) return { ok: false, error: "no_signers" };
+  // The Pro plan is required to send (D-039).
+  if (!(await hasActivePlan(admin, userId))) return { ok: false, error: "subscription_required" };
 
   const before = await getCredits(admin, userId);
   const tokens = new Map(signers.map((s) => [s.id, generateSignerToken()]));

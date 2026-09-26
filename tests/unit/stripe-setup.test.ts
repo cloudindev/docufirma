@@ -5,6 +5,7 @@ import { runStripeSetup } from "@/lib/stripe/setup";
 function fakeStripe(existingLookupKeys: Record<string, number> = {}) {
   let n = 0;
   const created: string[] = [];
+  const deactivated: string[] = [];
   const stripe = {
     prices: {
       list: async ({ lookup_keys }: { lookup_keys: string[] }) => {
@@ -12,7 +13,12 @@ function fakeStripe(existingLookupKeys: Record<string, number> = {}) {
         return key in existingLookupKeys
           ? {
               data: [
-                { id: `price_existing_${key}`, unit_amount: existingLookupKeys[key], active: true },
+                {
+                  id: `price_existing_${key}`,
+                  unit_amount: existingLookupKeys[key],
+                  active: true,
+                  product: `prod_existing_${key}`,
+                },
               ],
             }
           : { data: [] };
@@ -21,8 +27,15 @@ function fakeStripe(existingLookupKeys: Record<string, number> = {}) {
         created.push(p.lookup_key);
         return { id: `price_new_${++n}` };
       },
+      update: async (id: string, p: { active: boolean }) => {
+        if (p.active === false) deactivated.push(id);
+        return { id };
+      },
     },
-    products: { create: async () => ({ id: `prod_${++n}` }) },
+    products: {
+      create: async () => ({ id: `prod_${++n}` }),
+      update: async (id: string) => ({ id }),
+    },
     billingPortal: {
       configurations: {
         list: async () => ({ data: [] }),
@@ -37,7 +50,7 @@ function fakeStripe(existingLookupKeys: Record<string, number> = {}) {
       },
     },
   };
-  return { stripe: stripe as unknown as Stripe, created };
+  return { stripe: stripe as unknown as Stripe, created, deactivated };
 }
 
 function fakeAdmin() {
@@ -101,5 +114,17 @@ describe("Stripe setup", () => {
     expect(created).toEqual(["docufirma_pack_25"]);
     expect(report.proPriceId).toBe("price_existing_docufirma_pro_monthly");
     expect(report.webhook).toBeUndefined();
+  });
+
+  it("replaces a price whose amount changed and stops selling the old one", async () => {
+    const { stripe, created, deactivated } = fakeStripe({
+      docufirma_pro_monthly: 900,
+      docufirma_pack_25: 1500,
+      docufirma_sms_100: 500,
+    });
+    const { admin } = fakeAdmin();
+    await runStripeSetup(stripe, admin, { appUrl: "https://docufirma.es" });
+    expect(created).toEqual(["docufirma_sms_100"]);
+    expect(deactivated).toEqual(["price_existing_docufirma_sms_100"]);
   });
 });

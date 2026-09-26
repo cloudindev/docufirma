@@ -11,7 +11,7 @@ insert into public.signers (envelope_id, first_name, last_name, email) values (t
 insert into public.contacts (first_name, last_name, email) values ('Eva', 'Ruiz', 'eva@x.com');
 update public.profiles set first_name = 'Alicia' where id = tests.id('a');
 select tests.assert_eq((select first_name from public.profiles where id = tests.id('a')), 'Alicia', 'can update own profile');
-select tests.assert_eq((select total from public.get_available_credits(tests.id('a'))), 3, 'can read own balance');
+select tests.assert_eq((select total from public.get_available_credits(tests.id('a'))), 5, 'can read own balance');
 
 -- Protected columns cannot be written by the user.
 select tests.assert_raises(format('update public.profiles set stripe_customer_id = ''cus_x'' where id = %L', tests.id('a')), 'permission denied', 'no stripe id write');

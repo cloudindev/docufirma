@@ -29,7 +29,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Link } from "@/lib/i18n/navigation";
 import type { Locale } from "@/lib/i18n/routing";
-import { getPackOffers, getSmsPackOffers, planOffer, trialCredits } from "@/lib/pricing";
+import { getPackOffers, getSmsPackOffers, planOffer } from "@/lib/pricing";
 import { Reveal } from "./reveal";
 import { SectionHeading } from "./section-heading";
 
@@ -71,7 +71,9 @@ export async function Hero({ locale }: Props) {
               <Link href="/how-it-works">{t("hero.ctaSecondary")}</Link>
             </Button>
           </div>
-          <p className="text-sm text-ink-muted">{t("hero.note", { credits: trialCredits() })}</p>
+          <p className="text-sm text-ink-muted">
+            {t("hero.note", { credits: planOffer.welcomeCredits })}
+          </p>
         </div>
         <Reveal delay={0.1}>
           <HeroIllustration className="mx-auto max-w-[520px]" />
@@ -268,13 +270,13 @@ export async function PricingSection({
                   <span className="text-lg text-ink-muted">{t("perMonth")}</span>
                 </p>
                 <p className="text-sm text-ink-muted">
-                  {t("planSummary", { credits: planOffer.credits })}
+                  {t("planSummary", { credits: planOffer.welcomeCredits })}
                 </p>
                 <Button asChild size="lg" className="w-full">
                   <Link href="/register">{t("cta")}</Link>
                 </Button>
                 <p className="text-center text-xs text-ink-muted">
-                  {t("trialNote", { credits: trialCredits() })}
+                  {t("trialNote", { credits: planOffer.welcomeCredits })}
                 </p>
               </div>
               <div>
@@ -285,7 +287,7 @@ export async function PricingSection({
                       <span className="mt-0.5 inline-flex size-5 shrink-0 items-center justify-center rounded-full bg-success/12 text-success">
                         <Check className="size-3.5" strokeWidth={2.5} aria-hidden />
                       </span>
-                      {t(`features.${f}`, { credits: planOffer.credits })}
+                      {t(`features.${f}`, { credits: planOffer.welcomeCredits })}
                     </li>
                   ))}
                 </ul>
@@ -386,7 +388,9 @@ export async function FinalCta({ locale }: Props) {
           />
           <div className="relative mx-auto max-w-2xl space-y-6">
             <h2 className="text-3xl text-balance text-white sm:text-4xl">{t("title")}</h2>
-            <p className="text-lg text-white/85">{t("subtitle", { credits: trialCredits() })}</p>
+            <p className="text-lg text-white/85">
+              {t("subtitle", { credits: planOffer.welcomeCredits })}
+            </p>
             <Button
               asChild
               size="lg"

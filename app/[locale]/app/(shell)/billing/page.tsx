@@ -6,7 +6,6 @@ import { Alert } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { PageHeader } from "@/components/ui/page-header";
-import { Progress } from "@/components/ui/progress";
 import {
   Table,
   TableBody,
@@ -58,7 +57,6 @@ export default async function BillingPage({
   const date = (iso: string | null) => (iso ? format.dateTime(new Date(iso), "short") : "—");
   const checkout =
     sp.checkout === "success" ? "success" : sp.checkout === "canceled" ? "canceled" : null;
-  const used = Math.max(0, credits.monthlyGranted - credits.monthly);
 
   return (
     <>
@@ -122,7 +120,7 @@ export default async function BillingPage({
               <>
                 <p className="text-2xl font-semibold">{t("plan.none")}</p>
                 <p className="text-sm text-ink-muted">
-                  {t("plan.noneBody", { credits: planOffer.credits })}
+                  {t("plan.noneBody", { credits: planOffer.welcomeCredits })}
                 </p>
                 <p className="text-sm font-medium">
                   {t("plan.price", { price: eur(planOffer.priceCents) })}
@@ -153,27 +151,7 @@ export default async function BillingPage({
               <p className="text-sm text-ink-muted">{t("usage.total")}</p>
               <p className="text-3xl font-semibold">{credits.total}</p>
             </div>
-            <div className="space-y-2">
-              <div className="flex justify-between text-sm">
-                <span>{t("usage.monthly")}</span>
-                <span className="text-ink-muted">
-                  {t("usage.monthlyValue", { used, granted: credits.monthlyGranted })}
-                </span>
-              </div>
-              <Progress value={used} max={credits.monthlyGranted || 1} label={t("usage.monthly")} />
-              {credits.monthlyExpiresAt ? (
-                <p className="text-xs text-ink-muted">
-                  {t("usage.monthlyExpires", { date: date(credits.monthlyExpiresAt) })}
-                </p>
-              ) : null}
-            </div>
-            <div className="flex items-start justify-between gap-4 rounded-xl bg-bg-soft p-4">
-              <div>
-                <p className="text-sm font-medium">{t("usage.pack")}</p>
-                <p className="text-xs text-ink-muted">{t("usage.packHint")}</p>
-              </div>
-              <p className="text-xl font-semibold">{credits.pack}</p>
-            </div>
+            <p className="rounded-xl bg-bg-soft p-4 text-xs text-ink-muted">{t("usage.hint")}</p>
             <p className="text-xs text-ink-muted">
               {t("usage.reserved", { count: credits.reserved })}
             </p>

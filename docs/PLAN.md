@@ -84,9 +84,9 @@ Leyenda: `[x]` hecho · `[~]` hecho parcialmente / pendiente de credenciales ext
 
 - [x] `scripts/stripe-setup.ts`
 - [~] Checkout (suscripción y packs), Customer Portal — implementado; no ejecutable contra Stripe desde el entorno de desarrollo (red bloqueada)
-- [x] Webhook idempotente + grants mensuales + packs
+- [x] Webhook idempotente + packs (firmas mensuales eliminadas en D-039)
 - [x] Gating de envío + página de Facturación
-- [x] E2E del webhook (suscripción, grant mensual, pack, idempotencia, impago) y del flujo sin créditos → pack → envío
+- [x] E2E del webhook (suscripción, pack, idempotencia, impago, eventos ajenos), del flujo sin créditos → pack → envío y del envío sin Plan Pro
 
 ## Fase 8 — Endurecimiento
 

@@ -112,7 +112,7 @@ test.describe("signing flow", () => {
     const { signers, envelopeUrl } = await sendEnvelope(page, {
       files: ["tests/fixtures/anexo.pdf"],
     });
-    await expect(page.getByText("2 firmas disponibles").first()).toBeVisible();
+    await expect(page.getByText("4 firmas disponibles").first()).toBeVisible();
     const link = extractSignLink(await waitForEmail(signers[0]!.email, "signer-invitation"));
     const ctx = await browser.newContext({ baseURL, locale: "es-ES" });
     const signerPage = await ctx.newPage();
@@ -126,6 +126,6 @@ test.describe("signing flow", () => {
     await page.goto(envelopeUrl);
     await expect(page.getByText("Rechazado", { exact: true }).first()).toBeVisible();
     await expect(page.getByText("Motivo: Faltan datos del contrato")).toBeVisible();
-    await expect(page.getByText("3 firmas disponibles").first()).toBeVisible();
+    await expect(page.getByText("5 firmas disponibles").first()).toBeVisible();
   });
 });

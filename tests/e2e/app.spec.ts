@@ -8,7 +8,7 @@ test.describe("private area", () => {
     await registerAndOnboard(page, { firstName: "Clara" });
     await expect(page.getByRole("heading", { name: "Hola, Clara" })).toBeVisible();
     await expect(page.getByText("Aún no has enviado ningún documento")).toBeVisible();
-    await expect(page.getByText("3 firmas disponibles").first()).toBeVisible();
+    await expect(page.getByText("5 firmas disponibles").first()).toBeVisible();
 
     // Contacts CRUD
     await page.goto("/es/app/contacts");

@@ -33,7 +33,7 @@ import { cn } from "@/lib/utils";
 import { APP_NAV, isActive } from "./nav-items";
 
 export type ShellUser = { name: string; email: string; initials: string; company: string | null };
-export type ShellCredits = { monthly: number; pack: number; total: number; monthlyGranted: number };
+export type ShellCredits = { total: number; reserved: number };
 
 const SIDEBAR_COOKIE = "df_sidebar_collapsed";
 
@@ -78,10 +78,7 @@ function NavLinks({ collapsed, onNavigate }: { collapsed: boolean; onNavigate?: 
 
 function CreditsBadge({ credits }: { credits: ShellCredits }) {
   const t = useTranslations("app.topbar");
-  const label =
-    credits.monthlyGranted > 0
-      ? t("credits", { monthly: credits.monthly, granted: credits.monthlyGranted })
-      : t("creditsNoPlan", { total: credits.total });
+  const label = t("credits", { total: credits.total });
   return (
     <Tooltip>
       <TooltipTrigger asChild>
@@ -95,11 +92,6 @@ function CreditsBadge({ credits }: { credits: ShellCredits }) {
             className="h-8 gap-1 px-3 text-xs sm:text-sm"
           >
             <span className="font-semibold">{label}</span>
-            {credits.monthlyGranted > 0 && credits.pack > 0 ? (
-              <span className="hidden text-ink-muted sm:inline">
-                · {t("creditsPack", { pack: credits.pack })}
-              </span>
-            ) : null}
           </Badge>
         </Link>
       </TooltipTrigger>

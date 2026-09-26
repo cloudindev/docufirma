@@ -38,7 +38,7 @@ export default async function DashboardPage({ params }: PageProps<"/[locale]/app
     {
       key: "credits",
       value: credits.total,
-      hint: t("kpi.creditsHint", { monthly: credits.monthly, pack: credits.pack }),
+      hint: t("kpi.creditsHint", { reserved: credits.reserved }),
       icon: PenLine,
     },
   ] as const;

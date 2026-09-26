@@ -1,6 +1,5 @@
 import "server-only";
 import type Stripe from "stripe";
-import { PLAN } from "@/lib/config";
 import { sendAccountNotice } from "@/lib/email";
 import { appUrl } from "@/lib/env-public";
 import { getPathname } from "@/lib/i18n/navigation";
@@ -118,29 +117,6 @@ async function grantPack(admin: AdminSupabase, session: Stripe.Checkout.Session)
   if (error) throw new Error(error.message);
 }
 
-/** invoice.paid for the Pro subscription → 10 monthly credits valid until the end of the period. */
-async function grantMonthly(admin: AdminSupabase, invoice: Stripe.Invoice) {
-  const subscriptionId = idOf(invoice.parent?.subscription_details?.subscription ?? null);
-  if (!subscriptionId) return; // one-off invoices (packs) grant nothing here
-  const proPrice = process.env.STRIPE_PRICE_PRO_MONTHLY;
-  const line =
-    invoice.lines?.data?.find((l) => !proPrice || l.pricing?.price_details?.price === proPrice) ??
-    invoice.lines?.data?.[0];
-  const periodEnd = line?.period?.end ?? invoice.period_end;
-  const userId = await userIdFor(admin, {
-    metadataUserId: invoice.parent?.subscription_details?.metadata?.user_id,
-    customerId: idOf(invoice.customer),
-  });
-  if (!userId) throw new Error(`No user for invoice ${invoice.id}`);
-  const { error } = await admin.rpc("grant_monthly_credits", {
-    p_user_id: userId,
-    p_amount: PLAN.monthlyCredits,
-    p_expires_at: new Date(periodEnd * 1000).toISOString(),
-    p_invoice_id: invoice.id ?? `invoice:${subscriptionId}:${periodEnd}`,
-  });
-  if (error) throw new Error(error.message);
-}
-
 async function notifyPaymentFailed(admin: AdminSupabase, invoice: Stripe.Invoice) {
   const userId = await userIdFor(admin, { customerId: idOf(invoice.customer) });
   if (!userId) return;
@@ -194,7 +170,6 @@ async function isDocuFirmaEvent(admin: AdminSupabase, event: Stripe.Event): Prom
         })) !== null
       );
     }
-    case "invoice.paid":
     case "invoice.payment_failed": {
       const invoice = event.data.object;
       const meta = invoice.parent?.subscription_details?.metadata;
@@ -257,9 +232,6 @@ export async function handleStripeEvent(
       case "customer.subscription.paused":
       case "customer.subscription.resumed":
         await upsertSubscription(admin, event.data.object);
-        break;
-      case "invoice.paid":
-        await grantMonthly(admin, event.data.object);
         break;
       case "invoice.payment_failed":
         await notifyPaymentFailed(admin, event.data.object);

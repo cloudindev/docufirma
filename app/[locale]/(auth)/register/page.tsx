@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { GoogleButton, OrDivider } from "@/components/auth/google-button";
 import { RegisterForm } from "@/components/auth/register-form";
+import { PLAN } from "@/lib/config";
 import { Link } from "@/lib/i18n/navigation";
 import { resolveLocale } from "@/lib/i18n/server";
 
@@ -17,13 +18,12 @@ export default async function RegisterPage({ params }: PageProps<"/[locale]/regi
   const locale = await resolveLocale(params);
   const t = await getTranslations({ locale, namespace: "auth" });
   const googleEnabled = process.env.NEXT_PUBLIC_AUTH_GOOGLE_ENABLED === "true";
-  const trialCredits = Number(process.env.TRIAL_CREDITS ?? 3);
 
   return (
     <>
       <div className="mb-8 space-y-2">
         <h1 className="text-3xl">{t("register.title")}</h1>
-        <p className="text-ink-muted">{t("register.subtitle", { credits: trialCredits })}</p>
+        <p className="text-ink-muted">{t("register.subtitle", { credits: PLAN.welcomeCredits })}</p>
       </div>
       {googleEnabled ? (
         <>

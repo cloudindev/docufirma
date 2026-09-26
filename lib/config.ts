@@ -6,7 +6,8 @@ export const PLAN = {
   slug: "pro",
   monthlyPriceCents: 900,
   currency: "eur",
-  monthlyCredits: 10,
+  /** Signatures every account receives once; afterwards signatures are bought in packs. */
+  welcomeCredits: 5,
 } as const;
 
 export const DEFAULT_PACKS = [
@@ -17,9 +18,9 @@ export const DEFAULT_PACKS = [
 
 /** SMS packs for signer verification codes (1 code sent = 1 SMS). Mirrors the migration seed. */
 export const DEFAULT_SMS_PACKS = [
-  { slug: "sms-100", credits: 100, priceCents: 900 },
-  { slug: "sms-500", credits: 500, priceCents: 3900 },
-  { slug: "sms-1000", credits: 1000, priceCents: 6900 },
+  { slug: "sms-100", credits: 100, priceCents: 1200 },
+  { slug: "sms-500", credits: 500, priceCents: 5500 },
+  { slug: "sms-1000", credits: 1000, priceCents: 9000 },
 ] as const;
 
 export const LIMITS = {

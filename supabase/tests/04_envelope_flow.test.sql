@@ -29,7 +29,7 @@ select tests.assert_eq((select sender_name from public.envelopes where id = test
 select tests.assert_eq((select status::text from public.signers where id = tests.id('s2')), 'pending', 'second waits');
 select tests.assert_eq((select count(*)::int from public.signer_access_tokens), 1, 'only notified signer has token');
 select tests.assert_eq((select reserved from public.get_available_credits(tests.id('u'))), 2, 'two credits reserved');
-select tests.assert_eq((select total from public.get_available_credits(tests.id('u'))), 1, 'one left');
+select tests.assert_eq((select total from public.get_available_credits(tests.id('u'))), 3, 'three left');
 select tests.assert_raises(format($q$select public.send_envelope(%L, %L, '[]'::jsonb, 'DF-AB12-CD35', now() + interval '1 day')$q$,
   tests.id('e'), tests.id('u')), 'envelope_not_draft', 'cannot send twice');
 
@@ -72,7 +72,7 @@ select tests.assert(public.mark_envelope_completed(tests.id('e')), 'completed');
 select tests.assert(not public.mark_envelope_completed(tests.id('e')), 'completion idempotent');
 select tests.assert_eq((select status::text from public.envelopes where id = tests.id('e')), 'completed', 'status completed');
 select tests.assert_eq((select reserved from public.get_available_credits(tests.id('u'))), 0, 'nothing reserved');
-select tests.assert_eq((select total from public.get_available_credits(tests.id('u'))), 1, 'two credits spent');
+select tests.assert_eq((select total from public.get_available_credits(tests.id('u'))), 3, 'two credits spent');
 
 -- ── Decline releases the credits of non-signed signers ──────────────────────
 select tests.as_postgres();
@@ -85,13 +85,13 @@ select tests.as_service();
 select public.send_envelope(tests.id('d'), tests.id('u'),
   jsonb_build_array(jsonb_build_object('signer_id', tests.id('ds'), 'token_hash', repeat('4', 64))),
   'DF-ZZZZ-0001', now() + interval '10 days');
-select tests.assert_eq((select total from public.get_available_credits(tests.id('u'))), 0, 'reserved last credit');
+select tests.assert_eq((select total from public.get_available_credits(tests.id('u'))), 2, 'reserved one more');
 select tests.assert_raises(format($q$select public.send_envelope(%L, %L, '[]'::jsonb, 'DF-ZZZZ-0009', now() + interval '1 day')$q$,
   tests.id('d'), tests.id('u')), 'envelope_not_draft', 'already sent');
 select tests.assert_eq((public.decline_signature(repeat('4', 64), '  No estoy de acuerdo  ', null, null) ->> 'released')::int, 1, 'released 1');
 select tests.assert_eq((select status::text from public.envelopes where id = tests.id('d')), 'declined', 'declined');
 select tests.assert_eq((select decline_reason from public.signers where id = tests.id('ds')), 'No estoy de acuerdo', 'reason trimmed');
-select tests.assert_eq((select total from public.get_available_credits(tests.id('u'))), 1, 'credit back');
+select tests.assert_eq((select total from public.get_available_credits(tests.id('u'))), 3, 'credit back');
 select tests.assert_raises($q$select public.mark_signer_viewed(repeat('4', 64), null, null)$q$, 'envelope_declined', 'declined link');
 
 -- ── Cancel ───────────────────────────────────────────────────────────────────
@@ -127,7 +127,7 @@ select tests.as_service();
 select tests.assert_raises($q$select public.mark_signer_viewed(repeat('6', 64), null, null)$q$, 'token_expired', 'expired link');
 select tests.assert_eq((select count(*)::int from public.expire_due_envelopes()), 1, 'one expired');
 select tests.assert_eq((select status::text from public.envelopes where id = tests.id('x')), 'expired', 'status expired');
-select tests.assert_eq((select total from public.get_available_credits(tests.id('u'))), 1, 'credit released on expiry');
+select tests.assert_eq((select total from public.get_available_credits(tests.id('u'))), 3, 'credit released on expiry');
 select tests.assert_eq((select count(*)::int from public.expire_due_envelopes()), 0, 'expiry idempotent');
 
 -- ── Drafts can be deleted, others cannot ─────────────────────────────────────

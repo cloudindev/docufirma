@@ -5,7 +5,7 @@ import { registerAndOnboard, uniqueEmail } from "./helpers/auth";
 
 /**
  * Webhook integration: events are signed locally with STRIPE_WEBHOOK_SECRET (no network to Stripe).
- * Verifies idempotency, subscription mirroring, monthly grants and pack purchases.
+ * Verifies idempotency, subscription mirroring, pack purchases and foreign-event filtering.
  */
 test.describe("stripe webhook", () => {
   test.skip(
@@ -48,8 +48,8 @@ test.describe("stripe webhook", () => {
     request: { id: null, idempotency_key: null },
   });
 
-  test("subscription, monthly grant, pack purchase and idempotency", async ({ page, request }) => {
-    const { email } = await registerAndOnboard(page, { firstName: "Paula" });
+  test("subscription, pack purchases and idempotency", async ({ page, request }) => {
+    const { email } = await registerAndOnboard(page, { firstName: "Paula", plan: false });
     const { data: profile } = await admin()
       .from("profiles")
       .select("id")
@@ -102,31 +102,22 @@ test.describe("stripe webhook", () => {
         ],
       },
     };
-    expect((await post(request, evt("customer.subscription.created", sub))).ok()).toBeTruthy();
+    const created = evt("customer.subscription.created", sub);
+    expect((await post(request, created)).ok()).toBeTruthy();
+    const dup = await post(request, created);
+    expect((await dup.json()).duplicate).toBe(true);
 
-    // First invoice paid → 10 monthly credits.
-    const invoiceEvent = evt("invoice.paid", {
+    // No monthly signatures any more: a paid renewal grants nothing.
+    const invoice = evt("invoice.paid", {
       id: `in_${Date.now()}`,
       object: "invoice",
       customer,
-      period_end: now,
       parent: {
         type: "subscription_details",
         subscription_details: { subscription: sub.id, metadata: { user_id: userId } },
       },
-      lines: {
-        object: "list",
-        data: [
-          {
-            period: { start: now, end: periodEnd },
-            pricing: { price_details: { price: "price_pro_local" } },
-          },
-        ],
-      },
     });
-    expect((await post(request, invoiceEvent)).ok()).toBeTruthy();
-    const dup = await post(request, invoiceEvent);
-    expect((await dup.json()).duplicate).toBe(true);
+    expect((await (await post(request, invoice)).json()).ignored).toBe(true);
 
     // Pack purchase → +25 non-expiring credits.
     const { data: pack } = await admin()
@@ -172,11 +163,9 @@ test.describe("stripe webhook", () => {
     await page.goto("/es/app/billing");
     await expect(page.getByText("Plan Pro", { exact: true })).toBeVisible();
     await expect(page.getByText("Activa", { exact: true })).toBeVisible();
-    await expect(page.getByText("0 de 10 usadas")).toBeVisible();
-    // 3 trial + 25 pack = 28 non-expiring; 10 monthly → 38 total
-    await expect(page.getByText("38", { exact: true })).toBeVisible();
-    await expect(page.getByText("28", { exact: true })).toBeVisible();
-    await expect(page.getByText("10/10 este mes").first()).toBeVisible();
+    // 5 welcome + 25 pack
+    await expect(page.getByText("30", { exact: true })).toBeVisible();
+    await expect(page.getByText("30 firmas disponibles").first()).toBeVisible();
 
     // Payment failure → past_due banner.
     await post(request, evt("customer.subscription.updated", { ...sub, status: "past_due" }));
@@ -200,14 +189,14 @@ test.describe("stripe webhook", () => {
     await page.locator("#wizard-files").setInputFiles(["tests/fixtures/anexo.pdf"]);
     await expect(page.getByText("anexo.pdf", { exact: true })).toBeVisible({ timeout: 30_000 });
     await page.getByRole("button", { name: "Continuar" }).click();
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 6; i++) {
       if (i > 0) await page.getByRole("button", { name: "Añadir firmante" }).click();
       await page.locator(`#s-${i}-first`).fill(`Firmante${i}`);
       await page.locator(`#s-${i}-last`).fill("Prueba");
       await page.locator(`#s-${i}-email`).fill(uniqueEmail(`multi${i}`));
     }
     await page.getByRole("button", { name: "Revisar envío" }).click();
-    await expect(page.getByText("Necesitas 4 firmas y tienes 3.")).toBeVisible();
+    await expect(page.getByText("Necesitas 6 firmas y tienes 5.")).toBeVisible();
     await page.getByRole("button", { name: "Enviar para firmar" }).click();
     await expect(page.getByRole("heading", { name: "No tienes firmas suficientes" })).toBeVisible();
     await expect(page.getByRole("link", { name: "Comprar un pack" })).toBeVisible();

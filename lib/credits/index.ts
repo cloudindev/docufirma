@@ -2,23 +2,13 @@ import "server-only";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Database } from "@/types/database";
 
+/** Available signatures (welcome + packs, never expire) and those reserved by pending envelopes. */
 export type Credits = {
-  monthly: number;
-  pack: number;
   total: number;
-  monthlyGranted: number;
-  monthlyExpiresAt: string | null;
   reserved: number;
 };
 
-export const EMPTY_CREDITS: Credits = {
-  monthly: 0,
-  pack: 0,
-  total: 0,
-  monthlyGranted: 0,
-  monthlyExpiresAt: null,
-  reserved: 0,
-};
+export const EMPTY_CREDITS: Credits = { total: 0, reserved: 0 };
 
 /** Balance computed by the database from the ledger (never in TypeScript). */
 export async function getCredits(
@@ -29,14 +19,7 @@ export async function getCredits(
   if (error) throw error;
   const row = data?.[0];
   if (!row) return EMPTY_CREDITS;
-  return {
-    monthly: row.monthly_available,
-    pack: row.pack_available,
-    total: row.total,
-    monthlyGranted: row.monthly_granted,
-    monthlyExpiresAt: row.monthly_expires_at,
-    reserved: row.reserved,
-  };
+  return { total: row.total, reserved: row.reserved };
 }
 
 /** SMS left for signing codes (purchased packs minus codes sent). */
@@ -47,4 +30,19 @@ export async function getSmsBalance(
   const { data, error } = await supabase.rpc("get_sms_balance", { p_user_id: userId });
   if (error) throw error;
   return data ?? 0;
+}
+
+/** The Pro plan is required to send envelopes (active, trialing or past_due while Stripe retries). */
+export async function hasActivePlan(
+  supabase: SupabaseClient<Database>,
+  userId: string,
+): Promise<boolean> {
+  const { data, error } = await supabase
+    .from("subscriptions")
+    .select("id")
+    .eq("user_id", userId)
+    .in("status", ["active", "trialing", "past_due"])
+    .limit(1);
+  if (error) throw error;
+  return (data ?? []).length > 0;
 }

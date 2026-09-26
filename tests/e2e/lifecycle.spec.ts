@@ -20,7 +20,7 @@ test.describe("envelope lifecycle", () => {
       files: ["tests/fixtures/anexo.pdf"],
     });
     const envelopeId = envelopeUrl.split("/").pop()!;
-    await expect(page.getByText("2 firmas disponibles").first()).toBeVisible();
+    await expect(page.getByText("4 firmas disponibles").first()).toBeVisible();
     const link = extractSignLink(await waitForEmail(signers[0]!.email, "signer-invitation"));
 
     const past = new Date(Date.now() - 60_000).toISOString();
@@ -35,7 +35,7 @@ test.describe("envelope lifecycle", () => {
 
     await page.reload();
     await expect(page.getByText("Caducado", { exact: true }).first()).toBeVisible();
-    await expect(page.getByText("3 firmas disponibles").first()).toBeVisible();
+    await expect(page.getByText("5 firmas disponibles").first()).toBeVisible();
     expect((await waitForEmail(email, "envelope-expired")).subject).toContain("caducado");
 
     await page.goto(link);

@@ -26,6 +26,7 @@ export default async function ShellLayout({ children, params }: LayoutProps<"/[l
     .limit(1)
     .maybeSingle();
   const t = await getTranslations({ locale, namespace: "billing" });
+  const hasPlan = !!sub && ["active", "trialing", "past_due"].includes(sub.status);
   const banner =
     sub && (sub.status === "past_due" || sub.status === "unpaid") ? (
       <Alert
@@ -39,6 +40,18 @@ export default async function ShellLayout({ children, params }: LayoutProps<"/[l
       >
         {t("pastDue")}
       </Alert>
+    ) : !hasPlan ? (
+      <Alert
+        variant="info"
+        className="mb-6"
+        action={
+          <Button asChild size="sm">
+            <Link href="/app/billing">{t("noPlanCta")}</Link>
+          </Button>
+        }
+      >
+        {t("noPlanBanner")}
+      </Alert>
     ) : null;
 
   return (
@@ -51,12 +64,7 @@ export default async function ShellLayout({ children, params }: LayoutProps<"/[l
         initials: initials(profile.first_name, profile.last_name, profile.email[0]?.toUpperCase()),
         company: profile.company_name,
       }}
-      credits={{
-        monthly: credits.monthly,
-        pack: credits.pack,
-        total: credits.total,
-        monthlyGranted: credits.monthlyGranted,
-      }}
+      credits={{ total: credits.total, reserved: credits.reserved }}
     >
       {children}
     </AppShell>

@@ -79,7 +79,7 @@
     "register": {
       "metaTitle": "Create account",
       "title": "Create your free account",
-      "subtitle": "Includes {credits, plural, =0 {access to your dashboard} one {# trial signature} other {# trial signatures}}. No card required.",
+      "subtitle": "Creating an account is free. With the Pro plan you start with {credits, plural, one {# welcome signature} other {# welcome signatures}}.",
       "submit": "Create account",
       "passwordHint": "At least 8 characters, with letters and numbers.",
       "acceptTerms": "I accept the <terms>Terms of Service</terms> and the <privacy>Privacy Policy</privacy>.",
@@ -168,7 +168,7 @@
       "subtitle": "Upload your documents, choose who needs to sign and get the signed PDF with a biometric signature and a qualified timestamp. Nothing to install.",
       "ctaPrimary": "Start for free",
       "ctaSecondary": "See how it works",
-      "note": "{credits} trial signatures · No card required"
+      "note": "Pro plan €9/month · {credits} welcome signatures included"
     },
     "badges": {
       "label": "Guarantees",
@@ -259,13 +259,13 @@
     "pricing": {
       "eyebrow": "Pricing",
       "title": "One plan. No surprises.",
-      "subtitle": "Pay only for what you use. Cancel anytime.",
+      "subtitle": "One flat fee and the signatures you need, in packs that never expire. Cancel anytime.",
       "planName": "Pro plan",
       "perMonth": "/month",
-      "planSummary": "{credits} signatures included · VAT included · Cancel anytime",
+      "planSummary": "{credits} welcome signatures · VAT included · Cancel anytime",
       "includes": "Includes",
       "features": {
-        "credits": "{credits} signatures per month (renewed every cycle)",
+        "credits": "{credits} welcome signatures to start; then signature packs that never expire",
         "biometric": "Biometric advanced electronic signature",
         "timestamp": "Qualified timestamp on every document",
         "evidence": "PDF evidence certificate",
@@ -276,9 +276,9 @@
         "identity": "In-person signing and SMS code before signing (SMS sold in packs)"
       },
       "cta": "Start for free",
-      "trialNote": "Start with {credits} trial signatures, no card required.",
+      "trialNote": "Creating an account is free. You need the Pro plan to send documents.",
       "packsTitle": "Need more signatures?",
-      "packsSubtitle": "One-off packs. They never expire and are used after your monthly signatures.",
+      "packsSubtitle": "One-off packs. They never expire and are used with an active Pro plan.",
       "packCredits": "{credits} signatures",
       "packUnit": "{price} per signature",
       "whatIsSignature": "1 signature = 1 signer completing an envelope (with all of its documents).",
@@ -308,8 +308,8 @@
           "a": "We capture the signature stroke (coordinates, pressure, tilt and timing) with the signer's explicit consent. It is encrypted with AES-256, used only as evidence of the signature and kept for the period stated in the privacy policy."
         },
         "q5": {
-          "q": "What happens if I don't use all my monthly signatures?",
-          "a": "Signatures included in the plan renew every billing cycle and do not roll over. Pack signatures never expire and are only used once your monthly signatures run out."
+          "q": "What does the Pro plan include?",
+          "a": "The Pro plan (€9/month, VAT included) is required to send documents for signature and includes 5 welcome signatures to start. After that you buy the signatures you need in one-off packs that never expire, so you only pay for what you use."
         },
         "q6": {
           "q": "How is a signature counted?",
@@ -321,7 +321,7 @@
         },
         "q8": {
           "q": "Can I cancel anytime?",
-          "a": "Yes. You can cancel your subscription from your dashboard at any time. You keep access to your history and your signed documents."
+          "a": "Yes. You can cancel your subscription from your dashboard at any time. You keep access to your history and your signed documents, and any pack signatures you have left are kept if you subscribe again."
         },
         "q9": {
           "q": "Can I strengthen the signer's identification?",
@@ -335,7 +335,7 @@
     },
     "cta": {
       "title": "Start signing today",
-      "subtitle": "Create your account in a minute and send your first document with {credits} trial signatures.",
+      "subtitle": "Create your account in a minute. With the Pro plan you start with {credits} welcome signatures.",
       "button": "Start for free"
     },
     "footer": {
@@ -375,7 +375,7 @@
     },
     "pricingPage": {
       "metaTitle": "Pricing",
-      "metaDescription": "DocuFirma Pro plan: €9/month with 10 signatures included, VAT included. Extra signature packs that never expire and SMS packs to verify signers."
+      "metaDescription": "DocuFirma Pro plan: €9/month, VAT included, with 5 welcome signatures. Signature packs that never expire and SMS packs to verify signers."
     },
     "home": {
       "metaTitle": "Advanced electronic signature with qualified timestamp"
@@ -520,7 +520,7 @@
           },
           "s2": {
             "h": "Plans and payments",
-            "p": "The Pro plan costs €9/month (VAT included) and includes 10 signatures per billing cycle, which do not roll over. Signature packs are one-off payments and never expire. One signature equals one signer completing an envelope. Reserved signatures are returned if the envelope is declined, canceled or expires."
+            "p": "The Pro plan costs €9/month (VAT included) and is required to send documents for signature. Each account receives 5 welcome signatures once; additional signatures are bought in one-off packs that never expire. SMS packs to verify signers are bought separately: each code sent uses 1 SMS. One signature equals one signer completing an envelope. Reserved signatures are returned if the envelope is declined, canceled or expires."
           },
           "s3": {
             "h": "User obligations",
@@ -637,10 +637,8 @@
     "topbar": {
       "search": "Search envelopes…",
       "searchLabel": "Search envelopes",
-      "credits": "{monthly}/{granted} this month",
-      "creditsNoPlan": "{total} signatures available",
-      "creditsPack": "+{pack} pack",
-      "creditsTooltip": "Available signatures: {total}. Monthly: {monthly}. Packs and trial: {pack}.",
+      "credits": "{total, plural, one {# signature available} other {# signatures available}}",
+      "creditsTooltip": "Signatures available: {total}. Reserved in pending envelopes: {reserved}.",
       "account": "Account",
       "profile": "Account settings",
       "billing": "Billing",
@@ -674,14 +672,14 @@
         "signed": "Signed this month",
         "signedHint": "Envelopes completed since the 1st",
         "credits": "Available signatures",
-        "creditsHint": "{monthly} from plan · {pack} from packs"
+        "creditsHint": "{reserved, plural, =0 {None reserved} one {# reserved in pending envelopes} other {# reserved in pending envelopes}}"
       },
       "recent": "Recent envelopes",
       "viewAll": "View all",
       "emptyTitle": "You haven't sent any documents yet",
       "emptyBody": "Upload a PDF, choose who needs to sign and get the signed and sealed document back.",
       "emptyCta": "Send my first document",
-      "lowCredits": "You have {count, plural, =0 {0 signatures} one {# signature} other {# signatures}} left. Subscribe or buy a pack to keep sending.",
+      "lowCredits": "You have {count, plural, =0 {0 signatures} one {# signature} other {# signatures}} left. Buy a pack to keep sending.",
       "lowCreditsCta": "See options"
     },
     "envelopes": {
@@ -965,21 +963,21 @@
       "subject": "We couldn't charge your DocuFirma subscription",
       "preview": "Update your payment method to keep sending documents.",
       "heading": "There's a problem with your payment",
-      "body": "We couldn't charge the renewal of your Pro plan. Update your card so you don't lose next cycle's signatures.",
+      "body": "We could not charge the renewal of your Pro plan. Update your card to keep sending documents for signature.",
       "cta": "Update payment method"
     },
     "welcome": {
       "subject": "Welcome to DocuFirma",
-      "preview": "Send your first document in less than a minute.",
+      "preview": "Activate the Pro plan and send your first document.",
       "heading": "Welcome, {name}",
-      "body": "You can now send documents for advanced biometric signature with a qualified timestamp. You have {credits, plural, =0 {your account ready} one {# trial signature} other {# trial signatures}} to get started.",
-      "cta": "Send my first document"
+      "body": "Your account is ready and includes {credits, plural, =0 {access to your dashboard} one {# welcome signature} other {# welcome signatures}}. Activate the Pro plan (€9/month, VAT included) to send documents for signature with an advanced biometric signature and a qualified timestamp.",
+      "cta": "Activate the Pro plan"
     },
     "creditsLow": {
       "subject": "You have {count, plural, one {# signature} other {# signatures}} left on DocuFirma",
       "preview": "Top up to keep sending.",
       "heading": "You're running low on signatures",
-      "body": "You have {count, plural, =0 {0 signatures} one {# signature} other {# signatures}} left. Subscribe to the Pro plan or buy a pack to keep sending documents.",
+      "body": "You have {count, plural, =0 {0 signatures} one {# signature} other {# signatures}} left. Buy a signature pack (they never expire) to keep sending documents.",
       "cta": "See options"
     },
     "smsEmpty": {
@@ -1095,8 +1093,7 @@
     },
     "noCredits": {
       "title": "You don't have enough signatures",
-      "body": "This envelope needs {cost, plural, one {# signature} other {# signatures}} and you have {available}. Subscribe to the Pro plan (10 signatures a month) or buy a pack of signatures that never expire.",
-      "subscribe": "Subscribe for €9/month",
+      "body": "This envelope needs {cost, plural, one {# signature} other {# signatures}} and you have {available}. Buy a signature pack: one-off payment, never expires.",
       "buyPack": "Buy a pack",
       "later": "Not now"
     },
@@ -1109,7 +1106,14 @@
       "no_documents": "Add at least one document.",
       "phoneRequired": "To verify by SMS, enter the signer's mobile number.",
       "sms_unavailable": "SMS verification is not available right now.",
-      "sms_no_credits": "You don’t have enough SMS for every signer with a code. Buy an SMS pack in Billing."
+      "sms_no_credits": "You don’t have enough SMS for every signer with a code. Buy an SMS pack in Billing.",
+      "subscription_required": "You need an active Pro plan to send documents."
+    },
+    "noPlan": {
+      "title": "Activate the Pro plan to send",
+      "body": "You need the Pro plan (€9/month, VAT included) to send documents for signature. Your available signatures are kept.",
+      "subscribe": "Subscribe for €9/month",
+      "later": "Not now"
     }
   },
   "signing": {
@@ -1252,7 +1256,7 @@
     "plan": {
       "title": "Your plan",
       "none": "No subscription",
-      "noneBody": "Subscribe to the Pro plan to get {credits} signatures every month. You can also buy packs without a subscription.",
+      "noneBody": "Subscribe to the Pro plan to send documents for signature. Your account includes {credits} welcome signatures; after that, buy packs that never expire.",
       "pro": "Pro plan",
       "price": "{price}/month · VAT included",
       "status": {
@@ -1266,24 +1270,20 @@
         "paused": "Paused"
       },
       "renews": "Renews on {date}",
-      "cancels": "Will be canceled on {date}. You keep this month's signatures until then.",
+      "cancels": "It will be canceled on {date}. Until then you can keep sending.",
       "subscribe": "Subscribe to the Pro plan",
       "manage": "Manage subscription",
       "manageHint": "Change your card, download invoices or cancel in Stripe's secure portal."
     },
     "usage": {
       "title": "Your signatures",
-      "monthly": "Plan signatures this month",
-      "monthlyValue": "{used} of {granted} used",
-      "monthlyExpires": "Renewed on {date} (they don't roll over)",
-      "pack": "Pack and trial signatures",
-      "packHint": "They never expire. Used once the monthly ones run out.",
       "reserved": "{count, plural, =0 {No reserved signatures} one {# signature reserved in pending envelopes} other {# signatures reserved in pending envelopes}}",
-      "total": "Available now"
+      "total": "Available now",
+      "hint": "Welcome and pack signatures never expire. They are reserved when you send and returned if someone declines or the envelope expires."
     },
     "packs": {
       "title": "Buy additional signatures",
-      "subtitle": "One-off payment. They never expire and no subscription is needed.",
+      "subtitle": "One-off payment. Never expire.",
       "buy": "Buy",
       "credits": "{credits} signatures",
       "unit": "{price} per signature"
@@ -1299,10 +1299,10 @@
       "download": "PDF"
     },
     "checkout": {
-      "success": "Payment completed! Your signatures will appear in a few seconds.",
+      "success": "Payment completed! Changes will appear in a few seconds.",
       "canceled": "You canceled the payment. No charge was made."
     },
-    "pastDue": "We couldn't charge your subscription. Update your payment method so you don't lose next cycle's signatures.",
+    "pastDue": "We could not charge your subscription. Update your payment method to keep sending documents.",
     "pastDueCta": "Update payment",
     "errors": {
       "not_configured": "Payments are not configured yet. Please try later.",
@@ -1317,6 +1317,8 @@
       "credits": "{credits} SMS",
       "unit": "{price} per SMS",
       "buy": "Buy SMS"
-    }
+    },
+    "noPlanBanner": "Activate the Pro plan to send documents for signature.",
+    "noPlanCta": "Activate Pro plan"
   }
 }

@@ -72,10 +72,5 @@ export async function getSmsPackOffers(): Promise<PackOffer[]> {
 
 export const planOffer = {
   priceCents: PLAN.monthlyPriceCents,
-  credits: PLAN.monthlyCredits,
+  welcomeCredits: PLAN.welcomeCredits,
 };
-
-export function trialCredits() {
-  const value = Number(process.env.TRIAL_CREDITS ?? 3);
-  return Number.isFinite(value) && value >= 0 ? value : 3;
-}

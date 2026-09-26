@@ -79,7 +79,7 @@
     "register": {
       "metaTitle": "Crear cuenta",
       "title": "Crea tu cuenta gratis",
-      "subtitle": "Incluye {credits, plural, =0 {acceso a tu panel} one {# firma de prueba} other {# firmas de prueba}}. Sin tarjeta.",
+      "subtitle": "Crear la cuenta es gratis. Con el Plan Pro empiezas con {credits, plural, one {# firma de bienvenida} other {# firmas de bienvenida}}.",
       "submit": "Crear cuenta",
       "passwordHint": "Mínimo 8 caracteres, con letras y números.",
       "acceptTerms": "Acepto los <terms>Términos del servicio</terms> y la <privacy>Política de privacidad</privacy>.",
@@ -168,7 +168,7 @@
       "subtitle": "Sube tus documentos, indica quién debe firmar y recibe el PDF firmado con firma biométrica y sello de tiempo cualificado. Sin instalar nada.",
       "ctaPrimary": "Empezar gratis",
       "ctaSecondary": "Ver cómo funciona",
-      "note": "{credits} firmas de prueba · Sin tarjeta"
+      "note": "Plan Pro 9 €/mes · {credits} firmas de bienvenida incluidas"
     },
     "badges": {
       "label": "Garantías",
@@ -259,13 +259,13 @@
     "pricing": {
       "eyebrow": "Precios",
       "title": "Un único plan. Sin sorpresas.",
-      "subtitle": "Paga solo por lo que usas. Cancela cuando quieras.",
+      "subtitle": "Una cuota fija y las firmas que necesites, en packs que no caducan. Cancela cuando quieras.",
       "planName": "Plan Pro",
       "perMonth": "/mes",
-      "planSummary": "{credits} firmas incluidas · IVA incluido · Cancela cuando quieras",
+      "planSummary": "{credits} firmas de bienvenida · IVA incluido · Cancela cuando quieras",
       "includes": "Incluye",
       "features": {
-        "credits": "{credits} firmas al mes (se renuevan cada ciclo)",
+        "credits": "{credits} firmas de bienvenida al empezar; después, packs de firmas que no caducan",
         "biometric": "Firma electrónica avanzada biométrica",
         "timestamp": "Sello de tiempo cualificado en cada documento",
         "evidence": "Certificado de evidencias en PDF",
@@ -276,9 +276,9 @@
         "identity": "Firma presencial y código SMS antes de firmar (SMS en packs aparte)"
       },
       "cta": "Empezar gratis",
-      "trialNote": "Empieza con {credits} firmas de prueba, sin tarjeta.",
+      "trialNote": "Crear la cuenta es gratis. Para enviar documentos necesitas el Plan Pro.",
       "packsTitle": "¿Necesitas más firmas?",
-      "packsSubtitle": "Packs de pago único. No caducan y se usan después de las firmas del mes.",
+      "packsSubtitle": "Packs de pago único. No caducan y se usan con tu Plan Pro activo.",
       "packCredits": "{credits} firmas",
       "packUnit": "{price} por firma",
       "whatIsSignature": "1 firma = 1 firmante que completa un envío (con todos sus documentos).",
@@ -308,8 +308,8 @@
           "a": "Capturamos el trazo de la firma (coordenadas, presión, inclinación y tiempos) con el consentimiento explícito del firmante. Se cifran con AES-256, solo se usan como prueba de la firma y se conservan durante el plazo indicado en la política de privacidad."
         },
         "q5": {
-          "q": "¿Qué pasa si no uso todas las firmas del mes?",
-          "a": "Las firmas incluidas en el plan se renuevan en cada ciclo de facturación y no se acumulan. Las firmas de los packs no caducan y se usan solo cuando se agotan las del mes."
+          "q": "¿Qué incluye el Plan Pro?",
+          "a": "El Plan Pro (9 €/mes, IVA incluido) es necesario para enviar documentos a firmar e incluye 5 firmas de bienvenida al empezar. Después compras las firmas que necesites en packs de pago único que no caducan, así que solo pagas por lo que usas."
         },
         "q6": {
           "q": "¿Cómo se cuenta una firma?",
@@ -321,7 +321,7 @@
         },
         "q8": {
           "q": "¿Puedo cancelar cuando quiera?",
-          "a": "Sí. Puedes cancelar la suscripción desde tu panel en cualquier momento. Seguirás teniendo acceso a tu historial y a tus documentos firmados."
+          "a": "Sí. Puedes cancelar la suscripción desde tu panel en cualquier momento. Seguirás teniendo acceso a tu historial y a tus documentos firmados, y las firmas de packs que te queden se conservan si vuelves a suscribirte."
         },
         "q9": {
           "q": "¿Puedo reforzar la identificación del firmante?",
@@ -335,7 +335,7 @@
     },
     "cta": {
       "title": "Empieza a firmar hoy mismo",
-      "subtitle": "Crea tu cuenta en un minuto y envía tu primer documento con {credits} firmas de prueba.",
+      "subtitle": "Crea tu cuenta en un minuto. Con el Plan Pro empiezas con {credits} firmas de bienvenida.",
       "button": "Empezar gratis"
     },
     "footer": {
@@ -375,7 +375,7 @@
     },
     "pricingPage": {
       "metaTitle": "Precios",
-      "metaDescription": "Plan Pro de DocuFirma: 9 €/mes con 10 firmas incluidas, IVA incluido. Packs de firmas adicionales sin caducidad y packs de SMS para verificar a los firmantes."
+      "metaDescription": "Plan Pro de DocuFirma: 9 €/mes, IVA incluido, con 5 firmas de bienvenida. Packs de firmas sin caducidad y packs de SMS para verificar a los firmantes."
     },
     "home": {
       "metaTitle": "Firma electrónica avanzada con sello de tiempo cualificado"
@@ -520,7 +520,7 @@
           },
           "s2": {
             "h": "Planes y pagos",
-            "p": "El Plan Pro cuesta 9 €/mes (IVA incluido) e incluye 10 firmas por ciclo de facturación, que no se acumulan. Los packs de firmas son pagos únicos y no caducan. Una firma equivale a un firmante que completa un envío. Las firmas reservadas se devuelven si el envío se rechaza, se cancela o caduca."
+            "p": "El Plan Pro cuesta 9 €/mes (IVA incluido) y es necesario para enviar documentos a firmar. Cada cuenta recibe 5 firmas de bienvenida una sola vez; las firmas adicionales se compran en packs de pago único que no caducan. Los packs de SMS para verificar a los firmantes se compran aparte: cada código enviado consume 1 SMS. Una firma equivale a un firmante que completa un envío. Las firmas reservadas se devuelven si el envío se rechaza, se cancela o caduca."
           },
           "s3": {
             "h": "Obligaciones del usuario",
@@ -637,10 +637,8 @@
     "topbar": {
       "search": "Buscar envíos…",
       "searchLabel": "Buscar envíos",
-      "credits": "{monthly}/{granted} este mes",
-      "creditsNoPlan": "{total} firmas disponibles",
-      "creditsPack": "+{pack} pack",
-      "creditsTooltip": "Firmas disponibles: {total}. Mensuales: {monthly}. Packs y prueba: {pack}.",
+      "credits": "{total, plural, one {# firma disponible} other {# firmas disponibles}}",
+      "creditsTooltip": "Firmas disponibles: {total}. Reservadas en envíos pendientes: {reserved}.",
       "account": "Cuenta",
       "profile": "Ajustes de la cuenta",
       "billing": "Facturación",
@@ -674,14 +672,14 @@
         "signed": "Firmados este mes",
         "signedHint": "Sobres completados desde el día 1",
         "credits": "Firmas disponibles",
-        "creditsHint": "{monthly} del plan · {pack} de packs"
+        "creditsHint": "{reserved, plural, =0 {Ninguna reservada} one {# reservada en envíos pendientes} other {# reservadas en envíos pendientes}}"
       },
       "recent": "Últimos envíos",
       "viewAll": "Ver todos",
       "emptyTitle": "Aún no has enviado ningún documento",
       "emptyBody": "Sube un PDF, indica quién debe firmar y recibe el documento firmado y sellado.",
       "emptyCta": "Enviar mi primer documento",
-      "lowCredits": "Te quedan {count, plural, =0 {0 firmas} one {# firma} other {# firmas}}. Suscríbete o compra un pack para seguir enviando.",
+      "lowCredits": "Te quedan {count, plural, =0 {0 firmas} one {# firma} other {# firmas}}. Compra un pack para seguir enviando.",
       "lowCreditsCta": "Ver opciones"
     },
     "envelopes": {
@@ -965,21 +963,21 @@
       "subject": "No hemos podido cobrar tu suscripción de DocuFirma",
       "preview": "Actualiza tu método de pago para seguir enviando documentos.",
       "heading": "Hay un problema con tu pago",
-      "body": "No hemos podido cobrar la renovación de tu Plan Pro. Actualiza tu tarjeta para no perder las firmas del próximo ciclo.",
+      "body": "No hemos podido cobrar la renovación de tu Plan Pro. Actualiza tu tarjeta para seguir enviando documentos a firmar.",
       "cta": "Actualizar método de pago"
     },
     "welcome": {
       "subject": "Te damos la bienvenida a DocuFirma",
-      "preview": "Envía tu primer documento en menos de un minuto.",
+      "preview": "Activa el Plan Pro y envía tu primer documento.",
       "heading": "Te damos la bienvenida, {name}",
-      "body": "Ya puedes enviar documentos para firmar con firma biométrica avanzada y sello de tiempo cualificado. Tienes {credits, plural, =0 {tu cuenta lista} one {# firma de prueba} other {# firmas de prueba}} para empezar.",
-      "cta": "Enviar mi primer documento"
+      "body": "Tu cuenta ya está lista e incluye {credits, plural, =0 {acceso a tu panel} one {# firma de bienvenida} other {# firmas de bienvenida}}. Activa el Plan Pro (9 €/mes, IVA incluido) para enviar documentos a firmar con firma biométrica avanzada y sello de tiempo cualificado.",
+      "cta": "Activar el Plan Pro"
     },
     "creditsLow": {
       "subject": "Te {count, plural, one {queda # firma} other {quedan # firmas}} en DocuFirma",
       "preview": "Recarga tu saldo para seguir enviando.",
       "heading": "Tu saldo de firmas se está agotando",
-      "body": "Te {count, plural, =0 {quedan 0 firmas} one {queda # firma} other {quedan # firmas}}. Suscríbete al Plan Pro o compra un pack para seguir enviando documentos.",
+      "body": "Te {count, plural, =0 {quedan 0 firmas} one {queda # firma} other {quedan # firmas}}. Compra un pack de firmas (no caducan) para seguir enviando documentos.",
       "cta": "Ver opciones"
     },
     "smsEmpty": {
@@ -1095,8 +1093,7 @@
     },
     "noCredits": {
       "title": "No tienes firmas suficientes",
-      "body": "Este envío necesita {cost, plural, one {# firma} other {# firmas}} y tienes {available}. Suscríbete al Plan Pro (10 firmas al mes) o compra un pack de firmas que no caducan.",
-      "subscribe": "Suscribirme por 9 €/mes",
+      "body": "Este envío necesita {cost, plural, one {# firma} other {# firmas}} y tienes {available}. Compra un pack de firmas: son de pago único y no caducan.",
       "buyPack": "Comprar un pack",
       "later": "Ahora no"
     },
@@ -1109,7 +1106,14 @@
       "no_documents": "Añade al menos un documento.",
       "phoneRequired": "Para verificar por SMS, indica el móvil del firmante.",
       "sms_unavailable": "La verificación por SMS no está disponible ahora mismo.",
-      "sms_no_credits": "No tienes SMS suficientes para todos los firmantes con código. Compra un pack de SMS en Facturación."
+      "sms_no_credits": "No tienes SMS suficientes para todos los firmantes con código. Compra un pack de SMS en Facturación.",
+      "subscription_required": "Necesitas el Plan Pro activo para enviar documentos."
+    },
+    "noPlan": {
+      "title": "Activa el Plan Pro para enviar",
+      "body": "Para enviar documentos a firmar necesitas el Plan Pro (9 €/mes, IVA incluido). Tus firmas disponibles se mantienen.",
+      "subscribe": "Suscribirme por 9 €/mes",
+      "later": "Ahora no"
     }
   },
   "signing": {
@@ -1252,7 +1256,7 @@
     "plan": {
       "title": "Tu plan",
       "none": "Sin suscripción",
-      "noneBody": "Suscríbete al Plan Pro para tener {credits} firmas cada mes. También puedes comprar packs sin suscripción.",
+      "noneBody": "Suscríbete al Plan Pro para enviar documentos a firmar. Tu cuenta incluye {credits} firmas de bienvenida; después, compra packs que no caducan.",
       "pro": "Plan Pro",
       "price": "{price}/mes · IVA incluido",
       "status": {
@@ -1266,24 +1270,20 @@
         "paused": "En pausa"
       },
       "renews": "Se renueva el {date}",
-      "cancels": "Se cancelará el {date}. Hasta entonces conservas tus firmas del mes.",
+      "cancels": "Se cancelará el {date}. Hasta entonces puedes seguir enviando.",
       "subscribe": "Suscribirme al Plan Pro",
       "manage": "Gestionar suscripción",
       "manageHint": "Cambia de tarjeta, descarga facturas o cancela en el portal seguro de Stripe."
     },
     "usage": {
       "title": "Tus firmas",
-      "monthly": "Firmas del plan este mes",
-      "monthlyValue": "{used} de {granted} usadas",
-      "monthlyExpires": "Se renuevan el {date} (no se acumulan)",
-      "pack": "Firmas de packs y de prueba",
-      "packHint": "No caducan. Se usan cuando se agotan las del mes.",
       "reserved": "{count, plural, =0 {Ninguna firma reservada} one {# firma reservada en envíos pendientes} other {# firmas reservadas en envíos pendientes}}",
-      "total": "Disponibles ahora"
+      "total": "Disponibles ahora",
+      "hint": "Firmas de bienvenida y de packs: no caducan. Se reservan al enviar y se devuelven si alguien rechaza o el envío caduca."
     },
     "packs": {
       "title": "Comprar firmas adicionales",
-      "subtitle": "Pago único. No caducan y no necesitas suscripción.",
+      "subtitle": "Pago único. No caducan.",
       "buy": "Comprar",
       "credits": "{credits} firmas",
       "unit": "{price} por firma"
@@ -1299,10 +1299,10 @@
       "download": "PDF"
     },
     "checkout": {
-      "success": "¡Pago completado! Tus firmas aparecerán en unos segundos.",
+      "success": "¡Pago completado! Los cambios aparecerán en unos segundos.",
       "canceled": "Has cancelado el pago. No se ha realizado ningún cargo."
     },
-    "pastDue": "No hemos podido cobrar tu suscripción. Actualiza tu método de pago para no perder las firmas del próximo ciclo.",
+    "pastDue": "No hemos podido cobrar tu suscripción. Actualiza tu método de pago para seguir enviando documentos.",
     "pastDueCta": "Actualizar pago",
     "errors": {
       "not_configured": "Los pagos aún no están configurados. Inténtalo más tarde.",
@@ -1317,6 +1317,8 @@
       "credits": "{credits} SMS",
       "unit": "{price} por SMS",
       "buy": "Comprar SMS"
-    }
+    },
+    "noPlanBanner": "Activa el Plan Pro para enviar documentos a firmar.",
+    "noPlanCta": "Activar Plan Pro"
   }
 }
