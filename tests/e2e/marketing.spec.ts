@@ -3,8 +3,8 @@ import { expect, test } from "@playwright/test";
 test.describe("public site", () => {
   test("landing renders hero, pricing and FAQ in Spanish", async ({ page }) => {
     await page.goto("/es");
-    await expect(page.getByRole("heading", { level: 1 })).toContainText(
-      "Firma electrónica avanzada",
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText(
+      "Firma documentos online con validez legal.",
     );
     await expect(
       page.getByRole("heading", { name: "Un único plan. Sin sorpresas." }),

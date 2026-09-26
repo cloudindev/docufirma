@@ -163,9 +163,9 @@
       "skipToContent": "Skip to content"
     },
     "hero": {
-      "eyebrow": "Advanced electronic signature · eIDAS",
-      "title": "Advanced electronic signature. Simple, legal and time-stamped.",
-      "subtitle": "Upload your documents, choose who needs to sign and get the signed PDF with a biometric signature and a qualified timestamp. Nothing to install.",
+      "eyebrow": "Advanced electronic signature",
+      "title": "Sign documents online with legal validity.",
+      "subtitle": "Speed up signing your documents, from anywhere and fully compliant.",
       "ctaPrimary": "Start for free",
       "ctaSecondary": "See how it works",
       "note": "Pro plan €9/month · {credits} welcome signatures included"

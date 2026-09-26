@@ -163,9 +163,9 @@
       "skipToContent": "Saltar al contenido"
     },
     "hero": {
-      "eyebrow": "Firma electrónica avanzada · eIDAS",
-      "title": "Firma electrónica avanzada. Sencilla, legal y sellada en el tiempo.",
-      "subtitle": "Sube tus documentos, indica quién debe firmar y recibe el PDF firmado con firma biométrica y sello de tiempo cualificado. Sin instalar nada.",
+      "eyebrow": "Firma electrónica avanzada",
+      "title": "Firma documentos online con validez legal.",
+      "subtitle": "Agiliza la firma de tus documentos, desde cualquier lugar y con total conformidad.",
       "ctaPrimary": "Empezar gratis",
       "ctaSecondary": "Ver cómo funciona",
       "note": "Plan Pro 9 €/mes · {credits} firmas de bienvenida incluidas"
