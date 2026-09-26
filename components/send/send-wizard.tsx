@@ -16,6 +16,7 @@ import {
 import { getPathname, useRouter } from "@/lib/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { useLocale } from "next-intl";
+import { DeleteDraftButton } from "./delete-draft-button";
 import { DocumentsStep } from "./documents-step";
 import { NoCreditsDialog, NoPlanDialog } from "./no-credits-dialog";
 import { RecipientsStep } from "./recipients-step";
@@ -167,7 +168,10 @@ export function SendWizard({
     <div ref={topRef} className="mx-auto max-w-4xl scroll-mt-24">
       <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl sm:text-3xl">{t("title")}</h1>
+          <div className="flex flex-wrap items-center gap-3">
+            <h1 className="text-2xl sm:text-3xl">{t("title")}</h1>
+            {envelopeId ? <DeleteDraftButton envelopeId={envelopeId} /> : null}
+          </div>
           <p
             className="mt-1 flex h-5 items-center gap-1.5 text-xs text-ink-muted"
             aria-live="polite"

@@ -804,7 +804,8 @@
         "delete": "Delete draft",
         "more": "More actions",
         "signNow": "Sign now",
-        "signNowFor": "Sign now: {name}"
+        "signNowFor": "Sign now: {name}",
+        "deleteDraft": "Delete draft"
       },
       "confirm": {
         "cancelTitle": "Cancel this envelope?",

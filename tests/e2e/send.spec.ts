@@ -72,6 +72,24 @@ test.describe("send wizard", () => {
     await expect(page).toHaveURL(/\/es\/app\/envelopes\/[0-9a-f-]{36}$/, { timeout: 30_000 });
   });
 
+  test("a draft can be deleted from the wizard", async ({ page }) => {
+    await registerAndOnboard(page);
+    await page.goto("/es/app/send");
+    await expect(page.getByRole("button", { name: "Eliminar borrador" })).toHaveCount(0);
+    await page.locator("#wizard-files").setInputFiles(["tests/fixtures/anexo.pdf"]);
+    await expect(page.getByText("anexo.pdf", { exact: true })).toBeVisible({ timeout: 30_000 });
+    await expect(page).toHaveURL(/\/es\/app\/send\/[0-9a-f-]{36}$/);
+    const draftUrl = page.url();
+    await page.getByRole("button", { name: "Eliminar borrador" }).click();
+    await page
+      .locator("[role=alertdialog], [role=dialog]")
+      .getByRole("button", { name: "Eliminar borrador" })
+      .click();
+    await expect(page).toHaveURL(/\/es\/app\/envelopes$/, { timeout: 20_000 });
+    await expect(page.getByText("Borrador eliminado.")).toBeVisible();
+    expect((await page.goto(draftUrl))?.status()).toBe(404);
+  });
+
   test("validation: duplicate emails and missing signer", async ({ page }) => {
     await registerAndOnboard(page);
     await page.goto("/es/app/send");

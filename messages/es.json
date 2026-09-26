@@ -804,7 +804,8 @@
         "delete": "Eliminar borrador",
         "more": "Más acciones",
         "signNow": "Firmar ahora",
-        "signNowFor": "Firmar ahora: {name}"
+        "signNowFor": "Firmar ahora: {name}",
+        "deleteDraft": "Eliminar borrador"
       },
       "confirm": {
         "cancelTitle": "¿Cancelar este envío?",
