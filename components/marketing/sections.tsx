@@ -17,7 +17,7 @@ import {
   UserCheck,
 } from "lucide-react";
 import { getFormatter, getTranslations } from "next-intl/server";
-import { HeroIllustration, StepIllustration } from "@/components/brand/illustrations";
+import { StepIllustration } from "@/components/brand/illustrations";
 import {
   Accordion,
   AccordionContent,
@@ -32,6 +32,7 @@ import type { Locale } from "@/lib/i18n/routing";
 import { getPackOffers, getSmsPackOffers, planOffer } from "@/lib/pricing";
 import Image from "next/image";
 import { Reveal } from "./reveal";
+import { HeroSigningAnimation } from "./hero-signing-animation";
 import { SignedNotifications } from "./signed-notifications";
 import { SectionHeading } from "./section-heading";
 
@@ -57,7 +58,7 @@ export async function Hero({ locale }: Props) {
           <Badge className="py-1">
             <ShieldCheck strokeWidth={1.75} /> {t("hero.eyebrow")}
           </Badge>
-          <h1 className="text-4xl leading-[1.12] text-balance sm:text-5xl lg:text-[3.5rem] lg:leading-[1.1]">
+          <h1 className="text-4xl leading-[1.08] font-bold tracking-[-0.035em] text-balance sm:text-5xl lg:text-[3.75rem] lg:leading-[1.04]">
             {t("hero.title")}
           </h1>
           <p className="max-w-xl text-lg leading-relaxed text-ink-muted sm:text-xl">
@@ -78,7 +79,24 @@ export async function Hero({ locale }: Props) {
           </p>
         </div>
         <Reveal delay={0.1}>
-          <HeroIllustration className="mx-auto max-w-[520px]" />
+          <HeroSigningAnimation
+            className="mx-auto max-w-[520px]"
+            labels={{
+              file: t("hero.animation.file"),
+              send: t("hero.animation.send"),
+              signature: t("hero.animation.signature"),
+              signer: t("hero.animation.signer"),
+              signed: t("hero.animation.signed"),
+              seal: t("hero.animation.seal"),
+              status: {
+                ready: t("hero.animation.status.ready"),
+                sending: t("hero.animation.status.sending"),
+                received: t("hero.animation.status.received"),
+                signing: t("hero.animation.status.signing"),
+                signed: t("hero.animation.status.signed"),
+              },
+            }}
+          />
         </Reveal>
       </div>
       <div className="container-page pb-16">

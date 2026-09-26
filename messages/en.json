@@ -168,7 +168,22 @@
       "subtitle": "Speed up signing your documents, from anywhere and fully compliant.",
       "ctaPrimary": "Start for free",
       "ctaSecondary": "See how it works",
-      "note": "Pro plan €9/month · {credits} welcome signatures included"
+      "note": "Pro plan €9/month · {credits} welcome signatures included",
+      "animation": {
+        "file": "Service agreement.pdf",
+        "send": "Send for signature",
+        "signature": "Signature",
+        "signer": "Lucía Gómez",
+        "signed": "Signed",
+        "seal": "Qualified timestamp applied",
+        "status": {
+          "ready": "Not sent yet",
+          "sending": "Sending…",
+          "received": "Document received",
+          "signing": "Signing…",
+          "signed": "Signed"
+        }
+      }
     },
     "anywhere": {
       "eyebrow": "From anywhere",
