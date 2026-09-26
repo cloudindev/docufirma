@@ -911,7 +911,6 @@
       "downloads": "Descargas (enlaces válidos durante 7 días):",
       "signedPdf": "PDF firmado · {name}",
       "evidence": "Certificado de evidencias",
-      "tsaSummary": "Sello de tiempo: {authority} · {date} · Serie {serial}",
       "tsaPending": "El sello de tiempo cualificado se está aplicando; lo verás en la página de verificación en unos minutos.",
       "verify": "Verificar documento",
       "cta": "Abrir en DocuFirma"

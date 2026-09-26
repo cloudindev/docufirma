@@ -7,7 +7,7 @@ import {
   EmailLayout,
   EmailText,
 } from "./components/layout";
-import { type EmailLocale, emailTranslator, formatEmailDate } from "./i18n";
+import { type EmailLocale, emailTranslator } from "./i18n";
 
 export type EnvelopeCompletedProps = {
   locale: EmailLocale;
@@ -57,14 +57,12 @@ export default function EnvelopeCompleted(p: EnvelopeCompletedProps) {
       </EmailBox>
       <EmailText muted small>
         {t("common.verificationCode", { code: p.verificationCode })}
-        <br />
-        {p.tsa
-          ? t("completed.tsaSummary", {
-              authority: p.tsa.authority,
-              date: formatEmailDate(p.tsa.genTime, p.locale, true),
-              serial: p.tsa.serial,
-            })
-          : t("completed.tsaPending")}
+        {!p.tsa && (
+          <>
+            <br />
+            {t("completed.tsaPending")}
+          </>
+        )}
       </EmailText>
       <EmailButton
         href={p.audience === "sender" && p.appEnvelopeUrl ? p.appEnvelopeUrl : p.verifyUrl}

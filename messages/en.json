@@ -911,7 +911,6 @@
       "downloads": "Downloads (links valid for 7 days):",
       "signedPdf": "Signed PDF · {name}",
       "evidence": "Evidence certificate",
-      "tsaSummary": "Timestamp: {authority} · {date} · Serial {serial}",
       "tsaPending": "The qualified timestamp is being applied; it will show on the verification page in a few minutes.",
       "verify": "Verify document",
       "cta": "Open in DocuFirma"
