@@ -9,6 +9,8 @@ import type Stripe from "stripe";
 import { PLAN } from "../config";
 
 export const PRO_LOOKUP_KEY = "docufirma_pro_monthly";
+/** Tags every Stripe object DocuFirma creates; the Stripe account may be shared with other apps. */
+export const STRIPE_APP = "docufirma";
 
 export const WEBHOOK_EVENTS: Stripe.WebhookEndpointCreateParams.EnabledEvent[] = [
   "checkout.session.completed",
@@ -143,7 +145,7 @@ export async function runStripeSetup(
           },
         },
         default_return_url: `${base}/es/app/billing`,
-        metadata: { app: "docufirma" },
+        metadata: { app: STRIPE_APP },
       });
       report.portal = { id: config.id, created: true };
       log.push(`＋ portal ${config.id} (created)`);

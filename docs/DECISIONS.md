@@ -245,3 +245,6 @@ Opciones por firmante en el asistente de envío:
   `grant_sms_pack`. La configuración de Stripe (precios por `lookup_key`, portal y endpoint del webhook) puede lanzarse
   desde la app desplegada con `POST /api/admin/stripe-setup` (protegido con `CRON_SECRET`), sin CLI local.
   `STRIPE_PRICE_PRO_MONTHLY` pasa a ser opcional: si falta, el precio Pro se busca por su `lookup_key`.
+- La cuenta de Stripe puede estar compartida con otros negocios. Todo objeto que crea DocuFirma lleva
+  `metadata.app = 'docufirma'` y los precios usan `lookup_key` `docufirma_*`; el webhook responde 200 e ignora (sin
+  guardar el payload) los eventos que no son de DocuFirma, para que Stripe no los reintente ni deshabilite el endpoint.

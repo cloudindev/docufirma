@@ -6,6 +6,7 @@ import { appUrl } from "@/lib/env-public";
 import { getPathname } from "@/lib/i18n/navigation";
 import { type AdminSupabase, createAdminClient } from "@/lib/supabase/admin";
 import type { Enums } from "@/types/database";
+import { STRIPE_APP } from "./setup";
 
 type SubStatus = Enums<"subscription_status">;
 const STATUSES: SubStatus[] = [
@@ -158,13 +159,67 @@ async function notifyPaymentFailed(admin: AdminSupabase, invoice: Stripe.Invoice
 }
 
 /**
+ * The Stripe account can be shared with other businesses, so the endpoint also receives their
+ * events. An event is DocuFirma's when its object is tagged `metadata.app = docufirma`, uses a
+ * DocuFirma price (lookup key `docufirma_*`) or belongs to a known DocuFirma user/customer
+ * (objects created before the tag existed). Anything else is acknowledged and ignored, without
+ * storing its payload.
+ */
+async function isDocuFirmaEvent(admin: AdminSupabase, event: Stripe.Event): Promise<boolean> {
+  switch (event.type) {
+    case "checkout.session.completed":
+    case "checkout.session.async_payment_succeeded": {
+      const session = event.data.object;
+      if (session.metadata?.app === STRIPE_APP) return true;
+      return (
+        (await userIdFor(admin, {
+          metadataUserId: session.metadata?.user_id,
+          customerId: idOf(session.customer),
+        })) !== null
+      );
+    }
+    case "customer.subscription.created":
+    case "customer.subscription.updated":
+    case "customer.subscription.deleted":
+    case "customer.subscription.paused":
+    case "customer.subscription.resumed": {
+      const sub = event.data.object;
+      if (sub.metadata?.app === STRIPE_APP) return true;
+      if (sub.items?.data?.some((i) => i.price?.lookup_key?.startsWith(`${STRIPE_APP}_`)))
+        return true;
+      return (
+        (await userIdFor(admin, {
+          metadataUserId: sub.metadata?.user_id,
+          customerId: idOf(sub.customer),
+        })) !== null
+      );
+    }
+    case "invoice.paid":
+    case "invoice.payment_failed": {
+      const invoice = event.data.object;
+      const meta = invoice.parent?.subscription_details?.metadata;
+      if (meta?.app === STRIPE_APP) return true;
+      return (
+        (await userIdFor(admin, {
+          metadataUserId: meta?.user_id,
+          customerId: idOf(invoice.customer),
+        })) !== null
+      );
+    }
+    default:
+      return false;
+  }
+}
+
+/**
  * Processes a verified Stripe event exactly once (stripe_events is the idempotency log).
  * Throws on failure so the route answers 500 and Stripe retries.
  */
 export async function handleStripeEvent(
   event: Stripe.Event,
   admin: AdminSupabase = createAdminClient(),
-) {
+): Promise<{ duplicate: boolean; ignored?: boolean }> {
+  if (!(await isDocuFirmaEvent(admin, event))) return { duplicate: false, ignored: true };
   const { data: existing } = await admin
     .from("stripe_events")
     .select("processed_at")

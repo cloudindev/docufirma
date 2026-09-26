@@ -62,6 +62,25 @@ test.describe("stripe webhook", () => {
 
     expect((await post(request, evt("invoice.paid", {}), true)).status()).toBe(400);
 
+    // Events of other businesses sharing the Stripe account are acknowledged and ignored.
+    const foreignSub = evt("customer.subscription.created", {
+      id: `sub_foreign_${Date.now()}`,
+      object: "subscription",
+      customer: `cus_foreign_${Date.now()}`,
+      status: "active",
+      metadata: { user_id: "00000000-0000-4000-8000-000000000000" },
+      items: { object: "list", data: [{ id: "si_x", price: { id: "price_other_app" } }] },
+    });
+    const foreignRes = await post(request, foreignSub);
+    expect(foreignRes.status()).toBe(200);
+    expect((await foreignRes.json()).ignored).toBe(true);
+    const { data: logged } = await admin()
+      .from("stripe_events")
+      .select("id")
+      .eq("id", foreignSub.id)
+      .maybeSingle();
+    expect(logged).toBeNull();
+
     // Subscription created (links the customer through metadata.user_id).
     const sub = {
       id: `sub_${Date.now()}`,

@@ -7,7 +7,7 @@ import type { Locale } from "@/lib/i18n/routing";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { fullName } from "@/lib/utils";
 import { requireStripe } from "./client";
-import { PRO_LOOKUP_KEY } from "./setup";
+import { PRO_LOOKUP_KEY, STRIPE_APP } from "./setup";
 
 export class BillingError extends Error {
   constructor(
@@ -39,7 +39,7 @@ export async function ensureCustomer(userId: string): Promise<string> {
       name:
         profile.company_name || fullName(profile.first_name, profile.last_name) || profile.email,
       preferred_locales: [profile.locale],
-      metadata: { user_id: userId },
+      metadata: { app: STRIPE_APP, user_id: userId },
     },
     { idempotencyKey: `customer:${userId}` },
   );
@@ -103,8 +103,8 @@ export async function createSubscriptionCheckout(userId: string, locale: Locale)
     mode: "subscription",
     line_items: [{ price, quantity: 1 }],
     allow_promotion_codes: true,
-    subscription_data: { metadata: { user_id: userId, plan: PLAN.slug } },
-    metadata: { user_id: userId, kind: "subscription" },
+    subscription_data: { metadata: { app: STRIPE_APP, user_id: userId, plan: PLAN.slug } },
+    metadata: { app: STRIPE_APP, user_id: userId, kind: "subscription" },
   });
   if (!session.url) throw new BillingError("stripe_error", "Checkout session without URL");
   return session.url;
@@ -131,6 +131,7 @@ export async function createPackCheckout(
   const stripe = requireStripe();
   const customer = await ensureCustomer(userId);
   const metadata = {
+    app: STRIPE_APP,
     user_id: userId,
     kind: pack.kind === "sms" ? "sms_pack" : "pack",
     pack_id: pack.id,
@@ -155,7 +156,7 @@ let portalConfigId: Promise<string | undefined> | null = null;
 function docufirmaPortalConfig(stripe: Stripe): Promise<string | undefined> {
   portalConfigId ??= stripe.billingPortal.configurations
     .list({ limit: 100, active: true })
-    .then((list) => list.data.find((c) => c.metadata?.app === "docufirma")?.id)
+    .then((list) => list.data.find((c) => c.metadata?.app === STRIPE_APP)?.id)
     .catch(() => {
       portalConfigId = null;
       return undefined;
