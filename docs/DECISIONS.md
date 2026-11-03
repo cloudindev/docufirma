@@ -271,3 +271,20 @@ Opciones por firmante en el asistente de envío:
   el webhook `invoice.paid` (metadata `auto_recharge = 1`) abona los créditos.
 - Tarjeta rechazada o sin tarjeta: se anula la factura, se pausa la recarga y se avisa por email; los errores
   transitorios se reintentan tras el enfriamiento. Cada recarga correcta envía un email con el importe.
+
+## D-041 · API pública v1 y webhooks (solo Plan Pro)
+
+- REST en `/api/v1` (JSON, snake_case), documentada en `/es/desarrolladores` · `/en/developers` y en
+  `/api/v1/openapi.json`. Enlace en el pie.
+- Claves `df_live_…` creadas en Ajustes → API y webhooks: se muestran una vez; en BD solo el SHA-256 (`api_keys`, el
+  hash no se concede a `authenticated`). Máx. 5 activas; revocables. Cada petición comprueba clave, Plan Pro activo
+  (`subscription_required`, 403) y límite de 120 peticiones/min por clave (cabeceras `X-RateLimit-*`, 429 con
+  `Retry-After`).
+- Las operaciones reutilizan la lógica de la web (`lib/envelopes/operations.ts`, `sendDraftEnvelope`, `processUpload`):
+  mismas validaciones, créditos, SMS y eventos. Documentos en línea (base64, ≤ 3 MB por el límite de 4,5 MB de Vercel)
+  o subida directa con URL firmada de Storage (≤ 25 MB) + `complete`.
+- Errores `{ error: { code, message, details } }` con códigos estables; `X-Request-Id` en cada respuesta.
+- Webhooks: un endpoint por cuenta con secreto `dfwh_…` (no expuesto por RLS). Eventos `envelope.sent|signed|completed|
+declined|expired|canceled` (+ `ping` de prueba), firmados con `DocuFirma-Signature: t=…,v1=HMAC-SHA256(t.body)`.
+  Entrega en `after()` con 2 reintentos, sin seguir redirecciones y con protección SSRF (solo HTTPS a IP públicas,
+  comprobado también al enviar). `WEBHOOK_ALLOW_PRIVATE=1` solo para desarrollo y e2e.

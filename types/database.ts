@@ -7,6 +7,75 @@ export type Database = {
   __InternalSupabase: { PostgrestVersion: "13" };
   public: {
     Tables: {
+      api_keys: {
+        Row: {
+          created_at: string;
+          id: string;
+          key_hash: string;
+          last_used_at: string | null;
+          name: string;
+          prefix: string;
+          revoked_at: string | null;
+          user_id: string;
+        };
+        Insert: {
+          created_at?: string;
+          id?: string;
+          key_hash: string;
+          last_used_at?: string | null;
+          name: string;
+          prefix: string;
+          revoked_at?: string | null;
+          user_id: string;
+        };
+        Update: {
+          created_at?: string;
+          id?: string;
+          key_hash?: string;
+          last_used_at?: string | null;
+          name?: string;
+          prefix?: string;
+          revoked_at?: string | null;
+          user_id?: string;
+        };
+        Relationships: [];
+      };
+      webhook_endpoints: {
+        Row: {
+          created_at: string;
+          enabled: boolean;
+          last_delivery_at: string | null;
+          last_error: string | null;
+          last_status: number | null;
+          secret: string;
+          updated_at: string;
+          url: string;
+          user_id: string;
+        };
+        Insert: {
+          created_at?: string;
+          enabled?: boolean;
+          last_delivery_at?: string | null;
+          last_error?: string | null;
+          last_status?: number | null;
+          secret: string;
+          updated_at?: string;
+          url: string;
+          user_id: string;
+        };
+        Update: {
+          created_at?: string;
+          enabled?: boolean;
+          last_delivery_at?: string | null;
+          last_error?: string | null;
+          last_status?: number | null;
+          secret?: string;
+          updated_at?: string;
+          url?: string;
+          user_id?: string;
+        };
+        Relationships: [];
+      };
       auto_recharge: {
         Row: {
           created_at: string;

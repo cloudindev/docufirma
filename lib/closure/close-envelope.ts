@@ -1,4 +1,5 @@
 import "server-only";
+import { dispatchEnvelopeEvent } from "@/lib/api/webhooks";
 import { sendEnvelopeCompleted } from "@/lib/email";
 import { appUrl } from "@/lib/env-public";
 import { logEvent } from "@/lib/events";
@@ -476,7 +477,10 @@ export async function closeEnvelope(
     for (const artifact of artifacts ?? []) await timestampArtifact(admin, artifact, owner);
 
     // 5. Emails, once.
-    if (newlyCompleted) await sendCompletionEmails(admin, envelopeId);
+    if (newlyCompleted) {
+      await sendCompletionEmails(admin, envelopeId);
+      await dispatchEnvelopeEvent(envelopeId, "envelope.completed");
+    }
 
     await admin.rpc("complete_job", { p_job_id: job.id });
     return { skipped: false as const, completed: true };

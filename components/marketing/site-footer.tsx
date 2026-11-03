@@ -37,6 +37,11 @@ export async function SiteFooter({ locale }: { locale: Locale }) {
               </Link>
             </li>
             <li>
+              <Link href="/developers" className={linkClass}>
+                {t("footer.api")}
+              </Link>
+            </li>
+            <li>
               <Link href="/register" className={linkClass}>
                 {t("nav.cta")}
               </Link>

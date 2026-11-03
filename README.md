@@ -131,6 +131,11 @@ La biometría se cifra con AES-256-GCM. Para rotar: genera una clave nueva, pon 
 siguen descifrando por su _key id_; los nuevos usan la clave nueva. **Nunca** borres una clave antigua mientras queden
 evidencias cifradas con ella (retención: `BIOMETRIC_RETENTION_YEARS`).
 
+## API pública
+
+REST en `/api/v1` para cuentas con el Plan Pro (claves en Ajustes → API y webhooks). Documentación en
+`/es/desarrolladores` y especificación en `/api/v1/openapi.json`. Código en `lib/api/` y `app/api/v1/`; ver D-041.
+
 ## CI
 
 `.github/workflows/ci.yml`: en cada PR, formato + lint + typecheck + Vitest y los tests SQL contra Postgres; en `main`,

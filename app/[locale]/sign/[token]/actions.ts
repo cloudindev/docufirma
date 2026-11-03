@@ -3,6 +3,7 @@
 import { after } from "next/server";
 import { headers } from "next/headers";
 import { z } from "zod";
+import { dispatchEnvelopeEvent } from "@/lib/api/webhooks";
 import { closeEnvelope } from "@/lib/closure";
 import { triggerAutoRecharge } from "@/lib/credits/auto-recharge";
 import { LIMITS } from "@/lib/config";
@@ -152,7 +153,9 @@ export async function completeSignature(
     next_signer_id: string | null;
     envelope_id: string;
   };
+  const signerId = ctx.signer.id;
   after(async () => {
+    await dispatchEnvelopeEvent(result.envelope_id, "envelope.signed", { signer_id: signerId });
     try {
       if (result.next_signer_id) await issueTokenAndEmail(admin, result.next_signer_id);
       if (result.all_signed) await closeEnvelope(result.envelope_id);
@@ -190,6 +193,7 @@ export async function declineSignature(
   const envelope = ctx.envelope;
   const signer = ctx.signer;
   after(async () => {
+    await dispatchEnvelopeEvent(envelope.id, "envelope.declined", { signer_id: signer.id });
     if (!envelope.userId) return;
     const { data: sender } = await admin
       .from("profiles")

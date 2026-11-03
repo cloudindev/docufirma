@@ -4,6 +4,7 @@ import { appUrl } from "@/lib/env-public";
 import { after as afterResponse } from "next/server";
 import { getCredits, hasActivePlan } from "@/lib/credits";
 import { triggerAutoRecharge } from "@/lib/credits/auto-recharge";
+import { dispatchEnvelopeEvent } from "@/lib/api/webhooks";
 import { LIMITS } from "@/lib/config";
 import { getPathname } from "@/lib/i18n/navigation";
 import { emailSigner } from "@/lib/signing/notify";
@@ -102,6 +103,8 @@ export async function sendDraftEnvelope(
     const res = await emailSigner(admin, signerId, token);
     if (res.ok) notified += 1;
   }
+
+  afterResponse(() => dispatchEnvelopeEvent(envelopeId, "envelope.sent"));
 
   // Automatic top-up (if enabled) replaces the low-balance warning.
   const { data: autoTopUp } = await admin

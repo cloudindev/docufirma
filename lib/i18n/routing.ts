@@ -22,6 +22,7 @@ export const routing = defineRouting({
     "/pricing": { es: "/precios", en: "/pricing" },
     "/how-it-works": { es: "/como-funciona", en: "/how-it-works" },
     "/verify": { es: "/verificar", en: "/verify" },
+    "/developers": { es: "/desarrolladores", en: "/developers" },
     "/legal/[slug]": "/legal/[slug]",
     "/login": { es: "/iniciar-sesion", en: "/login" },
     "/register": { es: "/registro", en: "/register" },

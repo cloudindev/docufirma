@@ -1,4 +1,5 @@
 import "server-only";
+import { dispatchEnvelopeEvent } from "@/lib/api/webhooks";
 import { LIMITS } from "@/lib/config";
 import { sendEnvelopeNotice } from "@/lib/email";
 import { appUrl } from "@/lib/env-public";
@@ -48,6 +49,7 @@ export async function runExpirations(limit = 100) {
   const { data, error } = await admin.rpc("expire_due_envelopes", { p_limit: limit });
   if (error) throw new Error(error.message);
   for (const row of data ?? []) {
+    await dispatchEnvelopeEvent(row.envelope_id, "envelope.expired");
     const { data: env } = await admin
       .from("envelopes")
       .select("id, title, user_id")

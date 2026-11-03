@@ -16,6 +16,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { href: "/pricing", priority: 0.9, changeFrequency: "monthly" },
     { href: "/how-it-works", priority: 0.8, changeFrequency: "monthly" },
     { href: "/verify", priority: 0.6, changeFrequency: "yearly" },
+    { href: "/developers", priority: 0.6, changeFrequency: "monthly" },
     { href: "/register", priority: 0.5, changeFrequency: "yearly" },
     ...LEGAL_SLUGS.map((slug) => ({
       href: { pathname: "/legal/[slug]" as const, params: { slug } },

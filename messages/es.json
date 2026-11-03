@@ -391,7 +391,8 @@
       "language": "Idioma",
       "contact": "Contacto",
       "faq": "Preguntas frecuentes",
-      "rights": "© {year} DocuFirma. Todos los derechos reservados."
+      "rights": "© {year} DocuFirma. Todos los derechos reservados.",
+      "api": "API para desarrolladores"
     },
     "howItWorksPage": {
       "metaTitle": "Cómo funciona",
@@ -952,6 +953,61 @@
         "saved": "Recarga automática guardada.",
         "error": "No hemos podido guardar la recarga automática.",
         "footnote": "Se comprueba cada vez que usas firmas o SMS, como máximo una recarga cada 10 minutos. Recibirás la factura con el IVA y un email con cada recarga."
+      },
+      "api": {
+        "title": "API y webhooks",
+        "subtitle": "Conecta DocuFirma con tu software.",
+        "docs": "Ver la documentación de la API",
+        "noPlan": "La API y los webhooks están incluidos en el Plan Pro.",
+        "noPlanCta": "Activar Plan Pro",
+        "copy": "Copiar",
+        "show": "Mostrar",
+        "hide": "Ocultar",
+        "cancel": "Cancelar",
+        "never": "nunca",
+        "error": "No hemos podido completar la acción.",
+        "keys": {
+          "title": "Claves API",
+          "empty": "Aún no tienes claves API.",
+          "name": "Nombre de la clave",
+          "namePlaceholder": "Ej.: ERP producción",
+          "create": "Crear clave",
+          "createdTitle": "Tu nueva clave API",
+          "createdBody": "Cópiala ahora y guárdala en un lugar seguro: por seguridad no volveremos a mostrarla.",
+          "meta": "Creada: {created} · Último uso: {used}",
+          "revoke": "Revocar",
+          "revokeLabel": "Revocar la clave {name}",
+          "revokeTitle": "¿Revocar esta clave?",
+          "revokeBody": "Las integraciones que usen «{name}» dejarán de funcionar al instante.",
+          "revoked": "Clave revocada.",
+          "tooMany": "Puedes tener hasta 5 claves activas. Revoca alguna para crear otra."
+        },
+        "webhook": {
+          "title": "Webhook",
+          "subtitle": "Te avisamos con un POST firmado cada vez que un envío cambia de estado.",
+          "url": "URL del endpoint",
+          "urlHint": "Debe ser HTTPS y públicamente accesible.",
+          "enabled": "Enviar eventos",
+          "save": "Guardar webhook",
+          "saved": "Webhook guardado.",
+          "secret": "Secreto de firma",
+          "rotate": "Regenerar",
+          "rotated": "Secreto regenerado. Actualízalo en tu servidor.",
+          "test": "Enviar prueba",
+          "testOk": "Prueba entregada (HTTP {status}).",
+          "testFailed": "No hemos podido entregar la prueba. Revisa la URL y tu servidor.",
+          "delete": "Eliminar",
+          "deleted": "Webhook eliminado.",
+          "lastOk": "Última entrega: {date} · HTTP {status}",
+          "lastFailed": "Última entrega fallida: {date} · {error}",
+          "noDeliveries": "Aún no se ha enviado ningún evento.",
+          "urlErrors": {
+            "invalid_url": "Introduce una URL válida.",
+            "https_required": "La URL debe empezar por https://.",
+            "private_address": "La URL no puede apuntar a una dirección privada o local.",
+            "unresolvable_host": "No encontramos ese dominio."
+          }
+        }
       }
     },
     "billing": {
@@ -1408,5 +1464,94 @@
     },
     "noPlanBanner": "Activa el Plan Pro para enviar documentos a firmar.",
     "noPlanCta": "Activar Plan Pro"
+  },
+  "developers": {
+    "metaTitle": "API para desarrolladores",
+    "metaDescription": "Documentación de la API REST de DocuFirma: crea y envía documentos a firmar, descarga los PDF firmados y recibe webhooks. Incluida en el Plan Pro.",
+    "eyebrow": "Desarrolladores",
+    "title": "API de DocuFirma",
+    "subtitle": "Integra la firma electrónica avanzada con sello de tiempo cualificado en tu software: crea envíos, sigue su estado, descarga los documentos firmados y recibe avisos por webhook.",
+    "proBadge": "Incluida en el Plan Pro",
+    "openapi": "Especificación OpenAPI",
+    "getKey": "Obtener una clave API",
+    "toc": "En esta página",
+    "sections": {
+      "intro": {
+        "h": "Introducción",
+        "p": "La API es REST, usa JSON en peticiones y respuestas, y está disponible para cuentas con el Plan Pro activo. Las firmas y los SMS que consume son los de tu cuenta, igual que desde la web.",
+        "base": "URL base"
+      },
+      "auth": {
+        "h": "Autenticación",
+        "p": "Crea una clave en Ajustes → API y webhooks. Se muestra una sola vez: guárdala en tu gestor de secretos. Envíala en la cabecera Authorization en cada petición. Puedes tener hasta 5 claves activas y revocarlas en cualquier momento."
+      },
+      "quickstart": {
+        "h": "Primer envío en una llamada",
+        "p": "Crea el envío con sus firmantes y un documento en base64 (hasta 3 MB) y envíalo a la vez con send: true. La respuesta incluye el estado de cada firmante y el código de verificación."
+      },
+      "uploads": {
+        "h": "Documentos grandes",
+        "p": "Para archivos de hasta 25 MB, pide una URL de subida, envía el archivo con PUT y confirma la subida. DocuFirma valida el PDF (o convierte la imagen) y calcula su huella SHA-256."
+      },
+      "endpoints": {
+        "h": "Endpoints",
+        "method": "Método",
+        "path": "Ruta",
+        "desc": "Descripción",
+        "items": {
+          "account": "Tu cuenta: plan, firmas y SMS disponibles.",
+          "list": "Lista de envíos, del más reciente al más antiguo. Filtra por status y pagina con limit y starting_after.",
+          "create": "Crea un envío en borrador, con firmantes y documentos opcionales; con send: true lo envía.",
+          "get": "Detalle de un envío con firmantes y documentos.",
+          "update": "Modifica un borrador. signers sustituye la lista completa.",
+          "delete": "Elimina un borrador y sus documentos.",
+          "document": "Añade un documento en base64 (hasta 3 MB) a un borrador.",
+          "upload": "Devuelve una URL firmada para subir un archivo grande con PUT.",
+          "complete": "Valida el archivo subido y lo añade al borrador.",
+          "send": "Envía el borrador: reserva las firmas y avisa a los firmantes.",
+          "cancel": "Cancela un envío pendiente y devuelve las firmas reservadas.",
+          "remind": "Vuelve a avisar a los firmantes pendientes (máximo una vez por hora).",
+          "files": "URLs de descarga temporales (5 min): originales y, al completarse, PDF firmados, certificado de evidencias y sellos de tiempo.",
+          "events": "Cronología completa del envío.",
+          "signing": "Enlace de firma para un firmante presencial."
+        }
+      },
+      "objects": {
+        "h": "Estados",
+        "p": "Un envío pasa por draft → sent → viewed → completed, o termina en declined, expired o canceled. Cada firmante pasa por pending → sent → viewed → signed, o declined. Tras la última firma, el estado completed llega en unos segundos, cuando los PDF están firmados y sellados."
+      },
+      "errors": {
+        "h": "Errores",
+        "p": "Los errores devuelven un código HTTP y un objeto error con un code estable y un mensaje legible. Los de validación incluyen details con el campo afectado.",
+        "codes": {
+          "400": "JSON mal formado.",
+          "401": "Clave ausente, no válida o revocada.",
+          "402": "No tienes firmas o SMS suficientes (insufficient_credits, sms_no_credits).",
+          "403": "Sin Plan Pro activo (subscription_required) o email sin confirmar.",
+          "404": "El recurso no existe o no es tuyo.",
+          "409": "El estado no permite la operación (envelope_not_draft, not_cancelable).",
+          "413": "Documento demasiado grande para subirlo en línea.",
+          "422": "Datos no válidos o documento no admitido.",
+          "429": "Límite de peticiones superado."
+        }
+      },
+      "limits": {
+        "h": "Límites y paginación",
+        "p": "Cada clave admite 120 peticiones por minuto; las cabeceras X-RateLimit-Limit, X-RateLimit-Remaining y X-RateLimit-Reset indican tu consumo y, si lo superas, Retry-After indica cuándo reintentar. Por envío: hasta 10 documentos (25 MB cada uno) y 10 firmantes. Las listas devuelven has_more; pide la siguiente página con starting_after igual al id del último elemento."
+      },
+      "webhooks": {
+        "h": "Webhooks",
+        "p": "Configura una URL HTTPS en Ajustes → API y webhooks para recibir un POST en cada cambio de estado. Responde con cualquier 2xx; si falla, reintentamos dos veces. Cada petición lleva la cabecera DocuFirma-Signature para que compruebes que viene de nosotros.",
+        "events": {
+          "envelope_sent": "El envío se ha enviado a los firmantes.",
+          "envelope_signed": "Un firmante ha firmado (data.signer_id).",
+          "envelope_completed": "Todos han firmado y los PDF están sellados y listos.",
+          "envelope_declined": "Un firmante ha rechazado firmar.",
+          "envelope_expired": "El envío ha caducado sin completarse.",
+          "envelope_canceled": "Has cancelado el envío."
+        },
+        "verify": "Verifica la firma: calcula el HMAC-SHA256 de «t.cuerpo» con tu secreto y compáralo con v1. Rechaza mensajes con t de hace más de 5 minutos."
+      }
+    }
   }
 }

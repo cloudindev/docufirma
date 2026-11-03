@@ -7,14 +7,17 @@ import {
   PreferencesForm,
   ProfileForm,
 } from "@/components/app/settings-forms";
+import { ApiAccessCard } from "@/components/app/api-access-card";
 import { type AutoRechargeState, AutoRechargeCard } from "@/components/app/auto-recharge-form";
 import { PageHeader } from "@/components/ui/page-header";
 import { requireProfile } from "@/lib/auth/session";
 import { brandingLogoUrl } from "@/lib/email";
+import { hasActivePlan } from "@/lib/credits";
 import { resolveLocale } from "@/lib/i18n/server";
 import { getPackOffers, getSmsPackOffers } from "@/lib/pricing";
 import { savedCard } from "@/lib/stripe/auto-recharge";
 import { getStripe } from "@/lib/stripe/client";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 
 export async function generateMetadata({
@@ -32,6 +35,21 @@ export default async function SettingsPage({ params }: PageProps<"/[locale]/app/
   const logo = brandingLogoUrl(profile.id, profile.logo_path);
   const supabase = await createClient();
   const stripe = getStripe();
+  const admin = createAdminClient();
+  const [hasPlan, { data: apiKeys }, { data: webhook }] = await Promise.all([
+    hasActivePlan(admin, profile.id),
+    supabase
+      .from("api_keys")
+      .select("id, name, prefix, created_at, last_used_at")
+      .is("revoked_at", null)
+      .order("created_at", { ascending: false }),
+    // The signing secret is not exposed through RLS: read it server-side for its owner.
+    admin
+      .from("webhook_endpoints")
+      .select("url, enabled, secret, last_delivery_at, last_status, last_error")
+      .eq("user_id", profile.id)
+      .maybeSingle(),
+  ]);
   const [signaturePacks, smsPacks, { data: rows }, { data: catalog }, card] = await Promise.all([
     getPackOffers(),
     getSmsPackOffers(),
@@ -94,6 +112,28 @@ export default async function SettingsPage({ params }: PageProps<"/[locale]/app/
               : null
           }
           hasCustomer={Boolean(stripe && profile.stripe_customer_id)}
+        />
+        <ApiAccessCard
+          hasPlan={hasPlan}
+          keys={(apiKeys ?? []).map((k) => ({
+            id: k.id,
+            name: k.name,
+            prefix: k.prefix,
+            createdAt: k.created_at,
+            lastUsedAt: k.last_used_at,
+          }))}
+          webhook={
+            webhook
+              ? {
+                  url: webhook.url,
+                  enabled: webhook.enabled,
+                  secret: webhook.secret,
+                  lastDeliveryAt: webhook.last_delivery_at,
+                  lastStatus: webhook.last_status,
+                  lastError: webhook.last_error,
+                }
+              : null
+          }
         />
         <PasswordForm />
         <DeleteAccount email={profile.email} />

@@ -391,7 +391,8 @@
       "language": "Language",
       "contact": "Contact",
       "faq": "FAQ",
-      "rights": "© {year} DocuFirma. All rights reserved."
+      "rights": "© {year} DocuFirma. All rights reserved.",
+      "api": "Developer API"
     },
     "howItWorksPage": {
       "metaTitle": "How it works",
@@ -952,6 +953,61 @@
         "saved": "Automatic top-up saved.",
         "error": "We could not save the automatic top-up.",
         "footnote": "We check every time you use signatures or SMS, at most one top-up every 10 minutes. You get a VAT invoice and an email for each top-up."
+      },
+      "api": {
+        "title": "API and webhooks",
+        "subtitle": "Connect DocuFirma with your software.",
+        "docs": "Read the API documentation",
+        "noPlan": "The API and webhooks are included in the Pro plan.",
+        "noPlanCta": "Activate Pro plan",
+        "copy": "Copy",
+        "show": "Show",
+        "hide": "Hide",
+        "cancel": "Cancel",
+        "never": "never",
+        "error": "We could not complete the action.",
+        "keys": {
+          "title": "API keys",
+          "empty": "You have no API keys yet.",
+          "name": "Key name",
+          "namePlaceholder": "E.g. Production ERP",
+          "create": "Create key",
+          "createdTitle": "Your new API key",
+          "createdBody": "Copy it now and keep it somewhere safe: for security we will not show it again.",
+          "meta": "Created: {created} · Last used: {used}",
+          "revoke": "Revoke",
+          "revokeLabel": "Revoke the key {name}",
+          "revokeTitle": "Revoke this key?",
+          "revokeBody": "Integrations using “{name}” will stop working immediately.",
+          "revoked": "Key revoked.",
+          "tooMany": "You can have up to 5 active keys. Revoke one to create another."
+        },
+        "webhook": {
+          "title": "Webhook",
+          "subtitle": "We send you a signed POST every time an envelope changes status.",
+          "url": "Endpoint URL",
+          "urlHint": "It must be HTTPS and publicly reachable.",
+          "enabled": "Send events",
+          "save": "Save webhook",
+          "saved": "Webhook saved.",
+          "secret": "Signing secret",
+          "rotate": "Regenerate",
+          "rotated": "Secret regenerated. Update it on your server.",
+          "test": "Send test",
+          "testOk": "Test delivered (HTTP {status}).",
+          "testFailed": "We could not deliver the test. Check the URL and your server.",
+          "delete": "Delete",
+          "deleted": "Webhook deleted.",
+          "lastOk": "Last delivery: {date} · HTTP {status}",
+          "lastFailed": "Last delivery failed: {date} · {error}",
+          "noDeliveries": "No events sent yet.",
+          "urlErrors": {
+            "invalid_url": "Enter a valid URL.",
+            "https_required": "The URL must start with https://.",
+            "private_address": "The URL cannot point to a private or local address.",
+            "unresolvable_host": "We could not find that domain."
+          }
+        }
       }
     },
     "billing": {
@@ -1408,5 +1464,94 @@
     },
     "noPlanBanner": "Activate the Pro plan to send documents for signature.",
     "noPlanCta": "Activate Pro plan"
+  },
+  "developers": {
+    "metaTitle": "Developer API",
+    "metaDescription": "DocuFirma REST API documentation: create and send documents for signature, download signed PDFs and receive webhooks. Included in the Pro plan.",
+    "eyebrow": "Developers",
+    "title": "DocuFirma API",
+    "subtitle": "Bring advanced electronic signatures with a qualified timestamp into your software: create envelopes, track their status, download the signed documents and get notified by webhook.",
+    "proBadge": "Included in the Pro plan",
+    "openapi": "OpenAPI specification",
+    "getKey": "Get an API key",
+    "toc": "On this page",
+    "sections": {
+      "intro": {
+        "h": "Introduction",
+        "p": "The API is REST, uses JSON for requests and responses, and is available to accounts with an active Pro plan. It uses your account's signatures and SMS, just like the web app.",
+        "base": "Base URL"
+      },
+      "auth": {
+        "h": "Authentication",
+        "p": "Create a key in Settings → API and webhooks. It is shown only once: keep it in your secrets manager. Send it in the Authorization header with every request. You can have up to 5 active keys and revoke them at any time."
+      },
+      "quickstart": {
+        "h": "First envelope in one call",
+        "p": "Create the envelope with its signers and a base64 document (up to 3 MB) and send it at once with send: true. The response includes each signer's status and the verification code."
+      },
+      "uploads": {
+        "h": "Large documents",
+        "p": "For files up to 25 MB, request an upload URL, send the file with PUT and complete the upload. DocuFirma validates the PDF (or converts the image) and computes its SHA-256 fingerprint."
+      },
+      "endpoints": {
+        "h": "Endpoints",
+        "method": "Method",
+        "path": "Path",
+        "desc": "Description",
+        "items": {
+          "account": "Your account: plan, signatures and SMS available.",
+          "list": "Envelopes, newest first. Filter by status and paginate with limit and starting_after.",
+          "create": "Creates a draft envelope with optional signers and documents; with send: true it is sent right away.",
+          "get": "Envelope detail with signers and documents.",
+          "update": "Updates a draft. signers replaces the whole list.",
+          "delete": "Deletes a draft and its documents.",
+          "document": "Adds a base64 document (up to 3 MB) to a draft.",
+          "upload": "Returns a signed URL to upload a large file with PUT.",
+          "complete": "Validates the uploaded file and adds it to the draft.",
+          "send": "Sends the draft: reserves signatures and notifies the signers.",
+          "cancel": "Cancels a pending envelope and returns its reserved signatures.",
+          "remind": "Notifies pending signers again (at most once per hour).",
+          "files": "Temporary download URLs (5 min): originals and, once completed, signed PDFs, evidence certificate and timestamps.",
+          "events": "Full timeline of the envelope.",
+          "signing": "Signing link for an in-person signer."
+        }
+      },
+      "objects": {
+        "h": "Statuses",
+        "p": "An envelope goes draft → sent → viewed → completed, or ends as declined, expired or canceled. Each signer goes pending → sent → viewed → signed, or declined. After the last signature, completed arrives within seconds, once the PDFs are signed and timestamped."
+      },
+      "errors": {
+        "h": "Errors",
+        "p": "Errors return an HTTP status and an error object with a stable code and a readable message. Validation errors include details with the affected field.",
+        "codes": {
+          "400": "Malformed JSON.",
+          "401": "Missing, invalid or revoked key.",
+          "402": "Not enough signatures or SMS (insufficient_credits, sms_no_credits).",
+          "403": "No active Pro plan (subscription_required) or unconfirmed email.",
+          "404": "The resource does not exist or is not yours.",
+          "409": "The current status does not allow the operation (envelope_not_draft, not_cancelable).",
+          "413": "Document too large for an inline upload.",
+          "422": "Invalid data or unsupported document.",
+          "429": "Rate limit exceeded."
+        }
+      },
+      "limits": {
+        "h": "Limits and pagination",
+        "p": "Each key allows 120 requests per minute; the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers show your usage and, when exceeded, Retry-After says when to retry. Per envelope: up to 10 documents (25 MB each) and 10 signers. Lists return has_more; request the next page with starting_after set to the last item's id."
+      },
+      "webhooks": {
+        "h": "Webhooks",
+        "p": "Set an HTTPS URL in Settings → API and webhooks to receive a POST on every status change. Reply with any 2xx; on failure we retry twice. Every request carries the DocuFirma-Signature header so you can check it comes from us.",
+        "events": {
+          "envelope_sent": "The envelope was sent to the signers.",
+          "envelope_signed": "A signer signed (data.signer_id).",
+          "envelope_completed": "Everyone signed and the PDFs are timestamped and ready.",
+          "envelope_declined": "A signer declined to sign.",
+          "envelope_expired": "The envelope expired before completion.",
+          "envelope_canceled": "You canceled the envelope."
+        },
+        "verify": "Verify the signature: compute the HMAC-SHA256 of “t.body” with your secret and compare it with v1. Reject messages whose t is older than 5 minutes."
+      }
+    }
   }
 }

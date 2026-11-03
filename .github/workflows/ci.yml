@@ -96,6 +96,7 @@ jobs:
           EMAIL_OUTBOX_DIR=${{ github.workspace }}/.local-stack/mail
           SMS_PROVIDER=outbox
           SMS_OUTBOX_DIR=${{ github.workspace }}/.local-stack/sms
+          WEBHOOK_ALLOW_PRIVATE=1
           ENV
       - name: Start local Supabase (GoTrue + PostgREST + Storage emulator)
         run: |

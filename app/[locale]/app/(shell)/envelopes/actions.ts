@@ -1,15 +1,20 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { after } from "next/server";
+import { dispatchEnvelopeEvent } from "@/lib/api/webhooks";
 import { headers } from "next/headers";
 import { z } from "zod";
 import { type ActionResult, fail, ok } from "@/lib/actions/result";
 import { getSessionUser } from "@/lib/auth/session";
 import { LIMITS } from "@/lib/config";
+import {
+  deleteDraftEnvelope,
+  remindPendingSigners as remindNow,
+  startInPersonSession,
+} from "@/lib/envelopes/operations";
 import { logEvent } from "@/lib/events";
 import { clientIpFrom } from "@/lib/http";
-import { issueTokenAndEmail, signUrl } from "@/lib/signing/notify";
-import { generateSignerToken, hashToken } from "@/lib/signing/tokens";
 import { fullName } from "@/lib/utils";
 import { BUCKETS, paths, safeFileName } from "@/lib/storage/paths";
 import { createAdminClient } from "@/lib/supabase/admin";
@@ -40,6 +45,7 @@ export async function cancelEnvelope(
     p_user_id: owned.user.id,
   });
   if (error) return fail(error.message.includes("not_cancelable") ? "not_cancelable" : "generic");
+  after(() => dispatchEnvelopeEvent(envelopeId, "envelope.canceled"));
   revalidatePath("/[locale]/app", "layout");
   return ok({ released: Number((data as { released?: number } | null)?.released ?? 0) });
 }
@@ -48,18 +54,8 @@ export async function deleteDraft(envelopeId: string): Promise<ActionResult> {
   const owned = await ownedEnvelope(envelopeId);
   if (!owned) return fail("not_found");
   if (owned.envelope.status !== "draft") return fail("not_draft");
-  const admin = createAdminClient();
-  const { data: docs } = await admin
-    .from("documents")
-    .select("original_path")
-    .eq("envelope_id", envelopeId);
-  const { error } = await admin.rpc("delete_draft_envelope", {
-    p_envelope_id: envelopeId,
-    p_user_id: owned.user.id,
-  });
-  if (error) return fail("generic");
-  const files = (docs ?? []).map((d) => d.original_path);
-  if (files.length) await admin.storage.from(BUCKETS.originals).remove(files);
+  if (!(await deleteDraftEnvelope(createAdminClient(), owned.user.id, envelopeId)))
+    return fail("generic");
   revalidatePath("/[locale]/app", "layout");
   return ok();
 }
@@ -204,28 +200,7 @@ export async function remindPendingSigners(
   if (!owned) return fail("not_found");
   if (owned.envelope.status !== "sent" && owned.envelope.status !== "viewed")
     return fail("not_active");
-  const admin = createAdminClient();
-  const { data: signers } = await admin
-    .from("signers")
-    .select("id, last_reminder_at, sent_at")
-    .eq("envelope_id", envelopeId)
-    .eq("delivery", "email")
-    .in("status", ["sent", "viewed"]);
-  const hourAgo = Date.now() - 60 * 60 * 1000;
-  let sent = 0;
-  for (const s of signers ?? []) {
-    const last = Math.max(
-      Date.parse(s.last_reminder_at ?? "") || 0,
-      Date.parse(s.sent_at ?? "") || 0,
-    );
-    if (last > hourAgo) continue;
-    try {
-      const res = await issueTokenAndEmail(admin, s.id, { reminder: true });
-      if (res.ok) sent += 1;
-    } catch (error) {
-      console.error("[remind]", error);
-    }
-  }
+  const sent = await remindNow(createAdminClient(), envelopeId);
   revalidatePath("/[locale]/app", "layout");
   return ok({ sent });
 }
@@ -249,22 +224,13 @@ export async function startInPersonSigning(
     .single();
   const hostName = fullName(profile?.first_name, profile?.last_name) || owned.user.email;
   const h = await headers();
-  const token = generateSignerToken();
-  const { error } = await admin.rpc("start_in_person_signing", {
-    p_signer_id: signerId,
-    p_user_id: owned.user.id,
-    p_token_hash: hashToken(token),
-    p_host: `${hostName} <${profile?.email ?? owned.user.email}>`,
-    p_ip: clientIpFrom(h) ?? undefined,
-    p_user_agent: h.get("user-agent")?.slice(0, 512) ?? undefined,
+  const res = await startInPersonSession(admin, {
+    userId: owned.user.id,
+    signerId,
+    locale: owned.envelope.locale === "en" ? "en" : "es",
+    host: `${hostName} <${profile?.email ?? owned.user.email}>`,
+    ip: clientIpFrom(h),
+    userAgent: h.get("user-agent"),
   });
-  if (error) {
-    if (error.message.includes("not_your_turn")) return fail("not_your_turn");
-    if (error.message.includes("signer_not_found") || error.message.includes("not_in_person"))
-      return fail("not_found");
-    console.error("[in-person]", error.message);
-    return fail("not_active");
-  }
-  const locale = owned.envelope.locale === "en" ? "en" : "es";
-  return ok({ url: signUrl(locale, token) });
+  return res.ok ? ok({ url: res.url }) : fail(res.error);
 }

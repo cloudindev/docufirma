@@ -6,7 +6,6 @@ import { z } from "zod";
 import { type ActionResult, fail, ok, zodFieldErrors } from "@/lib/actions/result";
 import { getSessionUser } from "@/lib/auth/session";
 import { LIMITS } from "@/lib/config";
-import { getSmsBalance, hasActivePlan } from "@/lib/credits";
 import { processUpload } from "@/lib/envelopes/documents";
 import {
   envelopeSettingsSchema,
@@ -15,12 +14,11 @@ import {
   titleFromFileName,
   uploadRequestSchema,
 } from "@/lib/envelopes/schemas";
+import { checkSendPreconditions, writeDraftSettings } from "@/lib/envelopes/operations";
 import { sendDraftEnvelope } from "@/lib/envelopes/send";
 import { logEvent } from "@/lib/events";
 import { BUCKETS, paths } from "@/lib/storage/paths";
-import { isSmsAvailable } from "@/lib/sms";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { normalizePhone } from "@/lib/validation/phone";
 import { createClient } from "@/lib/supabase/server";
 
 async function ownedDraft(envelopeId: string) {
@@ -194,44 +192,9 @@ export async function saveDraft(envelopeId: string, raw: unknown): Promise<Actio
   if (!owned) return fail("not_found");
   const parsed = envelopeSettingsSchema.safeParse(raw);
   if (!parsed.success) return fail("validation", zodFieldErrors(parsed.error));
-  const d = parsed.data;
-  const admin = createAdminClient();
-  const { error } = await admin
-    .from("envelopes")
-    .update({
-      title: d.title,
-      message: d.message || null,
-      sequential: d.sequential && d.signers.length > 1,
-      locale: d.locale,
-      expiry_days: d.expiryDays,
-      reminder_days: d.reminderDays,
-    })
-    .eq("id", envelopeId)
-    .eq("status", "draft");
-  if (error) return fail("generic");
-
-  // Drafts own their signer list: replace it wholesale (duplicates by email are collapsed).
-  const unique = [...new Map(d.signers.map((s) => [s.email.toLowerCase(), s])).values()];
-  await admin.from("signers").delete().eq("envelope_id", envelopeId);
-  if (unique.length) {
-    const { error: sErr } = await admin.from("signers").insert(
-      unique.map((s, i) => {
-        const phone = normalizePhone(s.phone);
-        return {
-          envelope_id: envelopeId,
-          first_name: s.firstName,
-          last_name: s.lastName,
-          email: s.email,
-          order_index: i,
-          phone,
-          require_sms_otp: Boolean(s.requireSmsOtp && phone),
-          delivery: s.delivery,
-        };
-      }),
-    );
-    if (sErr) return fail("generic");
-  }
-  return ok();
+  return (await writeDraftSettings(createAdminClient(), envelopeId, parsed.data))
+    ? ok()
+    : fail("generic");
 }
 
 export async function sendEnvelope(
@@ -246,15 +209,8 @@ export async function sendEnvelope(
   if (!owned.user.emailVerified) return fail("email_not_verified");
   const parsed = sendEnvelopeSchema.safeParse(raw);
   if (!parsed.success) return fail("validation", zodFieldErrors(parsed.error));
-  if (!(await hasActivePlan(createAdminClient(), owned.user.id)))
-    return fail("subscription_required");
-  const smsSigners = parsed.data.signers.filter((s) => s.requireSmsOtp).length;
-  if (smsSigners > 0) {
-    if (!isSmsAvailable()) return fail("sms_unavailable");
-    // Each SMS signer needs at least one code; top-ups happen on the billing page.
-    const smsBalance = await getSmsBalance(createAdminClient(), owned.user.id).catch(() => 0);
-    if (smsBalance < smsSigners) return fail("sms_no_credits");
-  }
+  const blocked = await checkSendPreconditions(createAdminClient(), owned.user.id, parsed.data);
+  if (blocked) return fail(blocked);
 
   const saved = await saveDraft(envelopeId, parsed.data);
   if (!saved.ok) return saved;

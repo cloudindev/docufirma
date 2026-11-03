@@ -1,6 +1,10 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { z } from "zod";
+import { generateApiKey, generateWebhookSecret } from "@/lib/api/keys";
+import { assertWebhookUrl, sendTestWebhook } from "@/lib/api/webhooks";
+import { hasActivePlan } from "@/lib/credits";
 import { cookies } from "next/headers";
 import sharp from "sharp";
 import { type ActionResult, fail, ok, zodFieldErrors } from "@/lib/actions/result";
@@ -189,4 +193,120 @@ export async function deleteAccount(
   await supabase.auth.signOut();
   redirect({ href: "/", locale: isLocale(localeRaw) ? localeRaw : "es" });
   return ok();
+}
+
+// ── Public API (D-041): keys and webhook, Pro plan only ──────────────────────
+
+const MAX_API_KEYS = 5;
+const apiKeyNameSchema = z
+  .string()
+  .trim()
+  .min(1, "validation.required")
+  .max(60, "validation.tooLong");
+
+async function proUser() {
+  const user = await getSessionUser();
+  if (!user) return null;
+  return (await hasActivePlan(createAdminClient(), user.id)) ? user : null;
+}
+
+/** Creates an API key and returns it once (only its hash is stored). */
+export async function createApiKey(rawName: unknown): Promise<ActionResult<{ key: string }>> {
+  const user = await proUser();
+  if (!user) return fail("subscription_required");
+  const name = apiKeyNameSchema.safeParse(rawName);
+  if (!name.success) return fail("validation");
+  const admin = createAdminClient();
+  const { count } = await admin
+    .from("api_keys")
+    .select("id", { count: "exact", head: true })
+    .eq("user_id", user.id)
+    .is("revoked_at", null);
+  if ((count ?? 0) >= MAX_API_KEYS) return fail("too_many_keys");
+  const { key, prefix, hash } = generateApiKey();
+  const { error } = await admin
+    .from("api_keys")
+    .insert({ user_id: user.id, name: name.data, prefix, key_hash: hash });
+  if (error) return fail("generic");
+  revalidateApp();
+  return ok({ key });
+}
+
+export async function revokeApiKey(id: unknown): Promise<ActionResult> {
+  const user = await getSessionUser();
+  if (!user) return fail("unauthorized");
+  if (!z.uuid().safeParse(id).success) return fail("validation");
+  const { error } = await createAdminClient()
+    .from("api_keys")
+    .update({ revoked_at: new Date().toISOString() })
+    .eq("id", id as string)
+    .eq("user_id", user.id)
+    .is("revoked_at", null);
+  if (error) return fail("generic");
+  revalidateApp();
+  return ok();
+}
+
+const webhookSchema = z.object({
+  url: z.string().trim().max(500, "validation.tooLong"),
+  enabled: z.boolean(),
+});
+
+/** Saves the webhook endpoint (a signing secret is generated the first time). */
+export async function saveWebhook(raw: unknown): Promise<ActionResult> {
+  const user = await proUser();
+  if (!user) return fail("subscription_required");
+  const parsed = webhookSchema.safeParse(raw);
+  if (!parsed.success) return fail("validation");
+  try {
+    await assertWebhookUrl(parsed.data.url);
+  } catch (e) {
+    return fail("webhook_url", { url: (e as Error).message });
+  }
+  const admin = createAdminClient();
+  const { data: existing } = await admin
+    .from("webhook_endpoints")
+    .select("secret")
+    .eq("user_id", user.id)
+    .maybeSingle();
+  const { error } = await admin.from("webhook_endpoints").upsert(
+    {
+      user_id: user.id,
+      url: parsed.data.url,
+      enabled: parsed.data.enabled,
+      secret: existing?.secret ?? generateWebhookSecret(),
+    },
+    { onConflict: "user_id" },
+  );
+  if (error) return fail("generic");
+  revalidateApp();
+  return ok();
+}
+
+export async function rotateWebhookSecret(): Promise<ActionResult> {
+  const user = await proUser();
+  if (!user) return fail("subscription_required");
+  const { error } = await createAdminClient()
+    .from("webhook_endpoints")
+    .update({ secret: generateWebhookSecret() })
+    .eq("user_id", user.id);
+  if (error) return fail("generic");
+  revalidateApp();
+  return ok();
+}
+
+export async function deleteWebhook(): Promise<ActionResult> {
+  const user = await getSessionUser();
+  if (!user) return fail("unauthorized");
+  await createAdminClient().from("webhook_endpoints").delete().eq("user_id", user.id);
+  revalidateApp();
+  return ok();
+}
+
+export async function testWebhook(): Promise<ActionResult<{ status: number | null }>> {
+  const user = await proUser();
+  if (!user) return fail("subscription_required");
+  const res = await sendTestWebhook(user.id);
+  revalidateApp();
+  return res.ok ? ok({ status: res.status }) : fail("webhook_failed", { error: res.error ?? "" });
 }
