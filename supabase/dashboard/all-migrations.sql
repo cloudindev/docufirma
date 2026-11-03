@@ -2445,7 +2445,11 @@ delete from public.app_settings where key = 'monthly_credits';
 insert into public.credit_ledger (user_id, kind, amount, pool, note)
 select t.user_id, 'adjustment', 5 - t.amount, 'pack', 'Welcome credits raised to 5'
 from public.credit_ledger t
-where t.kind = 'trial_grant' and t.amount < 5;
+where t.kind = 'trial_grant' and t.amount < 5
+  and not exists (
+    select 1 from public.credit_ledger a
+    where a.user_id = t.user_id and a.kind = 'adjustment' and a.note = 'Welcome credits raised to 5'
+  );
 
 -- ── No more monthly credits ──────────────────────────────────────────────────
 drop function if exists public.grant_monthly_credits(uuid, integer, timestamptz, text);
